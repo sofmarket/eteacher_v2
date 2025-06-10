@@ -13,6 +13,8 @@ class Address extends Model {
      * @var array<int, string>
      */
     protected $fillable = [
+        'addressable_id',
+        'addressable_type',
         'city',
         'zipcode',
         'address',

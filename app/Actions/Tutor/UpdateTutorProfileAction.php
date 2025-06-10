@@ -3,6 +3,7 @@
 namespace App\Actions\Tutor;
 
 use App\Enums\SocialPlatforms;
+use App\Models\Address;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -43,11 +44,20 @@ class UpdateTutorProfileAction
             // $user->languages()->sync($data['languages']);
 
             // update address
-            $user->address()->updateOrCreate(
-                ['address' => $data['address'], 'city' => $data['city'], 'zipcode' => $data['zipcode']]
+            Address::updateOrCreate(
+                [
+                    'addressable_id' => $user->id,
+                    'addressable_type' => User::class
+                ],
+                [
+                    'address' => $data['address'],
+                    'city' => $data['city'],
+                    'zipcode' => $data['zipcode']
+                ]
             );
 
             return $user->fresh();
+            
         });
     }
 

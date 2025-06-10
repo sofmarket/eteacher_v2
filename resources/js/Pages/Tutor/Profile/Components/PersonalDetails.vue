@@ -34,6 +34,7 @@
           <div class="col-span-2 flex flex-col lg:flex-row lg:items-center lg:gap-4 sm:flex-row sm:items-center sm:gap-4"> 
             <label for="" class="lg:w-1/4 sm:w-1/3">Gender</label>
             <div class="flex-1 flex gap-4">
+              
               <CheckboxInput 
                 label="Male" 
                 name="gender" 
@@ -41,6 +42,7 @@
                 value="male" 
                 :errors="form.errors.gender"
               />
+              
               <CheckboxInput 
                 label="Female" 
                 name="gender" 
@@ -48,6 +50,7 @@
                 value="female" 
                 :errors="form.errors.gender"
               />
+
             </div>
           </div>
 
@@ -76,7 +79,7 @@
             <select name="" id="city" v-model="form.city"
               class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800">
               <option value="">Select City</option>
-              <option v-for="city in cities" :value="city.name" :key="city.name">{{ city.name }}</option>
+              <option v-for="city in cities" :value="city.name" :key="city.name" :selected="user.address?.city == city.name">{{ city.name }}</option>
             </select>
           </div>
 
@@ -180,9 +183,9 @@ const form = useForm({
   description: user.value.profile.description,
   tagline: user.value.profile.tagline,
   keywords: user.value.profile.keywords,
-  address: user.value.address.address,
-  zipcode: user.value.address.zipcode,
-  city: user.value.address.city,
+  address: user.value.address?.address,
+  zipcode: user.value.address?.zipcode,
+  city: user.value.address?.city,
   native_language: user.value.profile.native_language,
   languages: user.value.profile.languages,
   intro_video: user.value.profile.intro_video,
@@ -212,6 +215,8 @@ onMounted(() => {
   socialPlatforms.value.forEach(platform => {
     form.social_profiles[platform] = getSocialProfile(platform);
   });
+
+  console.log('city', user.value.address?.city);
 
   nextTick(() => {
     //todo:  apply select2 to the city select
