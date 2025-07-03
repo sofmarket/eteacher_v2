@@ -104,7 +104,9 @@
           <hr class="col-span-2">
 
           <div class="col-span-2">
-            <UniversalInput label="Languages I know" v-model="form.languages" :errors="form.errors.languages" />
+            <SelectInput label="Languages I know" multiple v-model="form.languages">
+              <option v-for="language in languages" :value="language.name" :key="language.name">{{ language.name }}</option>
+            </SelectInput>
           </div>
 
           <hr class="col-span-2">
@@ -117,12 +119,6 @@
 
           <div class="col-span-2">
             <FileInput label="Profile Image" v-model="form.image" :errors="form.errors.image" />
-          </div>
-
-          <hr class="col-span-2">
-
-          <div class="col-span-2">
-            <UniversalInput label="Profile Image" v-model="form.image" :errors="form.errors.image" />
           </div>
 
           <hr class="col-span-2">
@@ -167,6 +163,7 @@ import { useForm, usePage } from '@inertiajs/vue3';
 import UniversalInput from '@/Components/forms/FormElements/UniversalInput.vue';
 import CheckboxInput from '@/Components/forms/FormElements/CheckboxInput.vue';
 import FileInput from '@/Components/forms/FormElements/FileInput.vue';
+import SelectInput from '@/Components/forms/FormElements/SelectInput.vue';
 // use page inertia
 const page = usePage();
 const user = computed(() => page.props.user);
@@ -211,12 +208,14 @@ const getSocialProfile = (platform) => {
   return socialProfile?.url;
 }
 
+const onChangeLanguages = (e) => {
+  console.log('onChangeLanguages', e);
+}
+
 onMounted(() => {
   socialPlatforms.value.forEach(platform => {
     form.social_profiles[platform] = getSocialProfile(platform);
   });
-
-  console.log('city', user.value.address?.city);
 
   nextTick(() => {
     //todo:  apply select2 to the city select

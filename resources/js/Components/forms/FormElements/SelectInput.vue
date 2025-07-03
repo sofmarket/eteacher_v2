@@ -1,80 +1,138 @@
 <template>
-  <div class="space-y-6">
-    <!-- Single Select Input -->
-    <div>
-      <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-        Select Input
-      </label>
-      <div class="relative z-20 bg-transparent">
-        <select
-          v-model="singleSelect"
-          class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pr-11 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
-          :class="{ 'text-gray-800 dark:text-white/90': singleSelect }"
-        >
-          <option value="" disabled>Select Option</option>
-          <option value="marketing" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-            Marketing
-          </option>
-          <option value="template" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-            Template
-          </option>
-          <option value="development" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-            Development
-          </option>
+  <div :class="parentClasses">
+    <div
+      :class="inline ? 'flex flex-col lg:flex-row lg:items-center lg:gap-4 sm:flex-row sm:items-center sm:gap-4' : 'flex flex-col'">
+      <label v-if="label" :for="inputId" :class="[labelClasses, 'lg:w-1/4 sm:w-1/3']">{{ label }} <span v-if="required"
+          class="text-error-500">*</span></label>
+      <div class="flex-1">
+        <select :id="inputId || 'my-select'" :multiple="multiple" ref="mySelect" :disabled="disabled">
+          <slot />
         </select>
-        <span
-          class="absolute z-30 text-gray-700 -translate-y-1/2 pointer-events-none right-4 top-1/2 dark:text-gray-400"
-        >
-          <svg
-            class="stroke-current"
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M4.79175 7.396L10.0001 12.6043L15.2084 7.396"
-              stroke=""
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </span>
+        <p class="text-error-500 mt-2 text-sm" v-if="errors" v-cloak>{{ errors }}</p>
       </div>
-    </div>
-
-    <!-- Multiple Select Input -->
-    <div>
-      <MultipleSelect v-model="selectedItems" :options="optionss" class="w-full" />
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref, computed } from 'vue'
-import MultipleSelect from './MultipleSelect.vue'
+<script>
+import Choices from 'choices.js';
+import "choices.js/public/assets/styles/choices.css";
 
-const optionss = [
-  { value: 'apple', label: 'Apple' },
-  { value: 'banana', label: 'Banana' },
-  { value: 'cherry', label: 'Cherry' },
-  { value: 'date', label: 'Date' },
-  { value: 'elderberry', label: 'Elderberry' },
-  { value: 'graphs', label: 'Graphs' },
-]
+export default {
+  name: 'SelectInput',
+  props: {
+    name: String,
+    label: {
+      type: String,
+      default: null
+    },
+    multiple: {
+      type: Boolean,
+      default: false
+    },
+    modelValue: {
+      type: [Array, String, Number],
+      default: () => []
+    },
+    placeholder: String,
+    inputId: {
+      type: String,
+    },
+    labelClasses: {
+      type: String,
+      default: 'mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400'
+    },
+    parentClasses: {
+      type: String,
+      default: ''
+    },
+    required: {
+      type: Boolean,
+      default: false
+    },
+    inline: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    errors: {
+      type: String,
+    }
+  },
+  emits: ['update:modelValue'],
+  data() {
+    return {
+      choices: null
+    }
+  },
+  methods: {
+    handleChoicesChange() {
+      if (this.choices) {
+        const values = this.choices.getValue(true);
+        if (this.multiple) {
+          // For multiple select, emit array of values
+          this.$emit('update:modelValue', values);
+        } else {
+          // For single select, emit single value
+          this.$emit('update:modelValue', values ?? null);
+        }
+      }
+    },
+    updateChoicesValue() {
+      if (this.choices) {
+        if (this.multiple) {
+          // For multiple select, set array of values
+          this.choices.setChoiceByValue(Array.isArray(this.modelValue) ? this.modelValue : []);
+        } else {
+          // For single select, set single value
+          this.choices.setChoiceByValue(this.modelValue || '');
+        }
+      }
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.choices = new Choices(this.$refs.mySelect, {
+        removeItems: true,
+        removeItemButton: true,
+        removeItemButtonAlignLeft: false,
+        placeholder: this.placeholder,
+        placeholderValue: this.placeholder,
+        searchEnabled: true,
+        itemSelectText: '',
+      });
 
-const selectedItems = ref([])
+      // Set initial value
+      this.updateChoicesValue();
 
-const singleSelect = ref('')
-
-const options = ref([
-  { text: 'Option 1', selected: false },
-  { text: 'Option 2', selected: false },
-  { text: 'Option 3', selected: false },
-  { text: 'Option 4', selected: false },
-])
-
-const selected = computed(() => options.value.filter((option) => option.selected))
+      // Listen for changes
+      this.choices.passedElement.element.addEventListener('change', this.handleChoicesChange);
+    });
+  },
+  beforeUnmount() {
+    if (this.choices) {
+      this.choices.destroy();
+    }
+  },
+  watch: {
+    modelValue: {
+      handler() {
+        this.updateChoicesValue();
+      },
+      deep: true
+    },
+    disabled(newVal) {
+      if (this.choices) {
+        if (newVal) {
+          this.choices.disable();
+        } else {
+          this.choices.enable();
+        }
+      }
+    }
+  }
+}
 </script>
