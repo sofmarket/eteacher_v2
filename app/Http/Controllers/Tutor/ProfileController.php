@@ -41,8 +41,7 @@ class ProfileController extends Controller
 
     public function update(ProfileRequest $request)
     {
-
-        $user = User::find(auth()->id());
+        $user = User::findOrFail(auth()->id());
 
         $this->updateTutorProfileAction->handle(
             $user, 
