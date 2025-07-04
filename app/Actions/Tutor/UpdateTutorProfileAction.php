@@ -81,6 +81,7 @@ class UpdateTutorProfileAction
         return [
             'first_name' => $data['first_name'] ?? null,
             'last_name' => $data['last_name'] ?? null,
+            'gender' => $data['gender'] ?? null,
             'phone_number' => $data['phone_number'] ?? null,
             'description' => $data['description'] ?? null,
             'tagline' => $data['tagline'] ?? null,

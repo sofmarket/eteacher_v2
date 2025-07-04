@@ -9,7 +9,8 @@
         <div class="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
 
 
-          <div class="col-span-2 flex flex-col lg:flex-row lg:items-center lg:gap-4 sm:flex-row sm:items-center sm:gap-4"> 
+          <div
+            class="col-span-2 flex flex-col lg:flex-row lg:items-center lg:gap-4 sm:flex-row sm:items-center sm:gap-4">
             <label for="" class="lg:w-1/4 sm:w-1/3">Fullname</label>
             <div class="flex-1 flex gap-4 grid grid-cols-2">
               <UniversalInput v-model="form.first_name" :errors="form.errors.first_name" :inline="false" />
@@ -31,25 +32,16 @@
 
           <hr class="col-span-2">
 
-          <div class="col-span-2 flex flex-col lg:flex-row lg:items-center lg:gap-4 sm:flex-row sm:items-center sm:gap-4"> 
+          <div
+            class="col-span-2 flex flex-col lg:flex-row lg:items-center lg:gap-4 sm:flex-row sm:items-center sm:gap-4">
             <label for="" class="lg:w-1/4 sm:w-1/3">Gender</label>
             <div class="flex-1 flex gap-4">
-              
-              <CheckboxInput 
-                label="Male" 
-                name="gender" 
-                v-model="form.gender" 
-                value="male" 
-                :errors="form.errors.gender"
-              />
-              
-              <CheckboxInput 
-                label="Female" 
-                name="gender" 
-                v-model="form.gender" 
-                value="female" 
-                :errors="form.errors.gender"
-              />
+
+              <CheckboxInput label="Male" type="radio" name="gender" v-model="form.gender" value="male"
+                :errors="form.errors.gender" />
+
+              <CheckboxInput label="Female" type="radio" name="gender" v-model="form.gender" value="female"
+                :errors="form.errors.gender" />
 
             </div>
           </div>
@@ -79,7 +71,8 @@
             <select name="" id="city" v-model="form.city"
               class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800">
               <option value="">Select City</option>
-              <option v-for="city in cities" :value="city.name" :key="city.name" :selected="user.address?.city == city.name">{{ city.name }}</option>
+              <option v-for="city in cities" :value="city.name" :key="city.name"
+                :selected="user.address?.city == city.name">{{ city.name }}</option>
             </select>
           </div>
 
@@ -105,7 +98,8 @@
 
           <div class="col-span-2">
             <SelectInput label="Languages I know" multiple v-model="form.languages">
-              <option v-for="language in languages" :value="language.name" :key="language.name">{{ language.name }}</option>
+              <option v-for="language in languages" :value="language.name" :key="language.name">{{ language.name }}
+              </option>
             </SelectInput>
           </div>
 
@@ -187,7 +181,7 @@ const form = useForm({
   languages: user.value.profile.languages,
   intro_video: user.value.profile.intro_video,
   // image: user.value.profile.image,
-  gender: 'male',
+  gender: user.value.profile.gender,
   social_profiles: {},
 });
 
@@ -216,6 +210,8 @@ onMounted(() => {
   socialPlatforms.value.forEach(platform => {
     form.social_profiles[platform] = getSocialProfile(platform);
   });
+
+  console.log(user.value.profile);
 
   nextTick(() => {
     //todo:  apply select2 to the city select
