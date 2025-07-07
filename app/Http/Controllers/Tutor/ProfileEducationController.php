@@ -41,7 +41,6 @@ class ProfileEducationController extends Controller
 
         $education->delete();
 
-        return redirect()->route('tutor.profile.education')
-            ->with('message', 'Education record deleted successfully');
+        return redirect()->route('tutor.profile')->with('message', 'Education record deleted successfully');
     }
 } 

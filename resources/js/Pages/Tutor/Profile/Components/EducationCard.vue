@@ -88,7 +88,7 @@ const handleClickOutside = (event) => {
 };
 
 onMounted(() => {
-    console.log(props.education);
+    // console.log(props.education);
 
     document.addEventListener('click', handleClickOutside);
 });

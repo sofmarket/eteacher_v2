@@ -48,6 +48,7 @@ import { useForm, usePage } from '@inertiajs/vue3';
 import EducationCard from './EducationCard.vue';
 import Button from '@/Components/ui/Button.vue';
 import Modal from '@/Components/ui/Modal.vue';
+import Swal from 'sweetalert2';
 
 import UniversalInput from '@/Components/forms/FormElements/UniversalInput.vue';
 import DateInput from '@/Components/forms/FormElements/DateInput.vue';
@@ -61,12 +62,37 @@ const educations = computed(() => user.value.educations);
 
 const handleEdit = (education) => {
     // Handle edit logic here
-    console.log('Edit education:', education);
+    modalActive.value = true;
+    form.course_title = education.course_title;
+    form.institute_name = education.institute_name;
+    form.city = education.city;
+    form.start_date = education.start_date;
+    form.end_date = education.end_date;
+    form.ongoing = education.ongoing;
+    form.description = education.description;
+    form.id = education.id;
+    form.processing = false;
 };
 
 const handleDelete = (education) => {
-    // Handle delete logic here
-    console.log('Delete education:', education);
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'You will not be able to recover this education!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // console.log('Delete education:', education);
+            form.delete(route('tutor.profile.education.destroy', education.id), {
+                onSuccess: () => {
+                    console.log('Success');
+                }
+            });
+        }
+    });
 };
 
 const handleAddNew = () => {
