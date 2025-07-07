@@ -1,5 +1,4 @@
 <template>
-
   <form class="flex flex-col" @submit.prevent="onSave">
     <div class="p-2">
       <div class="mt-7">
@@ -10,12 +9,12 @@
         <div class="grid grid-cols-1 gap-x-6 gap-y-5">
 
           <PasswordInput label="Current Password" v-model="form.current_password"
-            :errors="form.errors.current_password" />
+            :errors="form.errors.current_password" name="current_password" />
 
-          <PasswordInput label="Password" v-model="form.password" :errors="form.errors.password" />
+          <PasswordInput label="Password" v-model="form.password" :errors="form.errors.password" name="password" />
 
           <PasswordInput label="Confirm Password" v-model="form.password_confirmation"
-            :errors="form.errors.password_confirmation" />
+            :errors="form.errors.password_confirmation" name="password_confirmation" />
 
         </div>
       </div>
@@ -29,7 +28,6 @@
       </div>
     </div>
   </form>
-
 </template>
 
 <script setup>

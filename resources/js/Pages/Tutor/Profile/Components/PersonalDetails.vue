@@ -211,8 +211,6 @@ onMounted(() => {
     form.social_profiles[platform] = getSocialProfile(platform);
   });
 
-  console.log(user.value.profile);
-
   nextTick(() => {
     //todo:  apply select2 to the city select
   });

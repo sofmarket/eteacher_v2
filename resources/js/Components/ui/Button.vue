@@ -10,13 +10,8 @@
     @click="onClick"
     :disabled="disabled"
   >
-    <span v-if="startIcon" class="flex items-center">
-      <component :is="startIcon" />
-    </span>
+    <span class="">{{ text }}</span>
     <slot></slot>
-    <span v-if="endIcon" class="flex items-center">
-      <component :is="endIcon" />
-    </span>
   </button>
 </template>
 
@@ -26,8 +21,7 @@ import { computed } from 'vue'
 interface ButtonProps {
   size?: 'sm' | 'md'
   variant?: 'primary' | 'outline'
-  startIcon?: object
-  endIcon?: object
+  text?: string
   onClick?: () => void
   className?: string
   disabled?: boolean
@@ -38,6 +32,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   variant: 'primary',
   className: '',
   disabled: false,
+  text: '',
 })
 
 const sizeClasses = {

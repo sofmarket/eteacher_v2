@@ -1,10 +1,10 @@
 <template>
 
     <div :class="parentClasses">
-        <label :for="inputId" :class="labelClasses">{{ label }} <span v-if="required" class="text-error-500">*</span></label>
+        <label :for="name" :class="labelClasses">{{ label }} <span v-if="required" class="text-error-500">*</span></label>
         <div class="relative">
 
-            <input :type="hidePassword ? 'password' : 'text'" :required="required" :id="inputId || name" :name="name"
+            <input :type="hidePassword ? 'password' : 'text'" :required="required" :id="name" :name="name"
                 @input="handleInput" @keypress="handleKeypress" :autocomplete="autocomplete" :placeholder="placeholder"
                 :class="[inputClasses, errors ? 'is-invalid' : '']" :dir="dir" />
 
@@ -46,7 +46,6 @@ export default {
             type: String,
             default: "********"
         },
-        inputId: "password",
         labelClasses: {
             type: String,
             default: 'mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400'

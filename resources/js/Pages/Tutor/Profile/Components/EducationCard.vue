@@ -1,7 +1,7 @@
 <template>
     <div class="mt-4 border rounded-lg border-gray-200 p-5 relative bg-gray-50">
         <h5 class="text-md lg:text-lg font-medium text-gray-800 dark:text-white/90 mb-2">
-            {{ education.degree }}
+            {{ education.course_title }}
         </h5>
         <div class="flex flex-col md:flex-row gap-3 lg:gap-5">
             <div class="flex items-center gap-1">
@@ -10,7 +10,7 @@
                     <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
                 </svg>
                 <p class="text-gray-500 text-sm lg:text-md">
-                    {{ education.university }}
+                    {{ education.institute_name }}
                 </p>
             </div>
 
@@ -20,7 +20,7 @@
                     <circle cx="12" cy="10" r="3"></circle>
                 </svg>
                 <p class="text-gray-500 text-sm lg:text-md">
-                    {{ education.location }}
+                    {{ education.city }}
                 </p>
             </div>
 
@@ -32,7 +32,7 @@
                     <line x1="3" y1="10" x2="21" y2="10"></line>
                 </svg>
                 <p class="text-gray-500 text-sm lg:text-md">
-                    {{ education.startDate }} - {{ education.endDate }}
+                    {{ education.start_date }} - {{ education.end_date }}
                 </p>
             </div>
         </div>
@@ -88,6 +88,8 @@ const handleClickOutside = (event) => {
 };
 
 onMounted(() => {
+    console.log(props.education);
+
     document.addEventListener('click', handleClickOutside);
 });
 
