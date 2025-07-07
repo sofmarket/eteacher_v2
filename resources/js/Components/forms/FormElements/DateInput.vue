@@ -32,15 +32,16 @@
                 </svg>
             </span>
         </div>
-        <p v-if="error" class="mt-1 text-sm text-red-500">{{ error }}</p>
-        <p v-else-if="helpText" class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ helpText }}</p>
+        <p class="text-error-500 mt-2 text-sm" v-if="errors" v-cloak>{{ errors }}</p>
+        <!-- <p v-else-if="helpText" class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ helpText }}</p> -->
     </div>
 </template>
 
 <script setup>
 import { ref, computed, watch } from 'vue'
 import flatPickr from 'vue-flatpickr-component'
-import 'flatpickr/dist/flatpickr.css'
+// import 'flatpickr/dist/flatpickr.css'
+import 'flatpickr/dist/themes/light.css'
 
 const props = defineProps({
     modelValue: {
@@ -59,10 +60,9 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
-    error: {
+    errors: {
         type: String,
-        default: ''
-    },
+      },
     helpText: {
         type: String,
         default: ''

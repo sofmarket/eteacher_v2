@@ -15,32 +15,28 @@
         </div>
 
         <div class="mt-7">
-            <EducationCard v-for="education in user.educations" :education="education" @edit="handleEdit" @delete="handleDelete" />
+            <EducationCard v-for="education in educations" :education="education" @edit="handleEdit" @delete="handleDelete" />
         </div>
 
         <Modal :modalActive="modalActive" @close="modalActive = false" :fullScreenBackdrop="true"
-            title="Add New Education">
+            title="Add New Education" @reset="modalActive = false" @submit="handleSubmit" :loading="form.processing">
             <template #body>
-                <div class="flex flex-col gap-4">
+                <form class="flex flex-col gap-4" @submit.prevent="handleSubmit">
                     
-                    <UniversalInput :inline="false" label="Degree" v-model="form.degree" :errors="form.errors.degree"
+                    <UniversalInput :inline="false" label="Course Title" v-model="form.course_title" :errors="form.errors.course_title"
                     dir="ltr" />
                     
-                    <UniversalInput :inline="false" label="University" v-model="form.university" :errors="form.errors.university" />
+                    <UniversalInput :inline="false" label="Institute Name" v-model="form.institute_name" :errors="form.errors.institute_name" />
                     
                     <UniversalInput :inline="false" label="Country" v-model="form.country" :errors="form.errors.country" />
                     
                     <UniversalInput :inline="false" label="City" v-model="form.city" :errors="form.errors.city" />
 
-
-
-                    <DateInput label="Start Date" v-model="form.startDate" :errors="form.errors.startDate" />
+                    <DateInput label="Start Date" v-model="form.start_date" :errors="form.errors.start_date" />
                     
-                    <DateInput label="End Date" v-model="form.endDate" :errors="form.errors.endDate" />
+                    <DateInput label="End Date" v-model="form.end_date" :errors="form.errors.end_date" />
                     
-
-
-                </div>
+                </form>
             </template>
         </Modal>
     </div>
@@ -61,13 +57,7 @@ const modalActive = ref(false);
 const page = usePage();
 const user = computed(() => page.props.user);
 
-const education = ref({
-    degree: 'Bachelor of Computer Science',
-    university: 'University of California',
-    location: 'Los Angeles',
-    startDate: 'September 2015',
-    endDate: 'June 2019'
-});
+const educations = computed(() => user.value.educations);
 
 const handleEdit = (education) => {
     // Handle edit logic here
@@ -84,15 +74,23 @@ const handleAddNew = () => {
     modalActive.value = true;
 };
 
+const handleSubmit = () => {
+    form.post(route('tutor.profile.education.store'), {
+        onSuccess: () => {
+            modalActive.value = false;
+            form.reset();
+        }
+    });
+};
+
 const form = useForm({
-    degree: '',
-    university: '',
-    country: '',
+    course_title: '',
+    institute_name: '',
     city: '',
-    startDate: '',
-    endDate: ''
+    start_date: '',
+    end_date: '',
+    ongoing: false,
+    description: '',
 });
-
-
 
 </script>

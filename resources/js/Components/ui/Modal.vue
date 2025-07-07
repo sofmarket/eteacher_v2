@@ -5,8 +5,7 @@
 
     <div class="fixed inset-0 flex items-center justify-center p-5 overflow-y-auto modal z-99999">
       <div class="modal-close-btn fixed inset-0 h-full w-full bg-gray-400/50 backdrop-blur-[32px]"></div>
-      <div
-        class="relative w-full max-w-[600px] rounded-3xl bg-white p-6 dark:bg-gray-900 lg:p-10">
+      <div class="relative w-full max-w-[600px] rounded-3xl bg-white p-6 dark:bg-gray-900 lg:p-10">
         <!-- close btn -->
         <button @click="$emit('close')"
           class="absolute right-3 top-3 z-999 flex h-9.5 w-9.5 items-center justify-center rounded-full bg-gray-100 text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white sm:right-6 sm:top-6 sm:h-11 sm:w-11">
@@ -22,7 +21,7 @@
           <h4 class="font-semibold text-gray-800 mb-7 text-title-sm dark:text-white/90">
             {{ title }}
           </h4>
-          
+
           <slot name="body"></slot>
 
           <div class="flex items-center justify-end w-full gap-3 mt-8">
@@ -35,6 +34,17 @@
               Save Changes
             </button>
           </div>
+        </div>
+      </div>
+      <div v-if="loading" class="absolute w-full h-full flex items-center justify-center z-9999999">
+        <div class="w-10 h-10">
+          <svg width="60" height="60" viewBox="0 0 44 44">
+            <circle cx="22" cy="22" r="20" fill="none" stroke="#E5E7EB" stroke-width="4"></circle>
+            <circle cx="22" cy="22" r="20" fill="none" stroke="#60A5FA" stroke-width="4" stroke-dasharray="125.6"
+              stroke-dashoffset="125.6">
+              <animate attributeName="stroke-dashoffset" values="125.6;0" dur="2s" repeatCount="indefinite"></animate>
+            </circle>
+          </svg>
         </div>
       </div>
     </div>
@@ -55,6 +65,10 @@ const props = defineProps({
   title: {
     type: String,
     default: '',
+  },
+  loading: {
+    type: Boolean,
+    default: false,
   },
 })
 

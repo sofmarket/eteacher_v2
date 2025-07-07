@@ -10,7 +10,7 @@
                  @input="$emit('update:modelValue', $event.target.value)"
                  @blur="trimInput"
                  :placeholder="placeholder || label"
-                 :class="[inputClasses, errors ? 'is-invalid' : '']"
+                 :class="[inputClasses, errors ? 'border-red-500 focus:border-red-500 focus:ring-red-500/10' : '']"
                  :required="required"
                  :autofocus="autofocus"
                  :disabled="disabled"
