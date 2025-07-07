@@ -15,27 +15,30 @@
         </div>
 
         <div class="mt-7">
-            <EducationCard v-for="education in educations" :education="education" @edit="handleEdit" @delete="handleDelete" />
+            <EducationCard v-for="education in educations" :education="education" @edit="handleEdit"
+                @delete="handleDelete" />
         </div>
 
         <Modal :modalActive="modalActive" @close="modalActive = false" :fullScreenBackdrop="true"
             title="Add New Education" @reset="modalActive = false" @submit="handleSubmit" :loading="form.processing">
             <template #body>
                 <form class="flex flex-col gap-4" @submit.prevent="handleSubmit">
-                    
-                    <UniversalInput :inline="false" label="Course Title" v-model="form.course_title" :errors="form.errors.course_title"
-                    dir="ltr" />
-                    
-                    <UniversalInput :inline="false" label="Institute Name" v-model="form.institute_name" :errors="form.errors.institute_name" />
-                    
-                    <UniversalInput :inline="false" label="Country" v-model="form.country" :errors="form.errors.country" />
-                    
+
+                    <UniversalInput :inline="false" label="Course Title" v-model="form.course_title"
+                        :errors="form.errors.course_title" dir="ltr" />
+
+                    <UniversalInput :inline="false" label="Institute Name" v-model="form.institute_name"
+                        :errors="form.errors.institute_name" />
+
+                    <UniversalInput :inline="false" label="Country" v-model="form.country"
+                        :errors="form.errors.country" />
+
                     <UniversalInput :inline="false" label="City" v-model="form.city" :errors="form.errors.city" />
 
                     <DateInput label="Start Date" v-model="form.start_date" :errors="form.errors.start_date" />
-                    
+
                     <DateInput label="End Date" v-model="form.end_date" :errors="form.errors.end_date" />
-                    
+
                 </form>
             </template>
         </Modal>
@@ -57,12 +60,10 @@ const modalActive = ref(false);
 
 const page = usePage();
 const user = computed(() => page.props.user);
-
 const educations = computed(() => user.value.educations);
 
 const handleEdit = (education) => {
     // Handle edit logic here
-    modalActive.value = true;
     form.course_title = education.course_title;
     form.institute_name = education.institute_name;
     form.city = education.city;
@@ -71,7 +72,7 @@ const handleEdit = (education) => {
     form.ongoing = education.ongoing;
     form.description = education.description;
     form.id = education.id;
-    form.processing = false;
+    modalActive.value = true;
 };
 
 const handleDelete = (education) => {
@@ -101,15 +102,25 @@ const handleAddNew = () => {
 };
 
 const handleSubmit = () => {
-    form.post(route('tutor.profile.education.store'), {
-        onSuccess: () => {
-            modalActive.value = false;
-            form.reset();
-        }
-    });
+    if (form.id) {
+        form.put(route('tutor.profile.education.update', form.id), {
+            onSuccess: () => {
+                modalActive.value = false;
+                form.reset();
+            }
+        });
+    } else {
+        form.post(route('tutor.profile.education.store'), {
+            onSuccess: () => {
+                modalActive.value = false;
+                form.reset();
+            }
+        });
+    }
 };
 
 const form = useForm({
+    id: null,
     course_title: '',
     institute_name: '',
     city: '',
