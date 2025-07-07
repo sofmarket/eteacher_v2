@@ -5,7 +5,9 @@
       <label v-if="label" :for="inputId" :class="[labelClasses, 'lg:w-1/4 sm:w-1/3']">{{ label }} <span v-if="required"
           class="text-error-500">*</span></label>
       <div class="flex-1">
-        <select :id="inputId || 'my-select'" :multiple="multiple" ref="mySelect" :disabled="disabled">
+        <select :class="[inputClasses, errors ? 'border-red-500 focus:border-red-500 focus:ring-red-500/10' : '']"
+          :id="inputId || 'my-select'" v-bind="$attrs" :value="modelValue"
+          @change="$emit('update:modelValue', $event.target.value)">
           <slot />
         </select>
         <p class="text-error-500 mt-2 text-sm" v-if="errors" v-cloak>{{ errors }}</p>
@@ -15,24 +17,14 @@
 </template>
 
 <script>
-import Choices from 'choices.js';
-import "choices.js/public/assets/styles/choices.css";
-
 export default {
   name: 'SelectInput',
   props: {
     name: String,
+    modelValue: [String, Number],
     label: {
       type: String,
       default: null
-    },
-    multiple: {
-      type: Boolean,
-      default: false
-    },
-    modelValue: {
-      type: [Array, String, Number],
-      default: () => []
     },
     placeholder: String,
     inputId: {
@@ -41,6 +33,10 @@ export default {
     labelClasses: {
       type: String,
       default: 'mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400'
+    },
+    inputClasses: {
+      type: String,
+      default: 'dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800'
     },
     parentClasses: {
       type: String,
@@ -62,77 +58,5 @@ export default {
       type: String,
     }
   },
-  emits: ['update:modelValue'],
-  data() {
-    return {
-      choices: null
-    }
-  },
-  methods: {
-    handleChoicesChange() {
-      if (this.choices) {
-        const values = this.choices.getValue(true);
-        if (this.multiple) {
-          // For multiple select, emit array of values
-          this.$emit('update:modelValue', values);
-        } else {
-          // For single select, emit single value
-          this.$emit('update:modelValue', values ?? null);
-        }
-      }
-    },
-    updateChoicesValue() {
-      if (this.choices) {
-        if (this.multiple) {
-          // For multiple select, set array of values
-          this.choices.setChoiceByValue(Array.isArray(this.modelValue) ? this.modelValue : []);
-        } else {
-          // For single select, set single value
-          this.choices.setChoiceByValue(this.modelValue || '');
-        }
-      }
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.choices = new Choices(this.$refs.mySelect, {
-        removeItems: true,
-        removeItemButton: true,
-        removeItemButtonAlignLeft: false,
-        placeholder: this.placeholder,
-        placeholderValue: this.placeholder,
-        searchEnabled: true,
-        itemSelectText: '',
-      });
-
-      // Set initial value
-      this.updateChoicesValue();
-
-      // Listen for changes
-      this.choices.passedElement.element.addEventListener('change', this.handleChoicesChange);
-    });
-  },
-  beforeUnmount() {
-    if (this.choices) {
-      this.choices.destroy();
-    }
-  },
-  watch: {
-    modelValue: {
-      handler() {
-        this.updateChoicesValue();
-      },
-      deep: true
-    },
-    disabled(newVal) {
-      if (this.choices) {
-        if (newVal) {
-          this.choices.disable();
-        } else {
-          this.choices.enable();
-        }
-      }
-    }
-  }
 }
 </script>

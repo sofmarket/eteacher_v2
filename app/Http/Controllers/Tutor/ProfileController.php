@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Tutor;
 
+use App\Enums\EmploymentLocation;
+use App\Enums\EmploymentType;
 use App\Enums\SocialPlatforms;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tutor\ProfileRequest;
@@ -36,6 +38,8 @@ class ProfileController extends Controller
             'cities' => City::all(),
             'languages' => Language::active()->get(),
             'socialPlatforms' => SocialPlatforms::values(),
+            'employmentTypes' => EmploymentType::toArray(),
+            'employmentLocations' => EmploymentLocation::toArray(),
         ]);
     }
 

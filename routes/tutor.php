@@ -10,6 +10,7 @@ use App\Http\Controllers\Tutor\InvoicesController;
 use App\Http\Controllers\Tutor\PayoutsController;
 use App\Http\Controllers\Tutor\ProfileController;
 use App\Http\Controllers\Tutor\ProfileEducationController;
+use App\Http\Controllers\Tutor\ProfileExperienceController;
 use App\Http\Controllers\Tutor\TestController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,11 @@ Route::post('/profile', [ProfileController::class, 'update'])->name('profile.upd
 Route::post('/profile/education', [ProfileEducationController::class, 'store'])->name('profile.education.store');
 Route::put('/profile/education/{education}', [ProfileEducationController::class, 'update'])->name('profile.education.update');
 Route::delete('/profile/education/{education}', [ProfileEducationController::class, 'destroy'])->name('profile.education.destroy');
+
+Route::get('/profile/experience', [ProfileExperienceController::class, 'index'])->name('profile.experience');
+Route::post('/profile/experience', [ProfileExperienceController::class, 'store'])->name('profile.experience.store');
+Route::put('/profile/experience/{experience}', [ProfileExperienceController::class, 'update'])->name('profile.experience.update');
+Route::delete('/profile/experience/{experience}', [ProfileExperienceController::class, 'destroy'])->name('profile.experience.destroy');
 
 Route::get('/bookings', [BookingsController::class, 'index'])->name('bookings');
 

@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use App\Casts\EmployementTypeCast;
+use App\Enums\EmploymentType;
+use App\Enums\EmploymentLocation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,7 +22,8 @@ class UserExperience extends Model
     protected function casts(): array
     {
         return [
-            'employment_type' => EmployementTypeCast::class,
+            'employment_type' => EmploymentType::class,
+            'location' => EmploymentLocation::class,
         ];
     }
 
