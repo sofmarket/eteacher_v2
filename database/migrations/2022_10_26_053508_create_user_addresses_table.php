@@ -18,8 +18,8 @@ return new class extends Migration {
             $table->string('city')->nullable()->fulltext();
             $table->string('address')->nullable()->fulltext();
             $table->string('zipcode')->nullable()->fulltext();
-            $table->decimal('lat', 8, 6, true)->unsigned(false)->default(0);
-            $table->decimal('long', 9, 6, true)->unsigned(false)->default(0);
+            $table->decimal('lat', 8, 6)->unsigned()->default(0);
+            $table->decimal('long', 9, 6)->unsigned()->default(0);
             $table->timestamps();
             $table->index(['addressable_id', 'addressable_type']);
         });
