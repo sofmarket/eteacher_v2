@@ -112,7 +112,7 @@
           <hr class="col-span-2">
 
           <div class="col-span-2">
-            <FileInput label="Profile Image" v-model="form.image" :errors="form.errors.image" />
+            <FileInput label="Profile Image" :errors="form.errors.image" @file-selected="onFileSelected" />
           </div>
 
           <hr class="col-span-2">
@@ -204,6 +204,10 @@ const getSocialProfile = (platform) => {
 
 const onChangeLanguages = (e) => {
   console.log('onChangeLanguages', e);
+}
+
+const onFileSelected = (file) => {
+  form.image = file;
 }
 
 onMounted(() => {

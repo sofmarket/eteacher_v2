@@ -39,6 +39,10 @@
 export default {
   name: 'FileUploader',
   props: {
+    modelValue: {
+      type: [File, null],
+      default: null
+    },
     label: {
       type: String,
       default: null
@@ -63,7 +67,7 @@ export default {
   data() {
     return {
       dragOver: false,
-      selectedFile: null,
+      selectedFile: this.modelValue,
       fileError: null,
       inputId: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
     };
@@ -105,6 +109,7 @@ export default {
 
       this.selectedFile = file;
       this.$emit('file-selected', file);
+      this.$emit('update:modelValue', file);
     },
     formatFileSize(bytes) {
       if (bytes < 1024) return bytes + ' bytes';
