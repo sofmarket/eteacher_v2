@@ -5,7 +5,7 @@
         <div class="relative">
 
             <input :type="hidePassword ? 'password' : 'text'" :required="required" :id="name" :name="name"
-                @input="handleInput" @keypress="handleKeypress" :autocomplete="autocomplete" :placeholder="placeholder"
+                @input="handleInput" @keypress="handleKeypress" :autocomplete="autocomplete" :placeholder="placeholder" v-model="value"
                 :class="[inputClasses, errors ? 'is-invalid' : '']" :dir="dir" />
 
             <span v-if="togglePassword === true" class="absolute z-30 text-gray-500 -translate-y-1/2 cursor-pointer right-4 top-1/2 dark:text-gray-400"

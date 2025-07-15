@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Tutor\BookingsController;
-use App\Http\Controllers\Tutor\CalendarController;
 use App\Http\Controllers\Tutor\ChatsController;
 use App\Http\Controllers\Tutor\CouponsController;
 use App\Http\Controllers\Tutor\DisputesController;
@@ -12,6 +11,7 @@ use App\Http\Controllers\Tutor\ProfileController;
 use App\Http\Controllers\Tutor\ProfileEducationController;
 use App\Http\Controllers\Tutor\ProfileExperienceController;
 use App\Http\Controllers\Tutor\TestController;
+use App\Http\Controllers\Tutor\UpdatePasswordController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -20,6 +20,8 @@ Route::get('/test', TestController::class)->name('test');
 
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
 Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+Route::post('/profile/update-password', UpdatePasswordController::class)->name('profile.update-password');
 
 Route::post('/profile/education', [ProfileEducationController::class, 'store'])->name('profile.education.store');
 Route::put('/profile/education/{education}', [ProfileEducationController::class, 'update'])->name('profile.education.update');

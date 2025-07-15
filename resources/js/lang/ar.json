@@ -1,1 +1,22 @@
-{}
+{
+  "user_profile": "الملف الشخصي",
+  "personal_information": "المعلومات الشخصية",
+  "account_settings": "إعدادات الحساب",
+  "resume_highlights": "الملخص المهني",
+  "identity_verification": "التحقق من الهوية",
+  "fullname": "الاسم الكامل",
+  "email_address": "البريد الإلكتروني",
+  "phone": "الهاتف",
+  "male": "ذكر",
+  "female": "أنثى",
+  "tag_line": "السطر التوضيحي",
+  "meta_keywords": "الكلمات المفتاحية",
+  "address": "العنوان",
+  "city": "المدينة",
+  "select_city": "اختر المدينة",
+  "native_language": "اللغة الأصلية",
+  "select_native_language": "اختر اللغة الأصلية",
+  "social_links": "الروابط الاجتماعية",
+  "save_and_update": "حفظ وتحديث",
+  "save_and_update_the_latest_changes_to_the_live": "حفظ وتحديث أحدث التغييرات إلى الحي"
+}

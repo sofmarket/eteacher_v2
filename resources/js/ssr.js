@@ -12,8 +12,8 @@ import fr from "@/lang/fr.json";
 
 const i18n = createI18n({
     legacy: false,
-    locale: 'ar',
-    fallbackLocale: 'ar',
+    locale: 'en',
+    fallbackLocale: 'en',
     messages: {
         ar,
         en,
