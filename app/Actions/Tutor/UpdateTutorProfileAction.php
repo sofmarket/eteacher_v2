@@ -19,12 +19,8 @@ class UpdateTutorProfileAction
                 $user->email = $data['email'];
                 $user->save();
             }
-
-            // Handle profile image upload
-            // if (isset($data['image'])) {
-            //     $this->handleImageUpload($user, $data['image']);
-            //     unset($data['image']);
-            // }
+            
+            $this->handleImageUpload($user);
 
             // Update profile data
             $user->profile()->updateOrCreate(
@@ -61,19 +57,31 @@ class UpdateTutorProfileAction
         });
     }
 
-    protected function handleImageUpload(User $user, $image): void
+    protected function handleImageUpload(User $user): void
     {
-        // Delete old image if exists
-        if ($user->profile?->image) {
-            Storage::disk('public')->delete($user->profile->image);
+
+        $files = request()->file('image');
+
+        if (!is_array($files) || count($files) === 0) {
+            return;
         }
 
-        // Store new image
-        $path = $image->store('tutor-profiles', 'public');
-        $user->profile()->updateOrCreate(
-            ['user_id' => $user->id],
-            ['image' => $path]
-        );
+        foreach ($files as $file) {
+            $user->profile->addMedia($file)->toMediaCollection('avatar');
+        }
+
+
+        // Delete old image if exists
+        // if ($user->profile?->image) {
+        //     Storage::disk('public')->delete($user->profile->image);
+        // }
+
+        // // Store new image
+        // $path = $image->store('tutor-profiles', 'public');
+        // $user->profile()->updateOrCreate(
+        //     ['user_id' => $user->id],
+        //     ['image' => $path]
+        // );
     }
 
     protected function prepareProfileData(array $data): array

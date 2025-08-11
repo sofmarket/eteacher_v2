@@ -12,10 +12,25 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Profile extends Model {
+class Profile extends Model implements HasMedia
+{
 
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, InteractsWithMedia;
+
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('avatar')
+            ->fit(Fit::Contain, 500, 500)
+            ->nonQueued();
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -31,7 +46,7 @@ class Profile extends Model {
     protected function casts(): array
     {
         return [
-            'gender'        => GenderCast::class,
+            'gender' => GenderCast::class,
             'recommend_tutor' => RecommendTutorCast::class,
         ];
     }
@@ -41,53 +56,59 @@ class Profile extends Model {
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user(): BelongsTo {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
     /**
      * Getter of full name
      */
-    protected function fullName(): Attribute {
+    protected function fullName(): Attribute
+    {
         return Attribute::make(
-            get: fn () => ucwords("$this->first_name $this->last_name")
+            get: fn() => ucwords("$this->first_name $this->last_name")
         );
     }
 
     /**
      * Getter of short name
      */
-    protected function shortName(): Attribute {
+    protected function shortName(): Attribute
+    {
         return Attribute::make(
-            get: fn () => ucwords($this?->first_name.' '. Str::charAt($this?->last_name, 0))
+            get: fn() => ucwords($this?->first_name . ' ' . Str::charAt($this?->last_name, 0))
         );
     }
 
     /**
      * Getter of is verified attribute
      */
-    public function isVerified(): Attribute {
+    public function isVerified(): Attribute
+    {
         return Attribute::make(
-            get: fn () => $this->verified_at ?? false,
+            get: fn() => $this->verified_at ?? false,
         );
     }
 
     /**
      * Getter of is is featured attribute
      */
-    public function isFeatured(): Attribute {
+    public function isFeatured(): Attribute
+    {
         return Attribute::make(
-            get: fn () => $this->feature_expired_at &&  $this->feature_expired_at > Carbon::now()
+            get: fn() => $this->feature_expired_at && $this->feature_expired_at > Carbon::now()
         );
     }
 
-      /**
+    /**
      * Getter of is is profile image attribute
      */
 
-     public function profileImage(): Attribute {
+    public function profileImage(): Attribute
+    {
         return Attribute::make(
-            get: fn () => !empty($this->image) && Storage::disk(getStorageDisk())->exists($this->image) ? url(Storage::url($this->image)) : (setting('_general.default_avatar_for_user') ? url(Storage::url(setting('_general.default_avatar_for_user')[0]['path'])) : url(Storage::url('placeholder.png')))
+            get: fn() => !empty($this->image) && Storage::disk(getStorageDisk())->exists($this->image) ? url(Storage::url($this->image)) : (setting('_general.default_avatar_for_user') ? url(Storage::url(setting('_general.default_avatar_for_user')[0]['path'])) : url(Storage::url('placeholder.png')))
         );
     }
 

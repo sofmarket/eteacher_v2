@@ -184,7 +184,7 @@ const form = useForm({
   native_language: user.value.profile.native_language,
   languages: user.value.profile.languages,
   intro_video: user.value.profile.intro_video,
-  // image: user.value.profile.image,
+  image: user.value.profile.image,
   gender: user.value.profile.gender,
   social_profiles: {},
 });
@@ -211,6 +211,7 @@ const onChangeLanguages = (e) => {
 }
 
 const onFileSelected = (file) => {
+  console.log('onFileSelected', file);
   form.image = file;
 }
 
