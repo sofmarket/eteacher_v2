@@ -13,6 +13,9 @@ class UpdateTutorProfileAction
 {
     public function handle(User $user, array $data): User
     {
+
+        // dd($this->prepareProfileData($data));
+
         return DB::transaction(function () use ($user, $data) {
             // Update user email if changed
             if (isset($data['email']) && $data['email'] !== $user->email) {
@@ -21,6 +24,8 @@ class UpdateTutorProfileAction
             }
             
             $this->handleImageUpload($user);
+
+            // dd($this->prepareProfileData($data));
 
             // Update profile data
             $user->profile()->updateOrCreate(
