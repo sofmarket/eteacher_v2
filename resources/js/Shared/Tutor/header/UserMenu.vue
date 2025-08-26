@@ -74,7 +74,6 @@ const handleClickOutside = (event) => {
 }
 
 onMounted(() => {
-  console.log(sharedUser.value);
   document.addEventListener('click', handleClickOutside)
 })
 

@@ -16,7 +16,7 @@
                  :disabled="disabled"
                  :autocomplete="autocomplete"
                  :dir="dir">
-          <p class="text-error-500 mt-2 text-sm" v-if="errors" v-cloak>{{ errors }}</p>
+          <p class="text-error-500 mt-2 text-sm _error" v-if="errors" v-cloak>{{ errors }}</p>
         </div>
       </div>
     </div>

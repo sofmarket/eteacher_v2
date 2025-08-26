@@ -97,7 +97,7 @@
 
           <div class="col-span-2">
             <ChoicesInput label="Languages I know" multiple v-model="form.languages">
-              <option v-for="language in languages" :value="language.name" :key="language.name">{{ language.name }}
+              <option v-for="language in languages" :value="language.id" :key="language.id">{{ language.name }}
               </option>
             </ChoicesInput>
           </div>
@@ -105,7 +105,7 @@
           <hr class="col-span-2">
 
           <div class="col-span-2">
-            <UniversalInput label="A brief introduction" v-model="form.description" :errors="form.errors.description" />
+            <Textarea label="A brief introduction" v-model="form.description" :errors="form.errors.description" />
           </div>
 
           <hr class="col-span-2">
@@ -156,6 +156,7 @@ import { useForm, usePage } from '@inertiajs/vue3';
 import UniversalInput from '@/Components/forms/FormElements/UniversalInput.vue';
 import CheckboxInput from '@/Components/forms/FormElements/CheckboxInput.vue';
 import FileInput from '@/Components/forms/FormElements/FileInput.vue';
+import Textarea from '@/Components/forms/FormElements/TextArea.vue';
 import ChoicesInput from '@/Components/forms/FormElements/ChoicesInput.vue';
 import { useI18n } from 'vue-i18n';
 
@@ -182,7 +183,7 @@ const form = useForm({
   zipcode: user.value.address?.zipcode,
   city: user.value.address?.city,
   native_language: user.value.profile.native_language,
-  languages: user.value.profile.languages,
+  languages: user.value.languages?.map(l => l.id),
   intro_video: user.value.profile.intro_video,
   avatar: user.value.profile.avatar,
   gender: user.value.profile.gender,
@@ -195,6 +196,14 @@ const onSave = () => {
     onSuccess: () => {
       console.log('success');
     },
+    onError: () => {
+      nextTick(() => {
+        const firstError = document.querySelector('p._error');
+        if (firstError) {
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+    }
   });
 }
 

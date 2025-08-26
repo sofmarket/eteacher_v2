@@ -37,7 +37,7 @@ class UpdateTutorProfileAction
             }
 
             // Update languages
-            // $user->languages()->sync($data['languages']);
+            $user->languages()->sync($data['languages']);
 
             // update address
             Address::updateOrCreate(
