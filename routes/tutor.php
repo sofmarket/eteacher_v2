@@ -10,6 +10,7 @@ use App\Http\Controllers\Tutor\PayoutsController;
 use App\Http\Controllers\Tutor\ProfileController;
 use App\Http\Controllers\Tutor\ProfileEducationController;
 use App\Http\Controllers\Tutor\ProfileExperienceController;
+use App\Http\Controllers\Tutor\ProfileCertificateController;
 use App\Http\Controllers\Tutor\TestController;
 use App\Http\Controllers\Tutor\UpdatePasswordController;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,11 @@ Route::get('/profile/experience', [ProfileExperienceController::class, 'index'])
 Route::post('/profile/experience', [ProfileExperienceController::class, 'store'])->name('profile.experience.store');
 Route::put('/profile/experience/{experience}', [ProfileExperienceController::class, 'update'])->name('profile.experience.update');
 Route::delete('/profile/experience/{experience}', [ProfileExperienceController::class, 'destroy'])->name('profile.experience.destroy');
+
+Route::get('/profile/certificate', [ProfileCertificateController::class, 'index'])->name('profile.certificate');
+Route::post('/profile/certificate', [ProfileCertificateController::class, 'store'])->name('profile.certificate.store');
+Route::put('/profile/certificate/{certificate}', [ProfileCertificateController::class, 'update'])->name('profile.certificate.update');
+Route::delete('/profile/certificate/{certificate}', [ProfileCertificateController::class, 'destroy'])->name('profile.certificate.destroy');
 
 Route::get('/bookings', [BookingsController::class, 'index'])->name('bookings');
 

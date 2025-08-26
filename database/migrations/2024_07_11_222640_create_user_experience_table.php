@@ -24,6 +24,7 @@ return new class extends Migration
             $table->date('end_date')->nullable();
             $table->boolean('is_current')->default(false);
             $table->text('description')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

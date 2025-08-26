@@ -112,7 +112,8 @@ const handleDelete = (experience) => {
 };
 
 const handleAddNew = () => {
-    console.log('Add new education');
+    form.reset();
+    console.log('Add new experience');
     modalActive.value = true;
 };
 

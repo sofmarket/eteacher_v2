@@ -98,6 +98,7 @@ const handleDelete = (education) => {
 
 const handleAddNew = () => {
     console.log('Add new education');
+    form.reset();
     modalActive.value = true;
 };
 

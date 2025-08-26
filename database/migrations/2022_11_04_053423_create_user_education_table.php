@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->date('end_date')->nullable();
             $table->tinyInteger('ongoing')->default(0);
             $table->text('description')->nullable();
+            $table->softDeletes();
         });
     }
 
