@@ -184,13 +184,14 @@ const form = useForm({
   native_language: user.value.profile.native_language,
   languages: user.value.profile.languages,
   intro_video: user.value.profile.intro_video,
-  image: user.value.profile.image,
+  avatar: user.value.profile.avatar,
   gender: user.value.profile.gender,
   social_profiles: {},
 });
 
 const onSave = () => {
   form.post(route('tutor.profile.update'), {
+    forceFormData: true,
     onSuccess: () => {
       console.log('success');
     },
@@ -212,7 +213,7 @@ const onChangeLanguages = (e) => {
 
 const onFileSelected = (file) => {
   console.log('onFileSelected', file);
-  form.image = file;
+  form.avatar = file;
 }
 
 onMounted(() => {

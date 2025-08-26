@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\SharedUserResource;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -40,8 +41,8 @@ class HandleInertiaRequests extends Middleware
             'notifications' => fn () => $request->user()
                 ? $request->user()->notifications
                 : [],
-            'user' => fn () => $request->user()
-                ? $request->user() // ->only('id', 'name', 'email')
+            'sharedUser' => fn () => $request->user()
+                ? SharedUserResource::make(($request->user()))
                 : null,
             'flash' => function () {
                 return [
