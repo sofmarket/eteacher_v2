@@ -5,6 +5,7 @@ use App\Http\Controllers\Tutor\ChatsController;
 use App\Http\Controllers\Tutor\CouponsController;
 use App\Http\Controllers\Tutor\DisputesController;
 use App\Http\Controllers\Tutor\HomeController;
+use App\Http\Controllers\Tutor\IdentityVerificationController;
 use App\Http\Controllers\Tutor\InvoicesController;
 use App\Http\Controllers\Tutor\PayoutsController;
 use App\Http\Controllers\Tutor\ProfileController;
@@ -37,6 +38,8 @@ Route::get('/profile/certificate', [ProfileCertificateController::class, 'index'
 Route::post('/profile/certificate', [ProfileCertificateController::class, 'store'])->name('profile.certificate.store');
 Route::put('/profile/certificate/{certificate}', [ProfileCertificateController::class, 'update'])->name('profile.certificate.update');
 Route::delete('/profile/certificate/{certificate}', [ProfileCertificateController::class, 'destroy'])->name('profile.certificate.destroy');
+
+Route::post('/profile/identity_verification', IdentityVerificationController::class)->name('profile.identity_verification');
 
 Route::get('/bookings', [BookingsController::class, 'index'])->name('bookings');
 

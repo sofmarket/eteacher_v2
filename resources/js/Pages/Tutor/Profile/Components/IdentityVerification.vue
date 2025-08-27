@@ -16,8 +16,7 @@
                     <hr class="col-span-2">
 
                     <div class="col-span-2">
-                        <UniversalInput label="Date of birth" v-model="form.birthdate"
-                            :errors="form.errors.birthdate" />
+                        <DateInput label="Date of birth" v-model="form.dob" :errors="form.errors.dob" :inline="true" />
                     </div>
 
                     <hr class="col-span-2">
@@ -26,17 +25,10 @@
                         class="col-span-2 flex flex-col lg:flex-row lg:items-center lg:gap-4 sm:flex-row sm:items-center sm:gap-4">
                         <label for="" class="lg:w-1/4 sm:w-1/3">Address</label>
                         <div class="flex-1 gap-4 grid grid-cols-2">
-                            <div class="">
-                                <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                                    City
-                                </label>
-                                <select name="" id="city" v-model="form.city"
-                                    class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800">
-                                    <option value="">Select City</option>
-                                    <option v-for="city in cities" :value="city.name" :key="city.name">{{ city.name }}
-                                    </option>
-                                </select>
-                            </div>
+                            <SelectInput v-model="form.city" label="City" :errors="form.errors.city">                                    
+                                <option v-for="city in cities" :value="city.name" :key="city.name">{{ city.name }}
+                                </option>
+                            </SelectInput>
                             <UniversalInput label="Zip Code" v-model="form.zipcode" :errors="form.errors.zipcode"
                                 :inline="false" />
                         </div>
@@ -46,15 +38,13 @@
                     <hr class="col-span-2">
 
                     <div class="col-span-2">
-                        <FileInput label="Personal Photo" v-model="form.personal_photo"
-                            :errors="form.errors.personal_photo" />
+                        <FileInput label="Personal Photo" v-model="form.photo" :errors="form.errors.photo" />
                     </div>
 
                     <hr class="col-span-2">
 
                     <div class="col-span-2">
-                        <FileInput label="Government-Issued ID" v-model="form.government_issued_id"
-                            :errors="form.errors.government_issued_id" />
+                        <FileInput label="Government-Issued ID" v-model="form.cin" :errors="form.errors.cin" />
                     </div>
 
                     <hr class="col-span-2">
@@ -77,24 +67,28 @@ import { computed } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import UniversalInput from '@/Components/forms/FormElements/UniversalInput.vue';
 import FileInput from '@/Components/forms/FormElements/FileInput.vue';
+import DateInput from '@/Components/forms/FormElements/DateInput.vue';
+import SelectInput from '@/Components/forms/FormElements/SelectInput.vue';
+
 // use page inertia
 const page = usePage();
-const user = computed(() => page.props.user);
+// const user = computed(() => page.props.user);
 const cities = computed(() => page.props.cities);
 
 const form = useForm({
     fullname: '',
-    birthdate: '',
+    dob: '',
     city: '',
     zipcode: '',
-    personal_photo: '',
-    government_issued_id: '',
+    photo: null,
+    cin: null,
 });
 
 const onSave = () => {
-    form.post(route('tutor.profile.update'), {
+    form.post(route('tutor.profile.identity_verification'), {
+        forceFormData: true,
         onSuccess: () => {
-            console.log('success');
+            form.reset();
         },
     });
 }

@@ -145,6 +145,14 @@ class User extends Authenticatable
         return $this->hasMany(UserCertificate::class);
     }
 
+    /**
+     * Get the identity verifications for the user.
+     */
+    public function identityVerifications()
+    {
+        return $this->hasMany(UserIdentityVerification::class);
+    }
+
     public function languages(): BelongsToMany
     {
         return $this->belongsToMany(Language::class, 'user_languages');

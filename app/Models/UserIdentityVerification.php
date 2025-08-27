@@ -3,19 +3,28 @@
 namespace App\Models;
 
 use App\Casts\IdentityStatusCast;
-use Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Illuminate\Support\Facades\Cache;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class UserIdentityVerification extends Model {
-    use HasFactory;
+class UserIdentityVerification extends Model implements HasMedia {
+    use HasFactory, InteractsWithMedia;
 
     public $guarded = [];
 
     public $timestamps = false;
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('photo')
+            ->nonQueued();
+        $this
+            ->addMediaConversion('cin')
+            ->nonQueued();
+    }
 
 
     protected function casts(): array
@@ -24,15 +33,6 @@ class UserIdentityVerification extends Model {
             'status'        => IdentityStatusCast::class,
             'attachments'   => 'array'
         ];
-    }
-
-    public function address(): MorphOne {
-        return $this->morphOne(Address::class, 'addressable');
-    }
-
-    public function profile()
-    {
-        return $this->hasOne(Profile::class, 'user_id');
     }
 
     public function user()

@@ -3,9 +3,9 @@
     <label v-if="label" :for="inputId" class="mt-2 lg:w-1/4 sm:w-1/3">{{ label }} <span
         v-if="required" class="text-error-500">*</span></label>
     <div class="flex-1">
-      <div class="border border-gray-200 bg-gray-50 rounded-lg py-2 px-4 cursor-pointer"
+      <div :class="['border border-gray-200 bg-gray-50 rounded-lg py-2 px-4 cursor-pointer', errors ? 'border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-500/10' : '' , dragOver ? 'bg-gray-100 border-gray-300' : '' ]"
         @dragover.prevent="handleDragOver" @dragleave.prevent="dragOver = false" @drop.prevent="handleDrop"
-        @click="$refs.fileInput.click()" :class="{ 'bg-gray-100 border-gray-300': dragOver }">
+        @click="$refs.fileInput.click()">
         <div class="flex items-center justify-start space-y-2 gap-2">
           <div class="h-12 w-12 text-gray-400">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-full" fill="none" viewBox="0 0 24 24"
@@ -31,6 +31,7 @@
       <div v-if="selectedFile" class="mt-2 text-sm text-gray-600">
         Selected file: {{ selectedFile.name }} ({{ formatFileSize(selectedFile.size) }})
       </div>
+      <p class="text-error-500 mt-2 text-sm _error" v-if="errors" v-cloak>{{ errors }}</p>
     </div>
   </div>
 </template>
@@ -62,7 +63,10 @@ export default {
     required: {
       type: Boolean,
       default: false
-    }
+    },
+    errors: {
+        type: String,
+      }
   },
   data() {
     return {
