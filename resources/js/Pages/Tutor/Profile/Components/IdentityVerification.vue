@@ -72,7 +72,6 @@ import SelectInput from '@/Components/forms/FormElements/SelectInput.vue';
 
 // use page inertia
 const page = usePage();
-// const user = computed(() => page.props.user);
 const cities = computed(() => page.props.cities);
 
 const form = useForm({
