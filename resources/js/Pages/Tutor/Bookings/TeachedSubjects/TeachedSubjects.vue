@@ -25,52 +25,21 @@
             @end="onGroupOrderChanged"
         >
             <template #item="{ element: subjectGroup, index: groupIndex }">
-                <div class="border border-gray-200 dark:border-gray-700 rounded-lg">
-                    <!-- Group Header -->
-                    <div class="flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-t-lg" :class="{'rounded-b-lg': !subjectGroup.isOpen }">
-                        <div class="flex items-center space-x-3">
-                             <svg class="w-5 h-5 text-gray-400 cursor-grab group-handle" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg> <!-- Drag Handle -->
-                            <span class="font-medium text-gray-800 dark:text-gray-200">{{ subjectGroup.name }}</span>
-                        </div>
-                        <div class="flex items-center space-x-2 relative">
-                             <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1">
-                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path></svg> <!-- Options -->
-                             </button>
-                             <!-- Chevron Button controls collapse/expand -->
-                              <button @click="toggleGroup(groupIndex)" class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
-                                  <svg class="w-5 h-5 text-gray-400 transition-transform duration-200" :class="{'rotate-180': subjectGroup.isOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                              </button>
-                        </div>
-                    </div>
-
-                    <!-- Subjects List (Draggable & Collapsible) -->
-                    <div v-if="subjectGroup.isOpen" class="border-t border-gray-200 dark:border-gray-700 p-4 space-y-4">
-                         <draggable
-                            v-model="subjectGroup.subjects"
-                            tag="div"
-                            item-key="id"
-                            handle=".subject-handle"
-                            class="space-y-4"
-                             animation="150"
-                             @end="(event) => onSubjectOrderChanged(event, subjectGroup)"
-                         >
-                             <template #item="{ element: subject }">
-                                <SubjectCard :subject="subject" @edit="handleEditSubject" />
-                            </template>
-                        </draggable>
-                        <!-- Add New Subject Button -->
-                        <button class="w-full border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-3 text-center text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-center space-x-1" @click="addSubject(subjectGroup.id)">
-                            <span>Add new subject</span>
-                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                        </button>
-                    </div>
-                </div>
+                <SubjectGroupCard 
+                    :subjectGroup="subjectGroup" 
+                    :groupIndex="groupIndex"
+                    @toggle="toggleGroup"
+                    @addSubject="addSubject"
+                    @editSubject="handleEditSubject"
+                    @subjectOrderChanged="onSubjectOrderChanged"
+                    @editGroup="handleEditGroup"
+                />
             </template>
         </draggable>
     
-        <AddSubjectGroupModal v-model:modalActive="addSubjectGroupModalActive" />
+        <SubjectGroupModal v-model:modalActive="subjectGroupModalActive" />
         <SubjectModal 
-            v-model:modalActive="addSubjectModalActive" 
+            v-model:modalActive="subjectModalActive" 
             :selectedGroupId="selectedGroupId" 
             :subjectToEdit="subjectToEdit"
         />
@@ -79,39 +48,51 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useForm, usePage, router } from '@inertiajs/vue3';
 import draggable from 'vuedraggable';
 
-import SubjectCard from './SubjectCard.vue';
-import AddSubjectGroupModal from './AddSubjectGroupModal.vue';
+import SubjectGroupCard from './SubjectGroupCard.vue';
+import SubjectGroupModal from './SubjectGroupModal.vue';
 import SubjectModal from './SubjectModal.vue';
 
 // use page inertia
 const page = usePage();
 
-const userSubjectGroups = computed(() => page.props.userSubjectGroups.data);
+// Create a reactive copy of the data
+const userSubjectGroups = ref([...page.props.userSubjectGroups.data]);
 
-const addSubjectGroupModalActive = ref(false);
-const addSubjectModalActive = ref(false);
+// Watch for changes in page props and update our local copy
+watch(() => page.props.userSubjectGroups.data, (newData) => {
+    userSubjectGroups.value = [...newData];
+}, { deep: true });
+
+const subjectGroupModalActive = ref(false);
+const subjectModalActive = ref(false);
 const selectedGroupId = ref(null);
 const subjectToEdit = ref(null);
 
 const addSubjectGroup = () => {
-    addSubjectGroupModalActive.value = true;
+    subjectGroupModalActive.value = true;
 }
 
 const addSubject = (groupId = null) => {
     selectedGroupId.value = groupId;
     subjectToEdit.value = null; // Reset edit mode
-    addSubjectModalActive.value = true;
+    subjectModalActive.value = true;
 }
 
 const handleEditSubject = (subject) => {
     subjectToEdit.value = subject;
     selectedGroupId.value = subject.user_subject_group_id;
-    addSubjectModalActive.value = true;
+    subjectModalActive.value = true;
 }
+
+const handleEditGroup = (group) => {
+    // TODO: Implement edit group functionality
+    console.log('Edit group:', group);
+}
+
 
 onMounted(() => {
     // console.log(subjectGroups);
@@ -138,8 +119,6 @@ const toggleGroup = (selectedIndex) => {
 };
 
 const onGroupOrderChanged = (event) => {
-    console.log('Subject Groups order changed:', event);
-
     // Prepare the sort order data
     const sortOrderData = userSubjectGroups.value.map((group, index) => ({
         id: group.id,

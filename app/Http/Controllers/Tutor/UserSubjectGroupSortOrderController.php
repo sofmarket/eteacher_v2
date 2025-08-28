@@ -26,7 +26,7 @@ class UserSubjectGroupSortOrderController extends Controller
                 ->get();
 
             if ($validGroups->count() !== count($groups)) {
-                return response()->json(['error' => 'Some groups do not belong to the current user'], 400);
+                return back()->withErrors(['error' => 'Some groups do not belong to the current user']);
             }
 
             // Update sort order for each group
@@ -35,9 +35,9 @@ class UserSubjectGroupSortOrderController extends Controller
                     ->update(['sort_order' => $groupData['sort_order']]);
             }
 
-            return response()->json(['message' => 'Group sort order updated successfully']);
+            return back()->with('success', 'Group sort order updated successfully');
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to update group sort order: ' . $e->getMessage()], 500);
+            return back()->withErrors(['error' => 'Failed to update group sort order: ' . $e->getMessage()]);
         }
     }
 }
