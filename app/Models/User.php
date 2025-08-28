@@ -87,7 +87,7 @@ class User extends Authenticatable
         return $this->hasOne(UserIdentityVerification::class);
     }
 
-    public function groups(): HasMany
+    public function subjectGroups(): HasMany
     {
         return $this->hasMany(UserSubjectGroup::class)->orderBy('sort_order');
     }

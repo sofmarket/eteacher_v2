@@ -24,15 +24,16 @@ class UserSubjectGroup extends Model {
         'sort_order'
     ];
 
+    protected $with = [
+        'group', 
+        'subjects'
+    ];
+
     public function group(): BelongsTo {
         return $this->belongsTo(SubjectGroup::class, 'subject_group_id', 'id');
     }
 
-    public function subjects(): BelongsToMany {
-        return $this->belongsToMany(Subject::class, 'user_subject_group_subjects', 'user_subject_group_id')->withPivot('id', 'hour_rate', 'description', 'image','sort_order')->orderBy('sort_order');
-    }
-
-    public function userSubjects(): HasMany {
-        return $this->hasMany(UserSubjectGroupSubject::class);
+    public function subjects(): HasMany {
+        return $this->hasMany(UserSubjectGroupSubject::class, 'user_subject_group_id');
     }
 }

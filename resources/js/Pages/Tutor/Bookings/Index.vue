@@ -28,7 +28,7 @@
 
 import Tabs from '@/Components/ui/Tabs.vue';
 import Breadcrumbs from '@/Components/common/Breadcrumbs.vue';
-import TeachedSubjects from './Components/TeachedSubjects.vue';
+import TeachedSubjects from './TeachedSubjects/TeachedSubjects.vue';
 import ManageSessions from './Components/ManageSessions.vue';
 import UpcomingBookings from './Components/UpcomingBookings.vue';
 

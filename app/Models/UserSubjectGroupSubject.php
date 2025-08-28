@@ -6,22 +6,36 @@ use App\Models\Scopes\PositionScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class UserSubjectGroupSubject extends Model {
-    use HasFactory;
+class UserSubjectGroupSubject extends Model implements HasMedia {
+    use HasFactory, InteractsWithMedia;
 
     public $timestamps = false;
 
-
+        
     protected static function booted() {
         static::addGlobalScope(new PositionScope);
     }
 
-    public $guarded = [];
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('image')
+            ->fit(Fit::Contain, 500, 500)
+            ->nonQueued();
+    }
+
+
+    protected $guarded = [];
+
+    protected $with = [
+        'subject'
+    ];
 
     public function subject(): BelongsTo {
         return $this->belongsTo(Subject::class, 'subject_id', 'id');

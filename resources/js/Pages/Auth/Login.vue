@@ -90,7 +90,7 @@ const keepLoggedIn = ref(false)
 
 const loginForm = useForm({
     username: 'tutor@test.com',
-    password: '',
+    password: 'password',
     remember: false
 });
 
