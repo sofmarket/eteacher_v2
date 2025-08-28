@@ -22,6 +22,7 @@
             handle=".group-handle"
             class="space-y-4"
             animation="150"
+            @end="onGroupOrderChanged"
         >
             <template #item="{ element: subjectGroup, index: groupIndex }">
                 <div class="border border-gray-200 dark:border-gray-700 rounded-lg">
@@ -51,6 +52,7 @@
                             handle=".subject-handle"
                             class="space-y-4"
                              animation="150"
+                             @end="(event) => onSubjectOrderChanged(event, subjectGroup)"
                          >
                              <template #item="{ element: subject }">
                                 <SubjectCard :subject="subject" @edit="handleEditSubject" />
@@ -78,7 +80,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { useForm, usePage } from '@inertiajs/vue3';
+import { useForm, usePage, router } from '@inertiajs/vue3';
 import draggable from 'vuedraggable';
 
 import SubjectCard from './SubjectCard.vue';
@@ -113,6 +115,11 @@ const handleEditSubject = (subject) => {
 
 onMounted(() => {
     // console.log(subjectGroups);
+    
+    // Set the first group as open by default
+    if (userSubjectGroups.value.length > 0) {
+        userSubjectGroups.value[0].isOpen = true;
+    }
 });
 
 const toggleGroup = (selectedIndex) => {
@@ -128,6 +135,60 @@ const toggleGroup = (selectedIndex) => {
         userSubjectGroups.value[selectedIndex].isOpen = true;
     }
     // If it was open, clicking again will just keep it closed (because all were closed above)
+};
+
+const onGroupOrderChanged = (event) => {
+    console.log('Subject Groups order changed:', event);
+
+    // Prepare the sort order data
+    const sortOrderData = userSubjectGroups.value.map((group, index) => ({
+        id: group.id,
+        sort_order: index + 1
+    }));
+
+    // Send request to backend to update sort order
+    router.post(route('tutor.user.subject.group.update_sort_order'), {
+        groups: sortOrderData
+    }, {
+        preserveState: true,
+        preserveScroll: true,
+        onSuccess: () => {
+            console.log('Group sort order updated successfully');
+        },
+        onError: (errors) => {
+            console.error('Failed to update group sort order:', errors);
+        }
+    });
+};
+
+const onSubjectOrderChanged = (event, subjectGroup) => {
+    console.log('Subjects order changed:', {
+        event: event,
+        groupId: subjectGroup.id,
+        groupName: subjectGroup.name,
+        subjects: subjectGroup.subjects.map(subject => ({ id: subject.id, name: subject.name }))
+    });
+
+    // Prepare the sort order data
+    const sortOrderData = subjectGroup.subjects.map((subject, index) => ({
+        id: subject.id,
+        sort_order: index + 1
+    }));
+
+    // Send request to backend to update sort order
+    router.post(route('tutor.user.subject.update_sort_order'), {
+        group_id: subjectGroup.id,
+        subjects: sortOrderData
+    }, {
+        preserveState: true,
+        preserveScroll: true,
+        onSuccess: () => {
+            console.log('Sort order updated successfully');
+        },
+        onError: (errors) => {
+            console.error('Failed to update sort order:', errors);
+        }
+    });
 };
 
 </script>

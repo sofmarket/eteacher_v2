@@ -13,6 +13,9 @@ use App\Http\Controllers\Tutor\ProfileEducationController;
 use App\Http\Controllers\Tutor\ProfileExperienceController;
 use App\Http\Controllers\Tutor\ProfileCertificateController;
 use App\Http\Controllers\Tutor\UserSubjectController;
+use App\Http\Controllers\Tutor\UserSubjectSortOrderController;
+use App\Http\Controllers\Tutor\UserSubjectGroupController;
+use App\Http\Controllers\Tutor\UserSubjectGroupSortOrderController;
 use App\Http\Controllers\Tutor\TestController;
 use App\Http\Controllers\Tutor\UpdatePasswordController;
 use Illuminate\Support\Facades\Route;
@@ -30,9 +33,19 @@ Route::post('/profile/education', [ProfileEducationController::class, 'store'])-
 Route::put('/profile/education/{education}', [ProfileEducationController::class, 'update'])->name('profile.education.update');
 Route::delete('/profile/education/{education}', [ProfileEducationController::class, 'destroy'])->name('profile.education.destroy');
 
+Route::post('/user/subject-group/update-sort-order', UserSubjectGroupSortOrderController::class)->name('user.subject.group.update_sort_order');
+
+Route::post('/user/subject-group', [UserSubjectGroupController::class, 'store'])->name('user.subject.group.store');
+Route::put('/user/subject-group/{group}', [UserSubjectGroupController::class, 'update'])->name('user.subject.group.update');
+Route::delete('/user/subject-group/{group}', [UserSubjectGroupController::class, 'destroy'])->name('user.subject.group.destroy');
+
+
+Route::post('/user/subjects/update-sort-order', UserSubjectSortOrderController::class)->name('user.subject.update_sort_order');
+
 Route::post('/user/subject', [UserSubjectController::class, 'store'])->name('user.subject.store');
 Route::put('/user/subject/{subject}', [UserSubjectController::class, 'update'])->name('user.subject.update');
 Route::delete('/user/subject/{subject}', [UserSubjectController::class, 'destroy'])->name('user.subject.destroy');
+
 
 Route::get('/profile/experience', [ProfileExperienceController::class, 'index'])->name('profile.experience');
 Route::post('/profile/experience', [ProfileExperienceController::class, 'store'])->name('profile.experience.store');
