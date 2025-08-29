@@ -22,7 +22,7 @@ class UserSubjectController extends Controller
         try {
             $this->upsertUserSubjectAction->handle($request->validated());
 
-            return back()->with('success', 'Subject added successfully.');
+            return back()->with('message', 'Subject added successfully.');
         } catch (\Exception $e) {
             return back()->withErrors(['subject_id' => $e->getMessage()]);
         }
@@ -33,13 +33,13 @@ class UserSubjectController extends Controller
 
         $this->upsertUserSubjectAction->handle($request->validated(), $subject);
 
-        return back()->with('success', 'Subject updated successfully.');
+        return back()->with('message', 'Subject updated successfully.');
     }
 
     public function destroy(UserSubjectGroupSubject $subject)
     {
         $this->deleteUserSubjectAction->handle($subject);
 
-        return back()->with('success', 'Subject removed successfully.');
+        return back()->with('message', 'Subject removed successfully.');
     }
 }

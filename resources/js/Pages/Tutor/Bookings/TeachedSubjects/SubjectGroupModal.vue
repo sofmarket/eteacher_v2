@@ -1,27 +1,23 @@
 <template>
-
-    <Modal :modalActive="modalActive" @close="closeModal" :fullScreenBackdrop="true" title="Add New Education"
+    <Modal :modalActive="modalActive" @close="closeModal" :fullScreenBackdrop="true" title="Add Subject Groups"
         @reset="closeModal" @submit="handleSubmit" :loading="form.processing">
         <template #body>
             <form class="flex flex-col gap-4" @submit.prevent="handleSubmit">
-
-                <UniversalInput :inline="false" label="Subject Groups" v-model="form.subject_groups"
-                    :errors="form.errors.subject_groups" />
-
+                <ChoicesInput label="Choose subject category you can teach" multiple v-model="form.subject_groups">
+                    <option v-for="group in subjectGroups" :value="group.id" :key="group.id">{{ group.name }}
+                    </option>
+                </ChoicesInput>
             </form>
         </template>
     </Modal>
-
 </template>
 
 <script setup>
 
-import { ref, computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import Modal from '@/Components/ui/Modal.vue';
-
-import UniversalInput from '@/Components/forms/FormElements/UniversalInput.vue';
-
+import ChoicesInput from '@/Components/forms/FormElements/ChoicesInput.vue';
 
 const emit = defineEmits(['update:modalActive'])
 
@@ -38,16 +34,15 @@ const subjectGroups = computed(() => page.props.subjectGroups.data);
 const closeModal = () => emit('update:modalActive', false);
 
 const handleSubmit = () => {
-    form.post(route('tutor.profile.education.store'), {
+    form.post(route('tutor.user.subject.group.store'), {
         onSuccess: () => {
             closeModal();
-            form.reset();
         }
     });
 };
 
 const form = useForm({
-    subject_groups: null,
+    subject_groups: page.props.userSubjectGroups.data.map(group => group.subject_group_id),
 });
 
 </script>

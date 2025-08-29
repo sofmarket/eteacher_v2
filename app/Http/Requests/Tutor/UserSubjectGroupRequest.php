@@ -21,17 +21,10 @@ class UserSubjectGroupRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
-            'subject_group_id' => 'required|exists:subject_groups,id',
+        return [
+            'subject_groups' => 'required|array',
+            'subject_groups.*' => 'required|exists:subject_groups,id',
         ];
-
-        if($this->isMethod('PUT')) {
-            $rules = [
-                'subject_group_id' => 'required|exists:subject_groups,id',
-            ];
-        }
-
-        return $rules;
     }
 
     /**
@@ -42,8 +35,9 @@ class UserSubjectGroupRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'subject_group_id.required' => 'Please select a subject group.',
-            'subject_group_id.exists' => 'The selected subject group is invalid.',
+            'subject_groups.required' => 'Please select a subject group.',
+            'subject_groups.*.required' => 'Please select a subject group.',
+            'subject_groups.*.exists' => 'The selected subject group is invalid.',
         ];
     }
 }

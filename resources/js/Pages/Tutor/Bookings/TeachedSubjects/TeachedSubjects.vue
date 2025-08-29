@@ -8,7 +8,7 @@
                     Please provide your educational background to help us assess your qualifications.
                 </p>
             </div>
-            <button class="bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-1" @click="addSubjectGroup">
+            <button class="bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-1" @click="updateSubjectGroups">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                 <span>Add New</span>
             </button>
@@ -32,12 +32,13 @@
                     @addSubject="addSubject"
                     @editSubject="handleEditSubject"
                     @subjectOrderChanged="onSubjectOrderChanged"
-                    @editGroup="handleEditGroup"
+                    @editGroup="updateSubjectGroups"
                 />
             </template>
         </draggable>
     
         <SubjectGroupModal v-model:modalActive="subjectGroupModalActive" />
+
         <SubjectModal 
             v-model:modalActive="subjectModalActive" 
             :selectedGroupId="selectedGroupId" 
@@ -48,8 +49,8 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue';
-import { useForm, usePage, router } from '@inertiajs/vue3';
+import { ref, onMounted, watch } from 'vue';
+import { usePage, router } from '@inertiajs/vue3';
 import draggable from 'vuedraggable';
 
 import SubjectGroupCard from './SubjectGroupCard.vue';
@@ -72,7 +73,7 @@ const subjectModalActive = ref(false);
 const selectedGroupId = ref(null);
 const subjectToEdit = ref(null);
 
-const addSubjectGroup = () => {
+const updateSubjectGroups = () => {
     subjectGroupModalActive.value = true;
 }
 
@@ -88,15 +89,7 @@ const handleEditSubject = (subject) => {
     subjectModalActive.value = true;
 }
 
-const handleEditGroup = (group) => {
-    // TODO: Implement edit group functionality
-    console.log('Edit group:', group);
-}
-
-
 onMounted(() => {
-    // console.log(subjectGroups);
-    
     // Set the first group as open by default
     if (userSubjectGroups.value.length > 0) {
         userSubjectGroups.value[0].isOpen = true;
@@ -141,13 +134,6 @@ const onGroupOrderChanged = (event) => {
 };
 
 const onSubjectOrderChanged = (event, subjectGroup) => {
-    console.log('Subjects order changed:', {
-        event: event,
-        groupId: subjectGroup.id,
-        groupName: subjectGroup.name,
-        subjects: subjectGroup.subjects.map(subject => ({ id: subject.id, name: subject.name }))
-    });
-
     // Prepare the sort order data
     const sortOrderData = subjectGroup.subjects.map((subject, index) => ({
         id: subject.id,

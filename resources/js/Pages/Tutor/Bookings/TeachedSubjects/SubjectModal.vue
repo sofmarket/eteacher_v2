@@ -58,17 +58,7 @@ const props = defineProps({
 
 const page = usePage();
 
-// Get available subject groups for the current user
-const userSubjectGroups = computed(() => page.props.userSubjectGroups.data);
 const subjects = computed(() => page.props.subjects.data);
-
-// Create options for subject groups
-const subjectGroupOptions = computed(() => {
-    return userSubjectGroups.value.map(group => ({
-        value: group.id,
-        label: group.name
-    }));
-});
 
 // Create options for subjects
 const subjectOptions = computed(() => {

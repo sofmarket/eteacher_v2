@@ -20,6 +20,7 @@ class UserSubjectGroupResource extends JsonResource
             'name'                          => $this->group->name,
             'description'                   => $this->group->description,
             'status'                        => $this->group->status,
+            'subject_group_id'              => $this->subject_group_id,
             'sort_order'                    => $this->sort_order,
             'subjects'                      => $this->whenLoaded('subjects', fn() => UserSubjectGroupSubjectResource::collection($this->subjects)),
         ];

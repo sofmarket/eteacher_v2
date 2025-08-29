@@ -36,7 +36,6 @@ Route::delete('/profile/education/{education}', [ProfileEducationController::cla
 Route::post('/user/subject-group/update-sort-order', UserSubjectGroupSortOrderController::class)->name('user.subject.group.update_sort_order');
 
 Route::post('/user/subject-group', [UserSubjectGroupController::class, 'store'])->name('user.subject.group.store');
-Route::put('/user/subject-group/{group}', [UserSubjectGroupController::class, 'update'])->name('user.subject.group.update');
 Route::delete('/user/subject-group/{group}', [UserSubjectGroupController::class, 'destroy'])->name('user.subject.group.destroy');
 
 
