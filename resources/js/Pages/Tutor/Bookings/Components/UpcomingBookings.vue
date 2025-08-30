@@ -71,22 +71,24 @@
         </div>
 
         <!-- Daily View -->
-        <div v-if="currentView === 'daily'" class="border-t border-gray-200 dark:border-gray-700">
+        <div v-if="currentView === 'daily'" class="border border-gray-200 dark:border-gray-700">
             <div class="grid grid-cols-[auto,1fr]">
-                <!-- Time Column Header -->
-                <div
-                    class="border-b border-r border-gray-200 dark:border-gray-700 p-2 text-sm font-medium text-gray-600 dark:text-gray-400 w-20 text-center">
-                    Time</div>
-                <!-- Date Header -->
-                <div
-                    class="border-b border-gray-200 dark:border-gray-700 p-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                    {{ currentDayFullFormatted }}</div>
+                <div class="flex">
+                    <!-- Time Column Header -->
+                    <div
+                        class="border-b border-r border-gray-200 dark:border-gray-700 px-2 py-5 text-sm font-medium text-gray-600 dark:text-gray-400 w-20 text-center">
+                        Time</div>
+                    <!-- Date Header -->
+                    <div
+                        class="border-b border-gray-200 dark:border-gray-700 px-2 py-5 text-sm font-medium text-gray-600 dark:text-gray-400 flex-1 text-center">
+                        {{ currentDayFullFormatted }}</div>
+                </div>
 
                 <!-- Time Slots -->
                 <template v-for="hour in 24" :key="`daily-${hour}`">
                     <!-- Time Label -->
                     <div
-                        class="border-b border-r border-gray-200 dark:border-gray-700 p-2 text-xs text-gray-500 dark:text-gray-400 h-16 flex items-center justify-center w-20">
+                        class="border-r border-gray-200 dark:border-gray-700 p-2 text-xs text-gray-500 dark:text-gray-400 h-16 flex items-center justify-center w-20">
                         {{ formatHour(hour - 1) }}
                     </div>
                     <!-- Schedule Area for the hour -->
@@ -98,7 +100,7 @@
         </div>
 
         <!-- Weekly View -->
-        <div v-if="currentView === 'weekly'" class="border-t border-l border-gray-200 dark:border-gray-700">
+        <div v-if="currentView === 'weekly'" class="border border-l border-gray-200 dark:border-gray-700">
             <!-- Day Headers -->
             <div class="grid grid-cols-7 border-b border-gray-200 dark:border-gray-700">
                 <div v-for="day in weekDays" :key="`header-${day.toISOString()}`"
@@ -121,7 +123,7 @@
         </div>
 
         <!-- Monthly View -->
-        <div v-if="currentView === 'monthly'" class="border-t border-l border-gray-200 dark:border-gray-700">
+        <div v-if="currentView === 'monthly'" class="border border-l border-gray-200 dark:border-gray-700">
             <!-- Day Headers -->
             <div class="grid grid-cols-7 border-b border-gray-200 dark:border-gray-700">
                 <div v-for="dayName in monthDayNames" :key="dayName"
@@ -132,7 +134,7 @@
             <!-- Calendar Grid -->
             <div class="grid grid-cols-7 grid-rows-6">
                 <div v-for="(day, index) in monthDays" :key="index"
-                    class="border-b border-r border-gray-200 dark:border-gray-700 p-2 h-24 relative"
+                    class="border-b border-r border-gray-200 dark:border-gray-700 p-2 h-40 relative"
                     :class="{
                         'bg-gray-50 dark:bg-gray-700/30 text-gray-400 dark:text-gray-500': !day.isCurrentMonth, // Dim days not in the current month
                         'bg-blue-50 dark:bg-blue-900/10': day.isToday, // Highlight today
