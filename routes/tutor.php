@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Tutor\BookingsController;
 use App\Http\Controllers\Tutor\ChatsController;
 use App\Http\Controllers\Tutor\CouponsController;
 use App\Http\Controllers\Tutor\DisputesController;
@@ -17,6 +16,7 @@ use App\Http\Controllers\Tutor\UserSubjectSortOrderController;
 use App\Http\Controllers\Tutor\UserSubjectGroupController;
 use App\Http\Controllers\Tutor\UserSubjectGroupSortOrderController;
 use App\Http\Controllers\Tutor\UserSubjectSlotController;
+use App\Http\Controllers\Tutor\SlotBookingsController;
 use App\Http\Controllers\Tutor\TestController;
 use App\Http\Controllers\Tutor\UpdatePasswordController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +36,10 @@ Route::delete('/profile/education/{education}', [ProfileEducationController::cla
 
 Route::post('/user/subject-group/update-sort-order', UserSubjectGroupSortOrderController::class)->name('user.subject.group.update_sort_order');
 
+Route::get('bookings/teached-subjects', [UserSubjectGroupController::class, 'index'])->name('bookings.teached-subjects');
+Route::get('bookings/manage-sessions', [UserSubjectSlotController::class, 'index'])->name('bookings.manage-sessions');
+Route::get('bookings/upcoming-bookings', [SlotBookingsController::class, 'index'])->name('bookings.upcoming-bookings');
+
 Route::post('/user/subject-group', [UserSubjectGroupController::class, 'store'])->name('user.subject.group.store');
 Route::delete('/user/subject-group/{group}', [UserSubjectGroupController::class, 'destroy'])->name('user.subject.group.destroy');
 
@@ -47,7 +51,6 @@ Route::put('/user/subject/{subject}', [UserSubjectController::class, 'update'])-
 Route::delete('/user/subject/{subject}', [UserSubjectController::class, 'destroy'])->name('user.subject.destroy');
 
 // User Subject Slots (Sessions) Routes
-Route::get('/user/subject/slots', [UserSubjectSlotController::class, 'index'])->name('user.subject.slots.index');
 Route::post('/user/subject/slots', [UserSubjectSlotController::class, 'store'])->name('user.subject.slots.store');
 Route::get('/user/subject/slots/{slot}', [UserSubjectSlotController::class, 'show'])->name('user.subject.slots.show');
 Route::get('/user/subject/slots/{slot}/edit', [UserSubjectSlotController::class, 'edit'])->name('user.subject.slots.edit');
@@ -67,8 +70,6 @@ Route::put('/profile/certificate/{certificate}', [ProfileCertificateController::
 Route::delete('/profile/certificate/{certificate}', [ProfileCertificateController::class, 'destroy'])->name('profile.certificate.destroy');
 
 Route::post('/profile/identity_verification', IdentityVerificationController::class)->name('profile.identity_verification');
-
-Route::get('/bookings', [BookingsController::class, 'index'])->name('bookings');
 
 Route::get('/invoices', [InvoicesController::class, 'index'])->name('invoices');
 

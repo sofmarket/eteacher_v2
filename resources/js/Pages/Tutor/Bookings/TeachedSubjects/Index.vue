@@ -1,49 +1,57 @@
 <template>
-    <div class="p-6">
-        <!-- Header -->
-        <div class="flex justify-between items-start mb-6">
-            <div>
-                <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Subjects I Can Teach</h2>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                    Please provide your educational background to help us assess your qualifications.
-                </p>
-            </div>
-            <button class="bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-1" @click="updateSubjectGroups">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                <span>Add New</span>
-            </button>
-        </div>
+    <div>
 
-        <!-- Subject Groups List (Draggable) -->
-        <draggable
-            v-model="userSubjectGroups"
-            tag="div"
-            item-key="id"
-            handle=".group-handle"
-            class="space-y-4"
-            animation="150"
-            @end="onGroupOrderChanged"
-        >
-            <template #item="{ element: subjectGroup, index: groupIndex }">
-                <SubjectGroupCard 
-                    :subjectGroup="subjectGroup" 
-                    :groupIndex="groupIndex"
-                    @toggle="toggleGroup"
-                    @addSubject="addSubject"
-                    @editSubject="handleEditSubject"
-                    @subjectOrderChanged="onSubjectOrderChanged"
-                    @editGroup="updateSubjectGroups"
-                />
-            </template>
-        </draggable>
+        <Breadcrumbs title="Subjects I Can Teach" />
+
+        <RoutedTabs :tabs="tabs">
+            <div class="p-6">
+                <!-- Header -->
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Subjects I Can Teach</h2>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                            Please provide your educational background to help us assess your qualifications.
+                        </p>
+                    </div>
+                    <button class="bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center space-x-1" @click="updateSubjectGroups">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                        <span>Add New</span>
+                    </button>
+                </div>
     
-        <SubjectGroupModal v-model:modalActive="subjectGroupModalActive" />
-
-        <SubjectModal 
-            v-model:modalActive="subjectModalActive" 
-            :selectedGroupId="selectedGroupId" 
-            :subjectToEdit="subjectToEdit"
-        />
+                <!-- Subject Groups List (Draggable) -->
+                <draggable
+                    v-model="userSubjectGroups"
+                    tag="div"
+                    item-key="id"
+                    handle=".group-handle"
+                    class="space-y-4"
+                    animation="150"
+                    @end="onGroupOrderChanged"
+                >
+                    <template #item="{ element: subjectGroup, index: groupIndex }">
+                        <SubjectGroupCard 
+                            :subjectGroup="subjectGroup" 
+                            :groupIndex="groupIndex"
+                            @toggle="toggleGroup"
+                            @addSubject="addSubject"
+                            @editSubject="handleEditSubject"
+                            @subjectOrderChanged="onSubjectOrderChanged"
+                            @editGroup="updateSubjectGroups"
+                        />
+                    </template>
+                </draggable>
+            
+                <SubjectGroupModal v-model:modalActive="subjectGroupModalActive" />
+    
+                <SubjectModal 
+                    v-model:modalActive="subjectModalActive" 
+                    :selectedGroupId="selectedGroupId" 
+                    :subjectToEdit="subjectToEdit"
+                />
+            
+            </div>
+        </RoutedTabs>
     
     </div>
 </template>
@@ -56,6 +64,14 @@ import draggable from 'vuedraggable';
 import SubjectGroupCard from './SubjectGroupCard.vue';
 import SubjectGroupModal from './SubjectGroupModal.vue';
 import SubjectModal from './SubjectModal.vue';
+import RoutedTabs from '../Components/RoutedTabs.vue';
+import Breadcrumbs from '@/Components/common/Breadcrumbs.vue';
+
+const tabs = [
+    { id: 'teached-subjects', label: 'Subjects I Can Teach', route: 'tutor.bookings.teached-subjects', isActive: true },
+    { id: 'manage-sessions', label: 'Manage Sessions', route: 'tutor.bookings.manage-sessions', isActive: false },
+    { id: 'upcoming-bookings', label: 'Upcoming Bookings', route: 'tutor.bookings.upcoming-bookings', isActive: false },
+];
 
 // use page inertia
 const page = usePage();

@@ -6,6 +6,8 @@ use App\Actions\Tutor\DeleteUserSubjectSlotAction;
 use App\Actions\Tutor\CreateUserSubjectSlotAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tutor\UserSubjectSlotRequest;
+use App\Http\Resources\UserSubjectGroupResource;
+use App\Models\UserSubjectGroup;
 use App\Models\UserSubjectSlot;
 use Illuminate\Http\Request;
 
@@ -22,14 +24,21 @@ class UserSubjectSlotController extends Controller
      */
     public function index()
     {
-        $slots = UserSubjectSlot::whereHas('subjectGroupSubjects.userSubjectGroup', function ($query) {
-            $query->where('user_id', auth()->id());
-        })
-        ->with(['subjectGroupSubjects.subject', 'subjectGroupSubjects.userSubjectGroup.subjectGroup'])
-        ->orderBy('start_time', 'desc')
-        ->paginate(15);
+        // $slots = UserSubjectSlot::whereHas('subjectGroupSubjects.userSubjectGroup', function ($query) {
+        //     $query->where('user_id', auth()->id());
+        // })
+        // ->with(['subjectGroupSubjects.subject', 'subjectGroupSubjects.userSubjectGroup.subjectGroup'])
+        // ->orderBy('start_time', 'desc')
+        // ->paginate(15);
 
-        return view('tutor.slots.index', compact('slots'));
+        $userSubjectGroups = UserSubjectGroup::query()
+            ->where('user_id', auth()->id())
+            ->orderBy('sort_order')
+            ->get();
+
+        return inertia('Tutor/Bookings/ManageSessions/Index', [
+            'userSubjectGroups' => UserSubjectGroupResource::collection($userSubjectGroups),
+        ]);
     }
 
     /**

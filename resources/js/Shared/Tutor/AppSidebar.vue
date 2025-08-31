@@ -182,7 +182,7 @@ const menuGroups = [
       {
         icon: CalenderIcon,
         name: "Manage Bookings",
-        path: route('tutor.bookings'),
+        path: route('tutor.bookings.teached-subjects'),
       },
       {
         icon: ChatIcon,
