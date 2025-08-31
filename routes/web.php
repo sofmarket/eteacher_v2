@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NotificationsController;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('/')->name('front.')->group(function () {
+    require __DIR__ . '/front.php';
 });
 
 require __DIR__ . '/auth.php';

@@ -105,11 +105,12 @@ class Profile extends Model implements HasMedia
      * Getter of is is profile image attribute
      */
 
-    public function profileImage(): Attribute
+    public function profileImage()
     {
-        return Attribute::make(
-            get: fn() => !empty($this->image) && Storage::disk(getStorageDisk())->exists($this->image) ? url(Storage::url($this->image)) : (setting('_general.default_avatar_for_user') ? url(Storage::url(setting('_general.default_avatar_for_user')[0]['path'])) : url(Storage::url('placeholder.png')))
-        );
+        return 'https://cdn.dawin2u.com/default-avatar.jpg';
+        // return Attribute::make(
+        //     get: fn() => !empty($this->image) && Storage::disk(getStorageDisk())->exists($this->image) ? url(Storage::url($this->image)) : (setting('_general.default_avatar_for_user') ? url(Storage::url(setting('_general.default_avatar_for_user')[0]['path'])) : url(Storage::url('placeholder.png')))
+        // );
     }
 
 }
