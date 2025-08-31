@@ -14,10 +14,10 @@ return new class extends Migration {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('student_id')->unsigned()->index();
-            $table->double('amount', 10, 2);
+            $table->double('amount');
             $table->string('transaction_id')->nullable();
-            $table->double('used_wallet_amt', 10, 2)->default(0);
-            $table->double('sales_tax', 10, 2)->default(0);
+            $table->double('used_wallet_amt')->default(0);
+            $table->double('sales_tax')->default(0);
             $table->string('currency', 100);
             $table->string('first_name', 150);
             $table->string('last_name', 150);
