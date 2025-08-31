@@ -1,7 +1,7 @@
 <template>
     <div :class="parentClasses">
       <div :class="inline ? 'flex flex-col lg:flex-row lg:items-center lg:gap-4 sm:flex-row sm:items-center sm:gap-4' : 'flex flex-col'">
-        <label v-if="label" :for="inputId" :class="[labelClasses, 'lg:w-1/4 sm:w-1/3']">{{ label }} <span v-if="required" class="text-error-500">*</span></label>
+        <label v-if="label" :for="inputId" :class="labelClasses">{{ label }} <span v-if="required" class="text-error-500">*</span></label>
         <div class="flex-1">
           <input :type="type"
                  :id="inputId || name"

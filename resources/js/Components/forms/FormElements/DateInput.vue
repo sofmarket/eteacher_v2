@@ -1,7 +1,7 @@
 <template>
     <div
         :class="inline ? 'flex flex-col lg:flex-row lg:items-center lg:gap-4 sm:flex-row sm:items-center sm:gap-4' : 'flex flex-col'">
-        <label v-if="label" :class="[labelClasses, 'lg:w-1/4 sm:w-1/3']">
+        <label v-if="label" :class="labelClasses">
             {{ label }}
         </label>
         <div class="flex-1">

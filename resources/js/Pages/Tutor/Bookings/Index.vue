@@ -4,7 +4,7 @@
 
         <Breadcrumbs title="Bookings" />
 
-        <Tabs :tabs="tabs">
+        <Tabs :tabs="tabs" defaultTab="manage-sessions">
 
             <template #teached-subjects>
                 <TeachedSubjects />
@@ -29,8 +29,8 @@
 import Tabs from '@/Components/ui/Tabs.vue';
 import Breadcrumbs from '@/Components/common/Breadcrumbs.vue';
 import TeachedSubjects from './TeachedSubjects/TeachedSubjects.vue';
-import ManageSessions from './Components/ManageSessions.vue';
-import UpcomingBookings from './Components/UpcomingBookings.vue';
+import ManageSessions from './ManageSessions/ManageSessions.vue';
+import UpcomingBookings from './UpcomingBookings/UpcomingBookings.vue';
 
 const tabs = [
     { id: 'teached-subjects', label: 'Subjects I Can Teach' },

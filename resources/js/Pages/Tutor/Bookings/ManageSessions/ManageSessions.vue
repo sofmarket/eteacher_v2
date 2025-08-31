@@ -22,8 +22,9 @@
         </button>
         <span class="text-md font-medium text-gray-700 dark:text-gray-300 w-28 text-center">{{ currentMonthYear
           }}</span>
-        <!-- Placeholder for Add Session Button -->
+        <!-- Add Session Button -->
         <button
+          @click="openAddSessionModal"
           class="ml-4 px-4 py-2 text-sm font-medium text-white bg-green-900 rounded-lg hover:bg-green-800 flex items-center gap-1">
           Add new Session
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -63,15 +64,20 @@
         </div>
       </div>
     </div>
+
+    <!-- Add Session Modal -->
+    <AddSessionModal v-model:modalActive="addSessionModalActive" />
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
+import AddSessionModal from './AddSessionModal.vue';
 
 const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 const currentDate = ref(new Date()); // Use ref for reactivity
+const addSessionModalActive = ref(false);
 
 // Ensure currentDate is always set to the start of the day 
 currentDate.value.setHours(0, 0, 0, 0);
@@ -140,6 +146,10 @@ const nextMonth = () => {
 const goToToday = () => {
   currentDate.value = new Date();
   currentDate.value.setHours(0, 0, 0, 0);
+};
+
+const openAddSessionModal = () => {
+  addSessionModalActive.value = true;
 };
 
 </script>

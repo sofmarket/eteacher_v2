@@ -16,6 +16,7 @@ use App\Http\Controllers\Tutor\UserSubjectController;
 use App\Http\Controllers\Tutor\UserSubjectSortOrderController;
 use App\Http\Controllers\Tutor\UserSubjectGroupController;
 use App\Http\Controllers\Tutor\UserSubjectGroupSortOrderController;
+use App\Http\Controllers\Tutor\UserSubjectSlotController;
 use App\Http\Controllers\Tutor\TestController;
 use App\Http\Controllers\Tutor\UpdatePasswordController;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,15 @@ Route::post('/user/subjects/update-sort-order', UserSubjectSortOrderController::
 Route::post('/user/subject', [UserSubjectController::class, 'store'])->name('user.subject.store');
 Route::put('/user/subject/{subject}', [UserSubjectController::class, 'update'])->name('user.subject.update');
 Route::delete('/user/subject/{subject}', [UserSubjectController::class, 'destroy'])->name('user.subject.destroy');
+
+// User Subject Slots (Sessions) Routes
+Route::get('/user/subject/slots', [UserSubjectSlotController::class, 'index'])->name('user.subject.slots.index');
+Route::post('/user/subject/slots', [UserSubjectSlotController::class, 'store'])->name('user.subject.slots.store');
+Route::get('/user/subject/slots/{slot}', [UserSubjectSlotController::class, 'show'])->name('user.subject.slots.show');
+Route::get('/user/subject/slots/{slot}/edit', [UserSubjectSlotController::class, 'edit'])->name('user.subject.slots.edit');
+Route::put('/user/subject/slots/{slot}', [UserSubjectSlotController::class, 'update'])->name('user.subject.slots.update');
+Route::delete('/user/subject/slots/{slot}', [UserSubjectSlotController::class, 'destroy'])->name('user.subject.slots.destroy');
+Route::get('/user/subject/slots/by-subject', [UserSubjectSlotController::class, 'getSlotsBySubject'])->name('user.subject.slots.by-subject');
 
 
 Route::get('/profile/experience', [ProfileExperienceController::class, 'index'])->name('profile.experience');
