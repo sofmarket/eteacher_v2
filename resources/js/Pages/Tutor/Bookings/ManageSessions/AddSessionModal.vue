@@ -56,19 +56,6 @@
               step="1"
             />
 
-            <!-- Session Fee -->
-            <UniversalInput 
-              :inline="false" 
-              label="Session Seats" 
-              v-model="form.spaces"
-              :errors="form.errors.spaces"
-              :required="true"
-              type="number"
-              placeholder="0"
-              min="0"
-              step="1"
-            />
-
           </div>
 
           <!-- Right Column -->
@@ -76,22 +63,22 @@
             <!-- Start date -->
             <DateInput 
               :inline="false" 
-              label="Start date" 
+              label="Session date" 
               v-model="form.start_date"
               :errors="form.errors.start_date"
               :required="true"
-              placeholder="Choose start date"
+              placeholder="Choose session date"
             />
 
             <!-- End date -->
-            <DateInput 
+            <!--<DateInput 
               :inline="false" 
               label="End date" 
               v-model="form.end_date"
               :errors="form.errors.end_date"
               :required="true"
               placeholder="Choose end date"
-            />
+            />-->
 
             <!-- Session duration -->
             <SelectInput 
@@ -108,8 +95,21 @@
               <option value="120">2 hours</option>
             </SelectInput>
 
+             <!-- Session Fee -->
+             <UniversalInput 
+              :inline="false" 
+              label="Session Seats" 
+              v-model="form.spaces"
+              :errors="form.errors.spaces"
+              :required="true"
+              type="number"
+              placeholder="0"
+              min="0"
+              step="1"
+            />
+
             <!-- Recurring booking for -->
-            <SelectInput 
+            <!--<SelectInput 
               :inline="false" 
               label="Recurring booking for" 
               v-model="form.recurring_booking"
@@ -118,7 +118,7 @@
               <option value="weekly">Weekly</option>
               <option value="biweekly">Bi-weekly</option>
               <option value="monthly">Monthly</option>
-            </SelectInput>
+            </SelectInput>-->
           </div>
         </div>
 
@@ -163,7 +163,7 @@ const form = useForm({
   session_fee: 0,
   spaces: 1,
   description: '',
-  recurring_booking: '',
+  recurring_booking: 0,
 });
 
 // use page inertia

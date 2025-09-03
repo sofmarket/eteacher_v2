@@ -22,26 +22,26 @@ class UserSubjectSlotRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
+            'recurring_booking' => 'required|in:0,1',
             'user_subject_group_subject_id' => 'required|exists:user_subject_group_subjects,id',
             'start_date' => 'required|date|after_or_equal:today',
-            'end_date' => 'required|date|after_or_equal:start_date',
+            'end_date' => 'nullable|required_if:recurring_booking,1|date|after_or_equal:start_date',
             'start_time' => 'required|date_format:H:i',
             'duration' => 'required|in:30,60,90,120',
             'session_fee' => 'required|numeric|min:0',
             'spaces' => 'required|integer|min:1|max:100',
-            'recurring_booking' => 'nullable|in:weekly,biweekly,monthly',
             'description' => 'required|string|max:2000',
         ];
 
         if ($this->isMethod('PUT')) {
             $rules = [
                 'start_date' => 'required|date',
-                'end_date' => 'required|date|after_or_equal:start_date',
+                'end_date' => 'nullable|date|after_or_equal:start_date',
                 'start_time' => 'required|date_format:H:i',
                 'duration' => 'required|in:30,60,90,120',
                 'session_fee' => 'required|numeric|min:0',
                 'spaces' => 'required|integer|min:1|max:100',
-                'recurring_booking' => 'nullable|in:weekly,biweekly,monthly',
+                'recurring_booking' => 'required|in:0,1',
                 'description' => 'required|string|max:2000',
             ];
         }

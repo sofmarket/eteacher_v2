@@ -23,6 +23,9 @@ return new class extends Migration {
             $table->tinyInteger('type')->default(0);
             $table->text('description')->nullable();
             $table->json('meta_data')->nullable();
+
+            // day_of_week (tinyint)   -- 0=Sunday, 1=Monday, ... 6=Saturday
+            // is_recurring
         });
     }
 

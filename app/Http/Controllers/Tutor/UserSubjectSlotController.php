@@ -7,6 +7,7 @@ use App\Actions\Tutor\CreateUserSubjectSlotAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tutor\UserSubjectSlotRequest;
 use App\Http\Resources\UserSubjectGroupResource;
+use App\Http\Resources\UserSubjectSlotResource;
 use App\Models\UserSubjectGroup;
 use App\Models\UserSubjectSlot;
 use Illuminate\Http\Request;
@@ -22,14 +23,25 @@ class UserSubjectSlotController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $slots = UserSubjectSlot::whereHas('subjectGroupSubjects.userSubjectGroup', function ($query) {
-        //     $query->where('user_id', auth()->id());
-        // })
-        // ->with(['subjectGroupSubjects.subject', 'subjectGroupSubjects.userSubjectGroup.subjectGroup'])
-        // ->orderBy('start_time', 'desc')
-        // ->paginate(15);
+
+        if ($request->wantsJson()) {
+
+            $slots = UserSubjectSlot::whereHas('subjectGroupSubjects.userSubjectGroup', function ($query) {
+                $query->where('user_id', auth()->id());
+            })
+                ->with(['subjectGroupSubjects.subject']) //  'subjectGroupSubjects.userSubjectGroup.subjectGroup'
+                ->orderBy('start_time', 'desc')
+                ->when($request->has('year') && $request->has('month'), function ($query) use ($request) {
+                    $query->whereYear('start_time', $request->year)
+                        ->whereMonth('start_time', $request->month);
+                })
+                ->get();
+
+            return UserSubjectSlotResource::collection($slots);
+
+        }
 
         $userSubjectGroups = UserSubjectGroup::query()
             ->where('user_id', auth()->id())
@@ -61,7 +73,7 @@ class UserSubjectSlotController extends Controller
     {
         // Verify the slot belongs to the authenticated user
         $slot->load(['subjectGroupSubjects.subject', 'subjectGroupSubjects.userSubjectGroup.subjectGroup', 'bookings.student']);
-        
+
         if ($slot->subjectGroupSubjects->userSubjectGroup->user_id !== auth()->id()) {
             abort(403, 'Unauthorized access.');
         }
@@ -76,7 +88,7 @@ class UserSubjectSlotController extends Controller
     {
         // Verify the slot belongs to the authenticated user
         $slot->load(['subjectGroupSubjects.subject', 'subjectGroupSubjects.userSubjectGroup.subjectGroup']);
-        
+
         if ($slot->subjectGroupSubjects->userSubjectGroup->user_id !== auth()->id()) {
             abort(403, 'Unauthorized access.');
         }
@@ -92,7 +104,7 @@ class UserSubjectSlotController extends Controller
         try {
             // Verify the slot belongs to the authenticated user
             $slot->load('subjectGroupSubjects.userSubjectGroup');
-            
+
             if ($slot->subjectGroupSubjects->userSubjectGroup->user_id !== auth()->id()) {
                 throw new \Exception('You are not authorized to update this session.');
             }

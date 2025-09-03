@@ -40,8 +40,20 @@
           </div>
         </div>
 
+        <div v-if="precessing" class="flex justify-center items-center">
+          <div class="w-20 h-20">
+            <svg width="60" height="60" viewBox="0 0 44 44">
+              <circle cx="22" cy="22" r="20" fill="none" stroke="#E5E7EB" stroke-width="4"></circle>
+              <circle cx="22" cy="22" r="20" fill="none" stroke="#60A5FA" stroke-width="4" stroke-dasharray="125.6"
+                stroke-dashoffset="125.6">
+                <animate attributeName="stroke-dashoffset" values="125.6;0" dur="2s" repeatCount="indefinite"></animate>
+              </circle>
+            </svg>
+          </div>
+        </div>
+
         <!-- Calendar Grid -->
-        <div class="grid grid-cols-7 border-t border-l border-gray-200 dark:border-gray-700">
+        <div v-if="!precessing" class="grid grid-cols-7 border-t border-l border-gray-200 dark:border-gray-700">
           <!-- Day Headers -->
           <div v-for="day in daysOfWeek" :key="day"
             class="text-center py-2 border-r border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 text-sm font-medium text-gray-600 dark:text-gray-400">
@@ -61,12 +73,12 @@
             }">
               {{ day.number }}
             </span>
-            <!-- Placeholder for Session Info -->
-            <div v-if="false"
+            <!-- Session Info -->
+            <div v-if="getSlotsForDay(day)"
               class="absolute bottom-2 left-2 right-2 text-xs text-gray-600 dark:text-gray-400 hidden md:flex flex-col items-center">
-              <!-- Example session data placeholder -->
-              <span>60/ 60 Left</span>
+              <span class="font-medium">{{ getSlotsForDay(day).total_booked }}/{{ getSlotsForDay(day).spaces }}</span>
               <div class="w-full h-1 bg-blue-400 rounded mt-1"></div>
+              <span class="text-xs opacity-75">{{ getSlotsForDay(day).slots.length }} session{{ getSlotsForDay(day).slots.length > 1 ? 's' : '' }}</span>
             </div>
           </div>
         </div>
@@ -79,11 +91,16 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
+import axios from 'axios';
 import AddSessionModal from './AddSessionModal.vue';
 import Breadcrumbs from '@/Components/common/Breadcrumbs.vue';
 import RoutedTabs from '../Components/RoutedTabs.vue';
+import { usePage } from '@inertiajs/vue3';
+
 const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+const precessing = ref(false);
 
 const tabs = [
     { id: 'teached-subjects', label: 'Subjects I Can Teach', route: 'tutor.bookings.teached-subjects', isActive: false },
@@ -91,6 +108,12 @@ const tabs = [
     { id: 'upcoming-bookings', label: 'Upcoming Bookings', route: 'tutor.bookings.upcoming-bookings', isActive: false },
 ];
 
+
+// use page inertia
+const page = usePage();
+
+// Create a reactive copy of the data
+const slots = ref([]);
 
 const currentDate = ref(new Date()); // Use ref for reactivity
 const addSessionModalActive = ref(false);
@@ -167,6 +190,50 @@ const goToToday = () => {
 const openAddSessionModal = () => {
   addSessionModalActive.value = true;
 };
+
+const getSlots = () => {
+  precessing.value = true;
+  const year = currentDate.value.getFullYear();
+  const month = currentDate.value.getMonth() + 1;
+  axios.get(route('tutor.bookings.manage-sessions', { year, month })).then(response => {
+    slots.value = response.data.data;
+  }).finally(() => {
+    precessing.value = false;
+  });
+}
+
+const getSlotsForDay = (day) => {
+  if (day.isCurrentMonth && !slots.value.length) return null;
+  
+  // Create a date string for the current day in YYYY-MM-DD format
+  const dayDate = new Date(currentDate.value.getFullYear(), currentDate.value.getMonth(), day.number);
+  const dayString = dayDate.toISOString().split('T')[0];
+  
+  // console.log(dayString, day.number);
+
+  // Find slots for this specific day
+  const daySlots = slots.value.filter(slot => slot.date === dayString);
+  
+  if (daySlots.length === 0) return null;
+  
+  // If multiple slots exist for the same day, aggregate the data
+  const totalSpaces = daySlots.reduce((sum, slot) => sum + slot.spaces, 0);
+  const totalBooked = daySlots.reduce((sum, slot) => sum + slot.total_booked, 0);
+  
+  return {
+    total_booked: totalBooked,
+    spaces: totalSpaces,
+    slots: daySlots
+  };
+}
+
+onMounted(() => {
+  getSlots();
+});
+
+watch(currentDate, () => {
+  getSlots();
+});
 
 </script>
 
