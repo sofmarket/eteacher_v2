@@ -187,7 +187,7 @@ const menuGroups = [
       {
         icon: ChatIcon,
         name: "Inbox",
-        path: route('tutor.chats'),
+        path: route('conversations.index'),
       },
       {
         icon: StaredIcon,

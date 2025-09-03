@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConversationsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NotificationsController;
 
@@ -26,10 +27,18 @@ Route::middleware('auth')->prefix('/dashboard')->name('dashboard.')->group(funct
 
 // Notifications
 Route::middleware('auth')->prefix('/notifications')->name('notifications.')->group(function () {
+    // Notifications
     Route::get('/', [NotificationsController::class, 'index'])->name('index');
     Route::post('/{id}/read', [NotificationsController::class, 'markAsRead'])->name('read');
     Route::post('/read-all', [NotificationsController::class, 'markAllAsRead'])->name('read-all');
     Route::delete('/{id}', [NotificationsController::class, 'destroy'])->name('destroy');
     Route::delete('/', [NotificationsController::class, 'destroyAll'])->name('destroy-all');
-    Route::get('/unread-count', [NotificationsController::class, 'unreadCount'])->name('unread-count');
+    Route::get('/unread-count', [NotificationsController::class, 'unreadCount'])->name('unread-count');    
+});
+
+// Conversations
+Route::middleware('auth')->prefix('/conversations')->name('conversations.')->group(function () {
+    Route::get('/', [ConversationsController::class, 'index'])->name('index');
+    Route::get('/{conversation}', [ConversationsController::class, 'show'])->name('show');
+    Route::delete('/{conversation}', [ConversationsController::class, 'destroy'])->name('destroy');
 });

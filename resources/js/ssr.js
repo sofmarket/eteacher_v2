@@ -52,7 +52,7 @@ createInertiaApp({
                     page.default.layout = layout.default || layout;
                     return page;
                 });
-            } else if (name.startsWith('Tutor')) {
+            } else if (name.startsWith('Tutor') || name.startsWith('Conversations')) {
                 return layouts.TutorLayout().then(layout => {
                     page.default.layout = layout.default || layout;
                     return page;
