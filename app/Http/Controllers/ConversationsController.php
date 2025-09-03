@@ -10,7 +10,9 @@ class ConversationsController extends Controller
 {
     public function index()
     {
-        $conversations = Conversation::all();
+        $conversations = Conversation::with('sender', 'receiver')
+        ->orderBy('last_time_message', 'desc')
+        ->get();
         return inertia('Conversations/Index', [
             'conversations' => ConversationResource::collection($conversations),
         ]);

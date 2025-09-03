@@ -24,18 +24,18 @@ class ConversationResource extends JsonResource
             'sender'                        => $this->whenLoaded('sender', function () {
                 return [
                     'id'        => $this->sender->id,
-                    'name'      => $this->sender->name,
                     'email'     => $this->sender->email,
-                    'avatar'    => $this->sender->profile?->getFirstMediaUrl('avatar'),
+                    'name'      => $this->sender->profile?->fullName,
+                    'avatar'    => $this->sender->profile?->image ?? 'https://ui-avatars.com/api/?name=' . $this->sender->profile?->fullName,
                 ];
             }),
             
             'receiver'                      => $this->whenLoaded('receiver', function () {
                 return [
                     'id'        => $this->receiver->id,
-                    'name'      => $this->receiver->name,
                     'email'     => $this->receiver->email,
-                    'avatar'    => $this->receiver->profile?->getFirstMediaUrl('avatar'),
+                    'name'      => $this->receiver->profile?->fullName,
+                    'avatar'    => $this->receiver->profile?->image ?? 'https://ui-avatars.com/api/?name=' . $this->receiver->profile?->fullName,
                 ];
             }),
             

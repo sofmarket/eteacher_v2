@@ -18,6 +18,7 @@
     "dependencies": {
         "@fullcalendar/vue3": "^6.1.17",
         "@inertiajs/vue3": "^2.0.8",
+        "@vueuse/core": "^13.9.0",
         "@yaireo/tagify": "^4.35.1",
         "choices.js": "^11.1.0",
         "fullcalendar": "^6.1.17",
