@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ConversationResource;
+use App\Http\Resources\ConversationMessageResource;
 use App\Models\Conversation;
+use App\Models\ConversationMessage;
+use Illuminate\Http\Request;
 
 class ConversationsController extends Controller
 {

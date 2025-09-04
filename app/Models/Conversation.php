@@ -15,13 +15,6 @@ class Conversation extends Model
         'last_time_message',
     ];
 
-    //relationships
-
-    public function messages()
-    {
-        return $this->hasMany(ConversationMessage::class);
-    }
-
     public function sender()
     {
         return $this->belongsTo(User::class, 'sender_id');
@@ -30,5 +23,10 @@ class Conversation extends Model
     public function receiver()
     {
         return $this->belongsTo(User::class, 'receiver_id');
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(ConversationMessage::class);
     }
 }

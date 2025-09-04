@@ -1,7 +1,7 @@
 <template>
 
     <div
-        class="xl:w-2/5 flex-col w-full rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] xl:flex">
+        class="md:w-2/5 flex-col w-full rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] md:flex">
         <div class="sticky px-4 pt-4 pb-4 sm:px-5 sm:pt-5 xl:pb-0">
             <div class="flex items-start justify-between">
                 <div>
@@ -91,14 +91,14 @@ defineProps({
     },
 });
 
+const emit = defineEmits(['openConversation']);
+
 const openConversation = (conversation) => {
-    // emit('openConversation', conversation);
-    console.log(conversation);
+    emit('openConversation', conversation);
 };
 
 onMounted(() => {
-    const fisrtConversation = conversations.value[0];
-    console.log(formatTimeAgo(new Date(fisrtConversation.last_time_message)));
+    //
 });
 
 </script>
