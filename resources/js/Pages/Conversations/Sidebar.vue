@@ -58,10 +58,10 @@
                         <span v-if="conversation.receiver.online"
                             class="absolute bottom-0 right-0 block h-3 w-3 rounded-full border-[1.5px] border-white bg-success-500 dark:border-gray-900"></span>
                     </div>
-                    <div class="flex-1 text-left">
-                        <h5 class="text-sm font-medium text-gray-800 dark:text-white/90">{{ conversation.receiver.name
+                    <div class="flex-1 text-left min-w-0">
+                        <h5 class="text-sm font-medium text-gray-800 dark:text-white/90 truncate">{{ conversation.receiver.name
                             }}</h5>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">conversation.latest_message.body</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 truncate">{{conversation.latest_message.body}}</p>
                     </div>
                     <div class="text-xs text-gray-500 dark:text-gray-400">
                         {{ formatTimeAgo(new Date(conversation.last_time_message)) }}

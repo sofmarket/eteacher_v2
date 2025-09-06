@@ -63,6 +63,13 @@ class ConversationResource extends JsonResource
                     'created_at' => $latest->created_at,
                     'sender_id'  => $latest->sender_id,
                 ] : null;
+            }, function() {
+                $latest = $this->messages()->orderBy('created_at', 'desc')->first();
+                return $latest ? [
+                    'body'       => $latest->body,
+                    'created_at' => $latest->created_at,
+                    'sender_id'  => $latest->sender_id,
+                ] : null;
             }),
         ];
     }

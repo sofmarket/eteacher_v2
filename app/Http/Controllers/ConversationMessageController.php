@@ -18,6 +18,25 @@ class ConversationMessageController extends Controller
     }
 
     /**
+     * Get all messages for a conversation.
+     */
+    public function index(Request $request, Conversation $conversation)
+    {
+        // Verify the conversation belongs to the authenticated user
+        if ($conversation->sender_id !== auth()->id() && $conversation->receiver_id !== auth()->id()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+        
+        $perPage = $request->get('per_page', 20);
+        $messages = $conversation->messages()
+            ->with(['sender.profile', 'receiver.profile'])
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
+        
+        return ConversationMessageResource::collection($messages);
+    }
+
+    /**
      * Store a newly created message in storage.
      */
     public function store(ConversationMessageRequest $request, Conversation $conversation)
@@ -127,23 +146,5 @@ class ConversationMessageController extends Controller
         
         return response()->json(['success' => true, 'message' => 'Message deleted successfully']);
     }
-    
-    /**
-     * Get all messages for a conversation.
-     */
-    public function index(Request $request, Conversation $conversation)
-    {
-        // Verify the conversation belongs to the authenticated user
-        if ($conversation->sender_id !== auth()->id() && $conversation->receiver_id !== auth()->id()) {
-            return response()->json(['error' => 'Unauthorized'], 403);
-        }
-        
-        $perPage = $request->get('per_page', 20);
-        $messages = $conversation->messages()
-            ->with(['sender.profile', 'receiver.profile'])
-            ->orderBy('created_at', 'asc')
-            ->paginate($perPage);
-        
-        return ConversationMessageResource::collection($messages);
-    }
+
 }

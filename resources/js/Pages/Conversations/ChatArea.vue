@@ -14,22 +14,6 @@
                 <h5 class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ conversation.receiver.name }}</h5>
             </div>
             <div class="flex items-center gap-3">
-                <!-- <button class="text-gray-700 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white/90">
-                    <svg class="stroke-current" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M5.54488 11.7254L8.80112 10.056C8.94007 9.98476 9.071 9.89524 9.16639 9.77162C9.57731 9.23912 9.66722 8.51628 9.38366 7.89244L7.76239 4.32564C7.23243 3.15974 5.7011 2.88206 4.79552 3.78764L3.72733 4.85577C3.36125 5.22182 3.18191 5.73847 3.27376 6.24794C3.9012 9.72846 5.56003 13.0595 8.25026 15.7497C10.9405 18.44 14.2716 20.0988 17.7521 20.7262C18.2615 20.8181 18.7782 20.6388 19.1442 20.2727L20.2124 19.2045C21.118 18.2989 20.8403 16.7676 19.6744 16.2377L16.1076 14.6164C15.4838 14.3328 14.7609 14.4227 14.2284 14.8336C14.1048 14.929 14.0153 15.06 13.944 15.1989L12.2747 18.4552"
-                            stroke="" stroke-width="1.5" />
-                    </svg>
-                </button>
-                <button class="text-gray-700 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white/90">
-                    <svg class="fill-current" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M4.25 5.25C3.00736 5.25 2 6.25736 2 7.5V16.5C2 17.7426 3.00736 18.75 4.25 18.75H15.25C16.4926 18.75 17.5 17.7426 17.5 16.5V15.3957L20.1118 16.9465C20.9451 17.4412 22 16.8407 22 15.8716V8.12838C22 7.15933 20.9451 6.55882 20.1118 7.05356L17.5 8.60433V7.5C17.5 6.25736 16.4926 5.25 15.25 5.25H4.25ZM17.5 10.3488V13.6512L20.5 15.4325V8.56756L17.5 10.3488ZM3.5 7.5C3.5 7.08579 3.83579 6.75 4.25 6.75H15.25C15.6642 6.75 16 7.08579 16 7.5V16.5C16 16.9142 15.6642 17.25 15.25 17.25H4.25C3.83579 17.25 3.5 16.9142 3.5 16.5V7.5Z"
-                            fill="" />
-                    </svg>
-                </button> -->
                 <!-- Dropdown Menu -->
                 <div class="relative" ref="dropdownRef">
                     <button @click="toggleDropdown"
@@ -74,7 +58,7 @@
         </div>
 
         <!-- Chat messages -->
-        <div class="flex-1 overflow-y-auto p-4 sm:p-5">
+        <div class="flex-1 overflow-y-auto p-4 sm:p-5 messages-container">
             <!-- Loading state -->
             <div v-if="isLoadingMessages" class="flex justify-center items-center h-full">
                 <div class="flex items-center space-x-2">
@@ -84,12 +68,12 @@
             </div>
 
             <!-- Messages -->
-            <div v-else-if="messages.length > 0" class="space-y-4 messages-container">
+            <div v-else-if="messages.length > 0" class="space-y-4 messages-container flex flex-col-reverse">
                 <div v-for="message in messages" :key="message.id" class="flex"
                     :class="{ 'justify-end': message.sender.id == sharedUser.id }">
                     <div
                         class="rounded-2xl p-4 max-w-[70%] bg-gray-100 dark:bg-white/[0.04] text-gray-800 dark:text-white/90" >
-                        <p class="text-sm">{{ message.body }}</p>
+                        <p class="text-sm break-words whitespace-pre-wrap">{{ message.body }}</p>
                         <!-- <span class="mt-1 block text-xs opacity-70">{{ message.time }}</span> -->
                     </div>
                 </div>
@@ -157,7 +141,7 @@
 
 <script setup>
 
-import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue';
+import { ref, computed, onMounted, watch, nextTick } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import { onClickOutside } from '@vueuse/core';
 import axios from 'axios';
@@ -176,7 +160,7 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['closeChat', 'deleteChat', 'messageSent']);
+const emit = defineEmits(['closeConversation', 'deleteConversation', 'messageSent']);
 
 // Dropdown functionality
 const dropdownRef = ref(null);
@@ -195,7 +179,7 @@ onClickOutside(dropdownRef, closeDropdown);
 
 // Chat actions
 const closeChat = () => {
-    emit('closeChat');
+    emit('closeConversation');
     closeDropdown();
 };
 
@@ -227,15 +211,13 @@ const sendMessage = async () => {
         });
 
         // Add the new message to the messages array
-        messages.value.push(response.data.data);
+        messages.value.unshift(response.data.data);
 
         // Emit event to parent to update conversation
         emit('messageSent', response.data.data);
 
         // Scroll to bottom after sending message
-        nextTick(() => {
-            scrollToBottom();
-        });
+        scrollToBottom();
 
     } catch (error) {
         console.error('Failed to send message:', error);
@@ -258,13 +240,8 @@ const loadMessages = async () => {
     try {
         const response = await axios.get(`/conversations/${props.conversation.id}/messages`);
         messages.value = response.data.data || [];
-
-        console.log(messages.value, sharedUser.value);
-
         // Scroll to bottom after loading messages
-        nextTick(() => {
-            scrollToBottom();
-        });
+        scrollToBottom();
     } catch (error) {
         console.error('Failed to load messages:', error);
         messages.value = [];
@@ -276,8 +253,13 @@ const loadMessages = async () => {
 // Scroll to bottom of messages
 const scrollToBottom = () => {
     nextTick(() => {
-        const elem = document.querySelector('.messages-container');
-        elem.scrollTop = elem.scrollHeight;
+        const scrollElement = document.querySelector('.messages-container');
+        if (scrollElement) {
+            scrollElement.scrollTo({
+                top: scrollElement.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
     });
 };
 
