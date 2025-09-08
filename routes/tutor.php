@@ -78,5 +78,7 @@ Route::get('/chats', [ChatsController::class, 'index'])->name('chats');
 Route::get('/coupons', [CouponsController::class, 'index'])->name('coupons');
 
 Route::get('/disputes', [DisputesController::class, 'index'])->name('disputes');
+Route::get('/disputes/{dispute}', [DisputesController::class, 'show'])->name('disputes.show');
+Route::post('/disputes', [DisputesController::class, 'store'])->name('disputes.store');
 
 Route::get('/payouts', [PayoutsController::class, 'index'])->name('payouts');
