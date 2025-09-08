@@ -54,6 +54,8 @@ class ConversationResource extends JsonResource
             
             'unread_count'                  => $this->whenLoaded('messages', function () {
                 return $this->messages->where('read', false)->count();
+            }, function() {
+                return $this->messages()->where('read', false)->count();
             }),
             
             'latest_message'                => $this->whenLoaded('messages', function () {

@@ -14,8 +14,8 @@ class ConversationsController extends Controller
     public function index()
     {
         $conversations = Conversation::with('sender', 'receiver')
-        ->orderBy('last_time_message', 'desc')
-        ->get();
+            ->orderBy('last_time_message', 'desc')
+            ->get();
         return inertia('Conversations/Index', [
             'conversations' => ConversationResource::collection($conversations),
         ]);
@@ -34,5 +34,17 @@ class ConversationsController extends Controller
         $conversation->delete();
         return redirect()->route('conversations.index')->with('success', 'Conversation deleted successfully.');
     }
-    
+
+    public function markAsRead(Conversation $conversation)
+    {
+        $conversation->messages()
+            ->where('read', false)
+            ->update(['read' => true]);
+
+        return response()->json([
+            'success' => true, 
+            'message' => 'Conversation marked as read'
+        ]);
+    }
+
 }

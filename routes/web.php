@@ -43,6 +43,8 @@ Route::middleware('auth')->prefix('/conversations')->name('conversations.')->gro
     Route::get('/', [ConversationsController::class, 'index'])->name('index');
     Route::get('/{conversation}', [ConversationsController::class, 'show'])->name('show');
     Route::delete('/{conversation}', [ConversationsController::class, 'destroy'])->name('destroy');
+    Route::patch('/{conversation}/read', [ConversationsController::class, 'markAsRead'])->name('read');
+
     
     // Message routes
     Route::prefix('/{conversation}/messages')->name('messages.')->group(function () {

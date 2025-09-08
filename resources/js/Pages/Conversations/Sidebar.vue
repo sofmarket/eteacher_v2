@@ -63,8 +63,14 @@
                             }}</h5>
                         <p class="text-xs text-gray-500 dark:text-gray-400 truncate">{{conversation.latest_message.body}}</p>
                     </div>
-                    <div class="text-xs text-gray-500 dark:text-gray-400">
-                        {{ formatTimeAgo(new Date(conversation.last_time_message)) }}
+                    <div class="flex flex-col items-end gap-1">
+                        <div class="text-xs text-gray-500 dark:text-gray-400">
+                            {{ formatTimeAgo(new Date(conversation.last_time_message)) }}
+                        </div>
+                        <div v-if="conversation.unread_count > 0" 
+                             class="flex items-center justify-center min-w-[20px] h-5 px-2 text-xs font-medium text-white bg-red-500 rounded-full">
+                            {{ conversation.unread_count > 99 ? '99+' : conversation.unread_count }}
+                        </div>
                     </div>
                 </button>
             </div>
@@ -82,6 +88,7 @@ import { formatTimeAgo   } from '@vueuse/core'
 
 const page = usePage();
 const conversations = computed(() => page.props.conversations?.data || [])  ;   
+const sharedUser = computed(() => page.props.sharedUser?.data ?? null)
 
 defineProps({
     selectedConversation: {
@@ -98,7 +105,11 @@ const openConversation = (conversation) => {
 };
 
 onMounted(() => {
-    //
+  window.Echo.private('user.' + sharedUser.value.id)
+    .listen('.message.received', (e) => {
+      conversations.value.find(conversation => conversation.id === e.conversation_id).latest_message = e.message;
+      conversations.value.find(conversation => conversation.id === e.conversation_id).last_time_message = e.message.created_at;
+    });
 });
 
 </script>

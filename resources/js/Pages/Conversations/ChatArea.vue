@@ -72,7 +72,7 @@
                 <div v-for="message in messages" :key="message.id" class="flex"
                     :class="{ 'justify-end': message.sender.id == sharedUser.id }">
                     <div
-                        class="rounded-2xl p-4 max-w-[70%] bg-gray-100 dark:bg-white/[0.04] text-gray-800 dark:text-white/90" >
+                        class="rounded-2xl p-4 max-w-[70%] bg-gray-100 dark:bg-white/[0.04] text-gray-800 dark:text-white/90">
                         <p class="text-sm break-words whitespace-pre-wrap">{{ message.body }}</p>
                         <!-- <span class="mt-1 block text-xs opacity-70">{{ message.time }}</span> -->
                     </div>
@@ -114,7 +114,8 @@
                         </path>
                     </svg>
                     <!-- Send icon -->
-                    <svg v-else width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg v-else width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M7.39999 6.32L15.89 3.49C19.7 2.22 21.77 4.3 20.51 8.11L17.68 16.6C15.78 22.31 12.66 22.31 10.76 16.6L9.91999 14.08L7.39999 13.24C1.68999 11.34 1.68999 8.23 7.39999 6.32Z"
                             stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -240,8 +241,11 @@ const loadMessages = async () => {
     try {
         const response = await axios.get(`/conversations/${props.conversation.id}/messages`);
         messages.value = response.data.data || [];
-        // Scroll to bottom after loading messages
-        scrollToBottom();
+
+        nextTick(() => {
+            // Scroll to bottom after loading messages
+            scrollToBottom();
+        });
     } catch (error) {
         console.error('Failed to load messages:', error);
         messages.value = [];
@@ -263,29 +267,47 @@ const scrollToBottom = () => {
     });
 };
 
+// Mark conversation as read
+const markConversationAsRead = async (conversationId) => {
+    if (!conversationId) return;
+
+    try {
+        await axios.patch(`/conversations/${conversationId}/read`);
+    } catch (error) {
+        console.error('Failed to mark conversation as read:', error);
+    }
+};
+
 // Watch for conversation changes
 watch(() => props.conversation, (newConversation, oldConversation) => {
     message.value = '';
 
     if (newConversation?.id !== oldConversation?.id) {
         loadMessages();
+        // Mark conversation as read when opening
+        markConversationAsRead(newConversation?.id);
+    } else {
+        scrollToBottom();
     }
 }, { immediate: true });
 
 onMounted(() => {
-    
+
     if (props.conversation?.id) {
         loadMessages();
+        // Mark conversation as read when component mounts with a conversation
+        markConversationAsRead(props.conversation.id);
     }
 
     window.Echo.private('user.' + sharedUser.value.id)
-      .listen('.message.received', (e) => {
-        console.log(e);
-        if (e.conversation_id == props.conversation?.id) {
-            messages.value.unshift(e.message);
-            scrollToBottom();
-        }
-      });
+        .listen('.message.received', (e) => {
+            if (e.conversation_id == props.conversation?.id) {
+                messages.value.unshift(e.message);
+                nextTick(() => {
+                    scrollToBottom();
+                });
+            }
+        });
 
 });
 
