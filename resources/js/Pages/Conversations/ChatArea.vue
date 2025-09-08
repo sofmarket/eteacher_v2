@@ -273,9 +273,20 @@ watch(() => props.conversation, (newConversation, oldConversation) => {
 }, { immediate: true });
 
 onMounted(() => {
+    
     if (props.conversation?.id) {
         loadMessages();
     }
+
+    window.Echo.private('user.' + sharedUser.value.id)
+      .listen('.message.received', (e) => {
+        console.log(e);
+        if (e.conversation_id == props.conversation?.id) {
+            messages.value.unshift(e.message);
+            scrollToBottom();
+        }
+      });
+
 });
 
 </script>

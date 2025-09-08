@@ -16,9 +16,15 @@
 
 <script setup>
 
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import Sidebar from './Sidebar.vue';
 import ChatArea from './ChatArea.vue';
+
+import { usePage } from '@inertiajs/vue3';
+
+const page = usePage();
+const sharedUser = computed(() => page.props.sharedUser?.data ?? null)
+
 
 const selectedConversation = ref(null);
 

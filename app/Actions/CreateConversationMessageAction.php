@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Events\MessageReceived;
 use App\Http\Requests\ConversationMessageRequest;
 use App\Models\Conversation;
 use App\Models\ConversationMessage;
@@ -33,6 +34,9 @@ class CreateConversationMessageAction
         
         // Load relationships for the response
         $message->load(['sender.profile', 'receiver.profile']);
+        
+        // Broadcast the message
+        broadcast(new MessageReceived($message))->toOthers();
         
         return $message;
     }
