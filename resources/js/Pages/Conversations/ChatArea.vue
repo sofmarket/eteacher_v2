@@ -36,19 +36,12 @@
                             class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50">
                             <button @click="closeChat"
                                 class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150">
-                                <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
+                                <CloseIcon class="w-4 h-4 mr-3" />
                                 Close Chat
                             </button>
                             <button @click="deleteChat"
                                 class="flex items-center w-full px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-150">
-                                <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-                                    </path>
-                                </svg>
+                                <DeleteIcon class="w-4 h-4 mr-3" />
                                 Delete Chat
                             </button>
                         </div>
@@ -114,14 +107,7 @@
                         </path>
                     </svg>
                     <!-- Send icon -->
-                    <svg v-else width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M7.39999 6.32L15.89 3.49C19.7 2.22 21.77 4.3 20.51 8.11L17.68 16.6C15.78 22.31 12.66 22.31 10.76 16.6L9.91999 14.08L7.39999 13.24C1.68999 11.34 1.68999 8.23 7.39999 6.32Z"
-                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M10.11 13.65L13.69 10.06" stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
+                    <SendIcon v-else class="w-6 h-6" />
                 </button>
             </div>
         </div>
@@ -146,6 +132,7 @@ import { ref, computed, onMounted, watch, nextTick } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import { onClickOutside } from '@vueuse/core';
 import axios from 'axios';
+import { CloseIcon, DeleteIcon, SendIcon } from '@/icons';
 
 // reactive reference to props
 const page = usePage();

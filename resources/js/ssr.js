@@ -34,31 +34,23 @@ createInertiaApp({
             Layout: () => import('@/Shared/Default/Layout.vue'),
             DashboardLayout: () => import('@/Shared/Dashboard/Layout.vue'),
             AuthLayout: () => import('@/Shared/Auth/Layout.vue'),
-            TutorLayout: () => import('@/Shared/Tutor/Layout.vue'),
-            StudentLayout: () => import('@/Shared/Student/Layout.vue'),
         };
-
 
         let page = pages[`./Pages/${name}.vue`];
 
         if (!page.layout && name) {
-            if (name.startsWith('Dashboard')) {
-                return layouts.DashboardLayout().then(layout => {
-                    page.default.layout = layout.default || layout;
-                    return page;
-                });
-            } else if (name.startsWith('Auth')) {
+            if (name.startsWith('Auth')) {
                 return layouts.AuthLayout().then(layout => {
                     page.default.layout = layout.default || layout;
                     return page;
                 });
-            } else if (name.startsWith('Tutor') || name.startsWith('Conversations')) {
-                return layouts.TutorLayout().then(layout => {
-                    page.default.layout = layout.default || layout;
-                    return page;
-                });
-            } else if (name.startsWith('Student')) {
-                return layouts.StudentLayout().then(layout => {
+            } else if (
+                name.startsWith('Admin') ||
+                name.startsWith('Tutor') ||
+                name.startsWith('Student') ||
+                name.startsWith('Conversations')
+            ) {
+                return layouts.DashboardLayout().then(layout => {
                     page.default.layout = layout.default || layout;
                     return page;
                 });

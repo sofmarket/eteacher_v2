@@ -53,7 +53,7 @@
                       ? 'menu-item-icon-active'
                       : 'menu-item-icon-inactive',
                   ]">
-                    <component :is="item.icon" />
+                    <component v-if="item.icon" :is="item.icon" />
                   </span>
                   <span v-if="isExpanded || isHovered || isMobileOpen" class="menu-item-text">{{ item.name }}</span>
                   <ChevronDownIcon v-if="isExpanded || isHovered || isMobileOpen" :class="[
@@ -78,7 +78,7 @@
                       ? 'menu-item-icon-active'
                       : 'menu-item-icon-inactive',
                   ]">
-                    <component :is="item.icon" />
+                    <component v-if="item.icon" :is="item.icon" />
                   </span>
                   <span v-if="isExpanded || isHovered || isMobileOpen" class="menu-item-text">{{ item.name }}</span>
                 </Link>
@@ -146,72 +146,28 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import { Link } from "@inertiajs/vue3";
+import { Link, usePage } from "@inertiajs/vue3";
 
 import {
-  GridIcon,
-  CalenderIcon,
-  UserCircleIcon,
   ChevronDownIcon,
   HorizontalDots,
-  FlagIcon,
-  ChatIcon,
-  MonyIcon,
-  StaredIcon,
-  DisputeIcon,
 } from "@/icons";
 import SidebarWidget from "./SidebarWidget.vue";
 import { useSidebar } from "@/Composables/useSidebar";
+import { useIconMapping } from "@/Composables/useIconMapping";
 
 const { isExpanded, isMobileOpen, isHovered, openSubmenu } = useSidebar();
+const { mapMenuItems } = useIconMapping();
+const page = usePage();
 
-const menuGroups = [
-  {
-    title: "Menu",
-    items: [
-      {
-        icon: GridIcon,
-        name: "Dashboard",
-        path: route('tutor.home'),
-      },
-      {
-        icon: UserCircleIcon,
-        name: "Profile Settings",
-        path: route('tutor.profile'),
-      },
-      {
-        icon: CalenderIcon,
-        name: "Manage Bookings",
-        path: route('tutor.bookings.teached-subjects'),
-      },
-      {
-        icon: ChatIcon,
-        name: "Inbox",
-        path: route('conversations.index'),
-      },
-      {
-        icon: StaredIcon,
-        name: "Deals & Coupons",
-        path: route('tutor.coupons'),
-      },
-      {
-        icon: FlagIcon,
-        name: "Payouts",
-        path: route('tutor.payouts'),
-      },
-      {
-        icon: MonyIcon,
-        name: "Invoices",
-        path: route('tutor.invoices'),
-      },
-      {
-        icon: DisputeIcon,
-        name: "Disputes",
-        path: route('tutor.disputes'),
-      },
-    ],
-  },
-];
+// Get menu data from PHP backend
+const menuGroups = computed(() => {
+  const sidebarMenu = page.props.sidebarMenu;
+  if (sidebarMenu && sidebarMenu.items) {
+    return mapMenuItems([sidebarMenu]);
+  }
+  return [];
+});
 
 // const isActive = (path) => route.path === path;
 const isActive = (path) => false;
@@ -222,7 +178,7 @@ const toggleSubmenu = (groupIndex, itemIndex) => {
 };
 
 const isAnySubmenuRouteActive = computed(() => {
-  return menuGroups.some((group) =>
+  return menuGroups.value.some((group) =>
     group.items.some(
       (item) =>
         item.subItems && item.subItems.some((subItem) => isActive(subItem.path))
@@ -235,7 +191,7 @@ const isSubmenuOpen = (groupIndex, itemIndex) => {
   return (
     openSubmenu.value === key ||
     (isAnySubmenuRouteActive.value &&
-      menuGroups[groupIndex].items[itemIndex].subItems?.some((subItem) =>
+      menuGroups.value[groupIndex].items[itemIndex].subItems?.some((subItem) =>
         isActive(subItem.path)
       ))
   );

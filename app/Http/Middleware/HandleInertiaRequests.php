@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Helpers\SidebarMenu;
 use App\Http\Resources\SharedUserResource;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -51,6 +52,9 @@ class HandleInertiaRequests extends Middleware
             },
             'locale' => function () {
                 return session('locale', 'en'); // Default to 'ar' if no locale is set in the session
+            },
+            'sidebarMenu' => function () {
+                return SidebarMenu::render();
             }
         ]);
     }

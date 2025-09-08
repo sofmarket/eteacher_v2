@@ -87,7 +87,7 @@
                         : 'menu-item-icon-inactive',
                     ]"
                   >
-                    <component :is="item.icon" />
+                    <component v-if="item.icon" :is="item.icon" />
                   </span>
                   <span
                     v-if="isExpanded || isHovered || isMobileOpen"
@@ -125,7 +125,7 @@
                         : 'menu-item-icon-inactive',
                     ]"
                   >
-                    <component :is="item.icon" />
+                    <component v-if="item.icon" :is="item.icon" />
                   </span>
                   <span
                     v-if="isExpanded || isHovered || isMobileOpen"
@@ -324,7 +324,7 @@ const toggleSubmenu = (groupIndex, itemIndex) => {
 };
 
 const isAnySubmenuRouteActive = computed(() => {
-  return menuGroups.some((group) =>
+  return menuGroups.value.some((group) =>
     group.items.some(
       (item) =>
         item.subItems && item.subItems.some((subItem) => isActive(subItem.path))
@@ -337,7 +337,7 @@ const isSubmenuOpen = (groupIndex, itemIndex) => {
   return (
     openSubmenu.value === key ||
     (isAnySubmenuRouteActive.value &&
-      menuGroups[groupIndex].items[itemIndex].subItems?.some((subItem) =>
+      menuGroups.value[groupIndex].items[itemIndex].subItems?.some((subItem) =>
         isActive(subItem.path)
       ))
   );

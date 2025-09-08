@@ -1,0 +1,126 @@
+import {
+  GridIcon,
+  UserCircleIcon,
+  CalenderIcon,
+  ChatIcon,
+  StaredIcon,
+  FlagIcon,
+  MonyIcon,
+  DisputeIcon,
+  BellIcon,
+  BarChartIcon,
+  LayoutDashboardIcon,
+  UserGroupIcon,
+  FolderIcon,
+  TrashIconLg,
+  SupportIcon,
+  HomeIcon,
+  RefreshIcon,
+  ArchiveIcon,
+  TrashIcon,
+  Message2Line,
+  PaperclipIcon,
+  BoxIcon,
+  ChevronRightIcon,
+  BoxCubeIcon,
+  TaskIcon,
+  MailIcon,
+  DocsIcon,
+  PieChartIcon,
+  ChevronDownIcon,
+  HorizontalDots,
+  Calendar2Line,
+  PlugInIcon,
+  PageIcon,
+  TableIcon,
+  ListIcon,
+  LogoutIcon,
+  InfoCircleIcon,
+  SettingsIcon,
+  ErrorIcon,
+  SuccessIcon,
+  InfoIcon,
+  WarningIcon,
+  PlusIcon,
+  ErrorHexaIcon,
+  MenuIcon,
+  CheckIcon,
+  MailBox,
+  SendIcon,
+  DraftIcon,
+} from '@/icons';
+
+// Icon mapping object
+const iconMap = {
+  GridIcon,
+  UserCircleIcon,
+  CalenderIcon,
+  ChatIcon,
+  StaredIcon,
+  FlagIcon,
+  MonyIcon,
+  DisputeIcon,
+  BellIcon,
+  BarChartIcon,
+  LayoutDashboardIcon,
+  UserGroupIcon,
+  FolderIcon,
+  TrashIconLg,
+  SupportIcon,
+  HomeIcon,
+  RefreshIcon,
+  ArchiveIcon,
+  TrashIcon,
+  Message2Line,
+  PaperclipIcon,
+  BoxIcon,
+  ChevronRightIcon,
+  BoxCubeIcon,
+  TaskIcon,
+  MailIcon,
+  DocsIcon,
+  PieChartIcon,
+  ChevronDownIcon,
+  HorizontalDots,
+  Calendar2Line,
+  PlugInIcon,
+  PageIcon,
+  TableIcon,
+  ListIcon,
+  LogoutIcon,
+  InfoCircleIcon,
+  SettingsIcon,
+  ErrorIcon,
+  SuccessIcon,
+  InfoIcon,
+  WarningIcon,
+  PlusIcon,
+  ErrorHexaIcon,
+  MenuIcon,
+  CheckIcon,
+  MailBox,
+  SendIcon,
+  DraftIcon,
+};
+
+export function useIconMapping() {
+  const getIcon = (iconName) => {
+    return iconMap[iconName] || null;
+  };
+
+  const mapMenuItems = (menuGroups) => {
+    return menuGroups.map(group => ({
+      ...group,
+      items: group.items.map(item => ({
+        ...item,
+        icon: getIcon(item.icon)
+      }))
+    }));
+  };
+
+  return {
+    getIcon,
+    mapMenuItems,
+    iconMap
+  };
+}

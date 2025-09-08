@@ -47,6 +47,8 @@ import BellIcon from "./BellIcon.vue";
 import BarChartIcon from "./BarChartIcon.vue";
 import MonyIcon from "./MonyIcon.vue";
 import DisputeIcon from "./DisputeIcon.vue";
+import CloseIcon from "./CloseIcon.vue";
+import DeleteIcon from "./DeleteIcon.vue";
 export {
   BellIcon,
   BarChartIcon,
@@ -97,4 +99,6 @@ export {
   DraftIcon,
   MonyIcon,
   DisputeIcon,
+  CloseIcon,
+  DeleteIcon,
 };
