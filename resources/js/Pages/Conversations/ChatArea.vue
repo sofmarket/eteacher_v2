@@ -74,7 +74,7 @@
                     <div
                         class="rounded-2xl p-4 max-w-[70%] bg-gray-100 dark:bg-white/[0.04] text-gray-800 dark:text-white/90">
                         <p class="text-sm break-words whitespace-pre-wrap">{{ message.body }}</p>
-                        <!-- <span class="mt-1 block text-xs opacity-70">{{ message.time }}</span> -->
+                        <span class="mt-1 block text-xs opacity-70">{{ message.time }}</span>
                     </div>
                 </div>
                 <!-- Scroll anchor -->

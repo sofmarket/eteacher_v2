@@ -8,7 +8,7 @@
                     <h3 class="font-semibold text-gray-800 text-theme-xl dark:text-white/90 sm:text-2xl">Chats</h3>
                 </div>
                 <div class="relative">
-                    <div class="relative">
+                    <!-- <div class="relative">
                         <button class="text-gray-500 dark:text-gray-400">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -17,7 +17,7 @@
                                     fill="currentColor" />
                             </svg>
                         </button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="flex items-center gap-3 mt-4">
