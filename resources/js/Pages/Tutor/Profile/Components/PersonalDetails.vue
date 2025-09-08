@@ -20,13 +20,13 @@
           <hr class="col-span-2">
 
           <div class="col-span-2">
-            <UniversalInput :label="t('email_address')" v-model="form.email" :errors="form.errors.email" dir="ltr" />
+            <UniversalInput :label="t('email_address')" v-model="form.email" :errors="form.errors.email" dir="ltr" :inline="false" />
           </div>
 
           <hr class="col-span-2">
 
           <div class="col-span-2">
-            <UniversalInput :label="t('phone')" v-model="form.phone_number" :errors="form.errors.phone_number" />
+            <UniversalInput :label="t('phone')" v-model="form.phone_number" :errors="form.errors.phone_number" :inline="false" />
           </div>
 
           <hr class="col-span-2">
@@ -48,13 +48,13 @@
           <hr class="col-span-2">
 
           <div class="col-span-2">
-            <UniversalInput :label="t('tag_line')" v-model="form.tagline" :errors="form.errors.tagline" />
+            <UniversalInput :label="t('tag_line')" v-model="form.tagline" :errors="form.errors.tagline" :inline="false" />
           </div>
 
           <hr class="col-span-2">
 
           <div class="col-span-2">
-            <UniversalInput :label="t('meta_keywords')" v-model="form.keywords" :errors="form.errors.keywords" />
+            <UniversalInput :label="t('meta_keywords')" v-model="form.keywords" :errors="form.errors.keywords" :inline="false" />
           </div>
 
           <hr class="col-span-2">

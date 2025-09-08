@@ -10,13 +10,13 @@
 
                     <div class="col-span-2">
                         <UniversalInput label="Fullname" v-model="form.fullname" :errors="form.errors.fullname"
-                            dir="ltr" />
+                            dir="ltr" :inline="false" />
                     </div>
 
                     <hr class="col-span-2">
 
                     <div class="col-span-2">
-                        <DateInput label="Date of birth" v-model="form.dob" :errors="form.errors.dob" :inline="true" />
+                        <DateInput label="Date of birth" v-model="form.dob" :errors="form.errors.dob" :inline="false" />
                     </div>
 
                     <hr class="col-span-2">
