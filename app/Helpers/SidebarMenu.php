@@ -59,7 +59,7 @@ class SidebarMenu
                 [
                     'icon' => 'MonyIcon',
                     'name' => "Invoices",
-                    'path' => route('tutor.invoices'),
+                    'path' => route('tutor.invoices.index'),
                 ],
                 [
                     'icon' => 'DisputeIcon',

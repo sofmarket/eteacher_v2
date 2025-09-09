@@ -71,7 +71,7 @@ Route::delete('/profile/certificate/{certificate}', [ProfileCertificateControlle
 
 Route::post('/profile/identity_verification', IdentityVerificationController::class)->name('profile.identity_verification');
 
-Route::get('/invoices', [InvoicesController::class, 'index'])->name('invoices');
+Route::get('/invoices', [InvoicesController::class, 'index'])->name('invoices.index');
 
 Route::get('/chats', [ChatsController::class, 'index'])->name('chats');
 

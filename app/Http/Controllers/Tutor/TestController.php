@@ -12,10 +12,22 @@ class TestController extends Controller
     public function __invoke()
     {
 
-        $message = \App\Models\ConversationMessage::find(1);
-        broadcast(new MessageReceived($message))->toOthers();
+        // $invoices = \App\Models\Invoice::get();
 
-        dd($message);
+        // $statuses = ['pending', 'paid', 'refunded'];
+
+        // foreach ($invoices as $invoice) {
+        //     $invoice->update([
+        //         'status' => $statuses[array_rand($statuses)],
+        //     ]);
+        // }
+
+        dd('test');
+
+        // $message = \App\Models\ConversationMessage::find(1);
+        // broadcast(new MessageReceived($message))->toOthers();
+
+        // dd($message);
 
         $user = User::find(1);
 
