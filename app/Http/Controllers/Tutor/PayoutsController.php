@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Tutor;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserPayoutMethodsResource;
+use App\Http\Resources\UserWithdrawalsResource;
+use App\Models\UserPayoutMethod;
+use App\Models\UserWithdrawal;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -15,22 +19,32 @@ class PayoutsController extends Controller
      */
     public function index()
     {
+        $withdrawals = UserWithdrawal::query()
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->paginate(request()->per_page ?? 5);
+        
+        $payoutMethods = UserPayoutMethod::query()
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->get();
+
         return inertia('Tutor/Payouts/Index', [
-            'payouts' => [],
-            'payout_methods' => [], // TODO: Fetch configured payout methods
+            'payouts' => UserWithdrawalsResource::collection($withdrawals),
+            'payout_methods' => UserPayoutMethodsResource::collection($payoutMethods),
         ]);
     }
 
     /**
      * Show the payout details.
      *
-     * @param  int  $id
+     * @param  UserWithdrawal  $withdrawal
      * @return \Inertia\Response
      */
-    public function show($id)
+    public function show(UserWithdrawal $withdrawal)
     {
         return inertia('Tutor/Payouts/Show', [
-            'payout' => [], // TODO: Fetch payout details
+            'payout' => UserWithdrawalsResource::make($withdrawal),
         ]);
     }
 
@@ -95,4 +109,4 @@ class PayoutsController extends Controller
 
         return response()->json($methods);
     }
-} 
+}

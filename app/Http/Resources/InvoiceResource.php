@@ -20,9 +20,9 @@ class InvoiceResource extends JsonResource
             'status'                => $this->status,
             'payment_method'        => $this->payment_method,
             'platform_fee'          => $this->platform_fee,
-            'issued_at'             => $this->issued_at->format('Y-m-d'),
-            'paid_at'               => $this->paid_at,
-            'refunded_at'           => $this->refunded_at,
+            'issued_at'             => $this->issued_at?->format('Y-m-d'),
+            'paid_at'               => $this->paid_at?->format('Y-m-d'),
+            'refunded_at'           => $this->refunded_at?->format('Y-m-d'),
             'tutor_payout'          => number_format($this->amount - $this->platform_fee, 2),
             
             // Related data

@@ -22,6 +22,7 @@ class SharedUserResource extends JsonResource
             'type'                          => $this->type,
             'gender'                        => $this->profile->gender,
             'avatar'                        => $this->profile->getFirstMediaUrl('avatar'),
+            'wallet_balance'                => $this->balance,
         ];
     }
 }

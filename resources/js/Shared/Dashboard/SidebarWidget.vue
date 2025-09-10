@@ -1,15 +1,11 @@
-<script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
-</script>
-
 <template>
   <div class="mx-auto mb-2 w-full max-w-60 rounded-2xl bg-gray-50 px-4 pt-5 py-2 text-center dark:bg-white/[0.03]">
-    <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">200 MAD</h3>
+    <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">{{ balance }} MAD</h3>
     <p class="mb-4 text-gray-500 text-theme-sm dark:text-gray-400">
-      Earnings this month
+      Wallet Balance
     </p>
     <hr class="my-4">
-    <a href="https://tailadmin.com/pricing" target="_blank" rel="nofollow"
+    <a href="#" target="_blank" rel="nofollow"
       class="flex items-center justify-center p-3 font-medium text-white rounded-lg bg-brand-500 text-theme-sm hover:bg-brand-600">
       Withdraw now
     </a>
@@ -27,3 +23,13 @@ import { Link } from '@inertiajs/vue3';
   logout
   </Link>
 </template>
+
+<script setup>
+import { computed } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
+
+
+const page = usePage();
+const balance = computed(() => page.props.sharedUser?.data?.wallet_balance);
+
+</script>
