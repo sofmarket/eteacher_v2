@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Helpers\SidebarMenu;
+use App\Http\Resources\NotificationResource;
 use App\Http\Resources\SharedUserResource;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -39,9 +40,11 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             // Lazily...
-            'notifications' => fn () => $request->user()
-                ? $request->user()->notifications
-                : [],
+            'notifications' => function () use ($request) {
+                return $request->user()
+                    ? NotificationResource::collection($request->user()->notifications()->paginate(5))
+                    : [];
+            },
             'sharedUser' => fn () => $request->user()
                 ? SharedUserResource::make(($request->user()))
                 : null,

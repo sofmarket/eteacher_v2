@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\NotificationResource;
 use Illuminate\Http\Request;
 
 class NotificationsController extends Controller
@@ -17,11 +18,9 @@ class NotificationsController extends Controller
     {
         $notifications = $request->user()
             ->notifications()
-            ->paginate(10);
+            ->paginate(5);
 
-        return inertia('Notifications/Index', [
-            'notifications' => $notifications,
-        ]);
+        return NotificationResource::collection($notifications);
     }
 
     /**
@@ -36,7 +35,10 @@ class NotificationsController extends Controller
 
         $notification->markAsRead();
 
-        return back()->with('success', __('notifications.marked_as_read'));
+        return response()->json([
+            'success' => true,
+            'message' => 'Notification marked as read'
+        ]);
     }
 
     /**
@@ -48,7 +50,10 @@ class NotificationsController extends Controller
             ->unreadNotifications
             ->markAsRead();
 
-        return back()->with('success', __('notifications.all_marked_as_read'));
+        return response()->json([
+            'success' => true,
+            'message' => 'All notifications marked as read'
+        ]);
     }
 
     /**
@@ -63,7 +68,10 @@ class NotificationsController extends Controller
 
         $notification->delete();
 
-        return back()->with('success', __('notifications.deleted'));
+        return response()->json([
+            'success' => true,
+            'message' => 'Notification deleted'
+        ]);
     }
 
     /**
@@ -75,7 +83,10 @@ class NotificationsController extends Controller
             ->notifications()
             ->delete();
 
-        return back()->with('success', __('notifications.all_deleted'));
+        return response()->json([
+            'success' => true,
+            'message' => 'All notifications deleted'
+        ]);
     }
 
     /**

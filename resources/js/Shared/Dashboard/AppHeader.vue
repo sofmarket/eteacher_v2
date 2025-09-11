@@ -40,6 +40,14 @@
         <div class="flex items-center gap-2 2xsm:gap-3">
           <!-- <ThemeToggler /> -->
           <NotificationMenu />
+
+          <Link
+            :href="route('conversations.index')"
+            class="relative flex items-center justify-center text-gray-500 transition-colors bg-white border border-gray-200 rounded-full hover:text-dark-900 h-11 w-11 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white">
+              <ChatIcon />
+            </Link>
+
+
         </div>
         <UserMenu />
       </div>
@@ -50,11 +58,13 @@
 <script setup>
 import { ref } from 'vue'
 import { useSidebar } from '@/composables/useSidebar'
-import ThemeToggler from '@/Components/common/ThemeToggler.vue'
+import ThemeToggler from '@/Components/common/ThemeToggler.vue' 
 import SearchBar from './header/SearchBar.vue'
 import HeaderLogo from './header/HeaderLogo.vue'
 import NotificationMenu from './header/NotificationMenu.vue'
 import UserMenu from './header/UserMenu.vue'
+import { Link } from '@inertiajs/vue3'
+import { ChatIcon } from '@/icons'
 
 const { toggleSidebar, toggleMobileSidebar, isMobileOpen } = useSidebar()
 

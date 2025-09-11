@@ -17,7 +17,7 @@
 
     <!-- Dropdown Start -->
     <div v-if="dropdownOpen"
-      class="absolute -right-[240px] mt-[17px] flex h-[480px] w-[350px] flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark sm:w-[361px] lg:right-0">
+      class="absolute -right-[240px] mt-[17px] flex max-h-[75vh] w-[350px] flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark sm:w-[361px] lg:right-0">
       <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100 dark:border-gray-800">
         <h5 class="text-lg font-semibold text-gray-800 dark:text-white/90">Notification</h5>
 
@@ -32,40 +32,43 @@
       </div>
 
       <ul class="flex flex-col h-auto overflow-y-auto custom-scrollbar">
-        <li v-for="notification in notifications" :key="notification.id" @click="handleItemClick">
+        <li v-if="notifications.data.length > 0" v-for="notification in notifications.data" :key="notification.id" @click="handleItemClick">
           <a class="flex gap-3 rounded-lg border-b border-gray-100 p-3 px-4.5 py-3 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-white/5"
             href="#">
             <span class="relative block w-full h-10 rounded-full z-1 max-w-10">
-              <img :src="notification.userImage" alt="User" class="overflow-hidden rounded-full" />
-              <span :class="notification.status === 'online' ? 'bg-success-500' : 'bg-error-500'"
-                class="absolute bottom-0 right-0 z-10 h-2.5 w-full max-w-2.5 rounded-full border-[1.5px] border-white dark:border-gray-900"></span>
+              <img :src="notification.data.image ?? 'https://placehold.co/400'" alt="User"
+                class="overflow-hidden rounded-full" />
             </span>
 
             <span class="block">
               <span class="mb-1.5 block text-theme-sm text-gray-500 dark:text-gray-400">
                 <span class="font-medium text-gray-800 dark:text-white/90">
-                  {{ notification.userName }}
-                </span>
-                {{ notification.action }}
-                <span class="font-medium text-gray-800 dark:text-white/90">
-                  {{ notification.project }}
-                </span>
+                  {{ notification.data.title }}
+                </span> <br>
+                <span class="block truncate max-w-[200px]">{{ notification.data.message }}</span>
               </span>
 
               <span class="flex items-center gap-2 text-gray-500 text-theme-xs dark:text-gray-400">
-                <span>{{ notification.type }}</span>
+                <span>from {{ notification.data.actor }}</span>
                 <span class="w-1 h-1 bg-gray-400 rounded-full"></span>
-                <span>{{ notification.time }}</span>
+                <span>{{ formatTimeAgo(new Date(notification.data.date)) }}</span>
               </span>
             </span>
           </a>
         </li>
+        <li v-else>
+          <div class="flex items-center justify-center h-full py-5">
+            <span class="text-gray-500 text-theme-sm dark:text-gray-400">No notifications</span>
+          </div>
+        </li>
       </ul>
 
-      <Link :href="route('notifications.index')"
-        class="mt-3 flex justify-center rounded-lg border border-gray-300 bg-white p-3 text-theme-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200">
-        View All Notification
-      </Link>
+      <div class="flex justify-center py-1 border-t border-gray-200" v-if="notifications.meta.last_page > notifications.meta.current_page">
+        <button @click="handleLoadMore"
+          class="my-3  rounded-lg border border-gray-300 bg-white py-2 px-5 text-theme-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200">
+          Load More
+        </button>
+      </div>
     </div>
     <!-- Dropdown End -->
   </div>
@@ -74,12 +77,13 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { Link, usePage } from "@inertiajs/vue3";
-
+import { formatTimeAgo } from '@vueuse/core';
+import axios from 'axios';
 const dropdownOpen = ref(false)
-const notifying = ref(true)
+const notifying = ref(usePage().props.notifications.data.length > 0)
 const dropdownRef = ref(null)
 
-const { notifications } = usePage().props;
+const notifications = ref(usePage().props.notifications);
 
 const toggleDropdown = () => {
   dropdownOpen.value = !dropdownOpen.value
@@ -103,11 +107,16 @@ const handleItemClick = (event) => {
   closeDropdown()
 }
 
-const handleViewAllClick = (event) => {
+const handleLoadMore = (event) => {
   event.preventDefault()
-  // Handle the "View All Notification" action here
-  console.log('View All Notifications clicked')
-  closeDropdown()
+  axios.get(route('notifications.index'), {
+    params: {
+      page: notifications.value.meta.current_page + 1
+    }
+  }).then(response => {
+    notifications.value.data = [...notifications.value.data, ...response.data.data];
+    notifications.value.meta = response.data.meta;
+  })
 }
 
 onMounted(() => {

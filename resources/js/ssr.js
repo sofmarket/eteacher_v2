@@ -48,6 +48,7 @@ createInertiaApp({
                 name.startsWith('Admin') ||
                 name.startsWith('Tutor') ||
                 name.startsWith('Student') ||
+                name.startsWith('Notifications') ||
                 name.startsWith('Conversations')
             ) {
                 return layouts.DashboardLayout().then(layout => {
