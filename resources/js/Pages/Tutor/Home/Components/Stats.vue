@@ -12,11 +12,11 @@
 
       <div class="flex items-end justify-between mt-5">
         <div>
-          <span class="text-sm text-gray-500 dark:text-gray-400">Customers</span>
-          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">3,782</h4>
+          <span class="text-sm text-gray-500 dark:text-gray-400">Students</span>
+          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">{{ stats.total_students }}</h4>
         </div>
 
-        <span
+        <!-- <span
           class="flex items-center gap-1 rounded-full bg-success-50 py-0.5 pl-2 pr-2.5 text-sm font-medium text-success-600 dark:bg-success-500/15 dark:text-success-500">
           <svg class="fill-current" width="12" height="12" viewBox="0 0 12 12" fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -26,7 +26,7 @@
           </svg>
 
           11.01%
-        </span>
+        </span> -->
       </div>
     </div>
 
@@ -42,11 +42,11 @@
 
       <div class="flex items-end justify-between mt-5">
         <div>
-          <span class="text-sm text-gray-500 dark:text-gray-400">Orders</span>
-          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">5,359</h4>
+          <span class="text-sm text-gray-500 dark:text-gray-400">Bookings</span>
+          <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">{{ stats.total_bookings }}</h4>
         </div>
 
-        <span
+        <!-- <span
           class="flex items-center gap-1 rounded-full bg-error-50 py-0.5 pl-2 pr-2.5 text-sm font-medium text-error-600 dark:bg-error-500/15 dark:text-error-500">
           <svg class="fill-current" width="12" height="12" viewBox="0 0 12 12" fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -56,8 +56,17 @@
           </svg>
 
           9.05%
-        </span>
+        </span> -->
       </div>
     </div>
   </div>
 </template>
+
+<script setup>
+import { usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+
+const page = usePage();
+const stats = computed(() => page.props.stats);
+
+</script>

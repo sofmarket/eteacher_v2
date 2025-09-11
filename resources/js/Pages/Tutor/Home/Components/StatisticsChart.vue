@@ -11,7 +11,7 @@
       </div>
 
       <div class="relative">
-        <div class="inline-flex items-center gap-0.5 rounded-lg bg-gray-100 p-0.5 dark:bg-gray-900">
+        <!-- <div class="inline-flex items-center gap-0.5 rounded-lg bg-gray-100 p-0.5 dark:bg-gray-900">
           <button
             v-for="option in options"
             :key="option.value"
@@ -25,7 +25,7 @@
           >
             {{ option.label }}
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="max-w-full overflow-x-auto custom-scrollbar">
@@ -36,28 +36,41 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue'
+<script setup>
+import { ref, computed } from 'vue';
+import { usePage } from '@inertiajs/vue3';
+
+const page = usePage();
+const monthlyRevenue = computed(() => page.props.monthlyRevenue);
 
 const options = [
   { value: 'optionOne', label: 'Monthly' },
   { value: 'optionTwo', label: 'Quarterly' },
   { value: 'optionThree', label: 'Annually' },
-]
+];
 
-const selected = ref('optionOne')
-import VueApexCharts from 'vue3-apexcharts'
+const selected = ref('optionOne');
+import VueApexCharts from 'vue3-apexcharts';
+
+
+const getMonthName = (monthNumber) => {
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  return months[parseInt(monthNumber) - 1] || monthNumber;
+};
 
 const series = ref([
   {
-    name: 'Sales',
-    data: [180, 190, 170, 160, 175, 165, 170, 205, 230, 210, 240, 235],
+    name: 'Bookings',
+    data: monthlyRevenue.value.map(revenue => revenue.bookings_count),
   },
   {
     name: 'Revenue',
-    data: [40, 30, 50, 40, 55, 40, 70, 100, 110, 120, 150, 140],
+    data: monthlyRevenue.value.map(revenue => revenue.revenue),
   },
-])
+]);
 
 const chartOptions = ref({
   legend: {
@@ -113,20 +126,7 @@ const chartOptions = ref({
   },
   xaxis: {
     type: 'category',
-    categories: [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ],
+    categories: monthlyRevenue.value.map(revenue => revenue.month),
     axisBorder: {
       show: false,
     },

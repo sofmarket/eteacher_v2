@@ -7,16 +7,12 @@ use App\Casts\BookingStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class SlotBooking extends Model
 {
     use HasFactory;
-
-    public $timestamps = false;
 
     public $guarded = [];
 
@@ -44,16 +40,8 @@ class SlotBooking extends Model
         ];
     }
 
-    public function booker(): BelongsTo {
+    public function student(): BelongsTo {
         return $this->belongsTo(User::class, 'student_id');
-    }
-
-    public function bookee(): BelongsTo {
-        return $this->belongsTo(User::class, 'tutor_id');
-    }
-
-    public function student(): HasOneThrough {
-        return $this->hasOneThrough(Profile::class, User::class, 'id', 'user_id', 'student_id', 'id');
     }
 
 

@@ -53,3 +53,10 @@ if (!function_exists('isEmail')) {
         return filter_var($value, FILTER_VALIDATE_EMAIL);
     }
 }
+
+
+if (!function_exists('formatCurrency')) {
+    function formatCurrency(float $value) {
+        return number_format(floatval($value), 0) . " MAD"; // TODO: translate currency
+    }
+}
