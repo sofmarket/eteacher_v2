@@ -16,6 +16,10 @@ class Conversation extends Model
         'last_time_message',
     ];
 
+    protected $casts = [
+        'last_time_message' => 'datetime',
+    ];
+
     public function sender()
     {
         return $this->belongsTo(User::class, 'sender_id');

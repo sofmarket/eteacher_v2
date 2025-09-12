@@ -86,7 +86,7 @@
                     </div>
                     <div class="flex flex-col items-end gap-1">
                         <div class="text-xs text-gray-500 dark:text-gray-400">
-                            {{ formatTimeAgo(new Date(conversation.last_time_message)) }}
+                            {{ formatTimeAgo(Date.parse(conversation.last_time_message)) }}
                         </div>
                         <div v-if="conversation.unread_count > 0"
                             class="flex items-center justify-center min-w-[20px] h-5 px-2 text-xs font-medium text-white bg-red-500 rounded-full">
@@ -118,8 +118,13 @@ import { usePage } from '@inertiajs/vue3';
 import { formatTimeAgo, useDebounceFn } from '@vueuse/core'
 import axios from 'axios';
 
-defineProps({
+const props = defineProps({
     selectedConversation: {
+        type: Object,
+        required: false,
+        default: null,
+    },
+    newMessage: {
         type: Object,
         required: false,
         default: null,
@@ -218,6 +223,25 @@ const openConversation = (conversation) => {
 watch(search, () => {
     searchConversations();
 });
+
+// Watch for new messages from ChatArea
+watch(() => props.newMessage, (newMessage) => {
+    if (newMessage && newMessage.conversation_id) {
+        const conversation = conversations.value.find(conv => conv.id === newMessage.conversation_id);
+        if (conversation) {
+            // Update the conversation's latest message and timestamp
+            conversation.latest_message = newMessage;
+            conversation.last_time_message = newMessage.created_at;
+            
+            // Move the conversation to the top of the list
+            const updatedConversation = conversations.value.splice(
+                conversations.value.findIndex(conv => conv.id === newMessage.conversation_id), 
+                1
+            )[0];
+            conversations.value.unshift(updatedConversation);
+        }
+    }
+}, { deep: true });
 
 onMounted(() => {
     window.Echo.private('user.' + sharedUser.value.id)

@@ -27,9 +27,9 @@ class ConversationResource extends JsonResource
             'messages'                      => $this->whenLoaded('messages', ConversationMessageResource::collection($this->messages)),
             
             'unread_count'                  => $this->whenLoaded('messages', function () {
-                return $this->messages->where('read', false)->count();
+                return $this->messages->where('receiver_id', auth()->id())->where('read', false)->count();
             }, function() {
-                return $this->messages()->where('read', false)->count();
+                return $this->messages()->where('receiver_id', auth()->id())->where('read', false)->count();
             }),
             
             'latest_message'                => $this->whenLoaded('messages', function () {

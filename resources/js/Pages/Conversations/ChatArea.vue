@@ -246,15 +246,15 @@ const sendMessage = async () => {
             receiver_id: props.conversation.receiver.id
         });
 
+        const newMessage = response.data.data;
         // Add the new message to the messages array
-        messages.value.unshift(response.data.data);
+        messages.value.unshift(newMessage);
 
         // Emit event to parent to update conversation
-        emit('messageSent', response.data.data);
+        emit('messageSent', newMessage);
 
         // Scroll to bottom after sending message
         scrollToBottom();
-
     } catch (error) {
         console.error('Failed to send message:', error);
         // Restore message on error

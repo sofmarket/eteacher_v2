@@ -4,12 +4,19 @@
     <div class="flex flex-col h-full gap-6 md:flex-row md:gap-5">
 
       <!-- Left sidebar -->
-      <Sidebar :selectedConversation="selectedConversation" @openConversation="openConversation" />
+      <Sidebar 
+        :selectedConversation="selectedConversation" 
+        :newMessage="newMessage"
+        @openConversation="openConversation" 
+      />
 
       <!-- Main chat area -->
-      <ChatArea :conversation="selectedConversation" @closeConversation="closeConversation"
-        @deleteConversation="handleDeleteConversation" />
-
+      <ChatArea 
+        :conversation="selectedConversation" 
+        @closeConversation="closeConversation"
+        @deleteConversation="handleDeleteConversation" 
+        @messageSent="handleMessageSent" 
+      />
     </div>
   </div>
 
@@ -24,6 +31,7 @@ import Swal from 'sweetalert2';
 import { useForm } from '@inertiajs/vue3';
 
 const selectedConversation = ref(null);
+const newMessage = ref(null);
 
 const openConversation = (conversation) => {
   selectedConversation.value = conversation;
@@ -59,6 +67,19 @@ const handleDeleteConversation = (conversationId) => {
     }
   });
 
+};
+
+const handleMessageSent = (message) => {
+  // Update the newMessage ref to trigger sidebar update
+  newMessage.value = {
+    ...message,
+    conversation_id: selectedConversation.value?.id
+  };
+  
+  // Reset after a short delay to allow sidebar to process
+  setTimeout(() => {
+    newMessage.value = null;
+  }, 100);
 };
 
 </script>
