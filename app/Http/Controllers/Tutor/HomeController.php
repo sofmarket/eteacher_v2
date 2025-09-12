@@ -8,7 +8,6 @@ use App\Models\MonthlyTarget;
 use App\Models\SlotBooking;
 use App\Models\User;
 use App\Models\UserSubjectSlot;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -48,7 +47,7 @@ class HomeController extends Controller
 
         $monthlyRevenue = SlotBooking::query()
             ->where('tutor_id', $userId)
-            ->selectRaw('DATE_FORMAT(booked_at, "%M-%Y") as month, SUM(session_fee) as revenue, COUNT(id) as bookings_count')
+            ->selectRaw('DATE_FORMAT(booked_at, "%Y-%m") as month, SUM(session_fee) as revenue, COUNT(id) as bookings_count')
             ->groupBy('month')
             ->orderBy('month')
             ->get()
