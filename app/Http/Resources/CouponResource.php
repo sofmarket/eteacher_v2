@@ -38,33 +38,6 @@ class CouponResource extends JsonResource
             'remaining_uses' => $this->when($this->max_uses, function () {
                 return max(0, $this->max_uses - $this->uses);
             }),
-
-            // Status
-            'status' => $this->getStatus(),
         ];
-    }
-
-    /**
-     * Get the coupon status based on various conditions
-     */
-    private function getStatus(): string
-    {
-        if ($this->isExpired()) {
-            return 'expired';
-        }
-
-        if ($this->isOverMaxUses()) {
-            return 'max_uses_reached';
-        }
-
-        if ($this->isOverBudget()) {
-            return 'budget_exceeded';
-        }
-
-        if ($this->start_at && now()->lt($this->start_at)) {
-            return 'not_started';
-        }
-
-        return 'active';
     }
 }
