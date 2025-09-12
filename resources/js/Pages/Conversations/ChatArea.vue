@@ -51,7 +51,15 @@
         </div>
 
         <!-- Chat messages -->
-        <div class="flex-1 overflow-y-auto p-4 sm:p-5 messages-container">
+        <div class="flex-1 overflow-y-auto p-4 sm:p-5 messages-container" ref="messagesContainer" @scroll="handleScroll">
+            <!-- Loading more messages indicator -->
+            <div v-if="loadingMoreMessages" class="flex justify-center items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-primary-500"></div>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">Loading more messages...</span>
+                </div>
+            </div>
+
             <!-- Loading state -->
             <div v-if="isLoadingMessages" class="flex justify-center items-center h-full">
                 <div class="flex items-center space-x-2">
@@ -61,7 +69,7 @@
             </div>
 
             <!-- Messages -->
-            <div v-else-if="messages.length > 0" class="space-y-4 messages-container flex flex-col-reverse">
+            <div v-else-if="messages.length > 0" class="space-y-4 messages-container">
                 <div v-for="message in messages" :key="message.id" class="flex"
                     :class="{ 'justify-end': message.sender.id == sharedUser.id }">
                     <div
@@ -178,7 +186,7 @@
 
 <script setup>
 
-import { ref, computed, onMounted, watch, nextTick } from 'vue';
+import { ref, computed, onMounted, nextTick, watch } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import { onClickOutside } from '@vueuse/core';
 import axios from 'axios';
@@ -230,7 +238,12 @@ const message = ref('');
 const isSending = ref(false);
 const messages = ref([]);
 const isLoadingMessages = ref(false);
+const loadingMoreMessages = ref(false);
 const messagesEndRef = ref(null);
+const messagesContainer = ref(null);
+const currentPage = ref(1);
+const hasMoreMessages = ref(true);
+const messagesMeta = ref(null);
 
 const sendMessage = async () => {
     if (!message.value.trim() || isSending.value) return;
@@ -268,31 +281,85 @@ const sendMessage = async () => {
 }
 
 // Load conversation messages
-const loadMessages = async () => {
+const loadMessages = async (page = 1, append = false) => {
     if (!props.conversation?.id) return;
 
-    isLoadingMessages.value = true;
+    if (page === 1) {
+        isLoadingMessages.value = true;
+    } else {
+        loadingMoreMessages.value = true;
+    }
 
     try {
-        const response = await axios.get(`/conversations/${props.conversation.id}/messages`);
-        messages.value = response.data.data || [];
-
-        nextTick(() => {
-            // Scroll to bottom after loading messages
-            scrollToBottom();
+        const response = await axios.get(`/conversations/${props.conversation.id}/messages`, {
+            params: { page }
         });
+        
+        const newMessages = response.data.data || [];
+        messagesMeta.value = response.data.meta;
+        
+        if (append) {
+            // Append older messages to the beginning
+            messages.value = [...newMessages, ...messages.value];
+        } else {
+            // Replace messages (initial load)
+            messages.value = newMessages;
+        }
+        
+        hasMoreMessages.value = messagesMeta.value?.current_page < messagesMeta.value?.last_page;
+
+        if (!append) {
+            nextTick(() => {
+                // Scroll to bottom after loading messages
+                scrollToBottom();
+            });
+        }
     } catch (error) {
         console.error('Failed to load messages:', error);
-        messages.value = [];
+        if (!append) {
+            messages.value = [];
+        }
     } finally {
         isLoadingMessages.value = false;
+        loadingMoreMessages.value = false;
+    }
+};
+
+// Load more messages (for pagination)
+const loadMoreMessages = async () => {
+    if (loadingMoreMessages.value || !hasMoreMessages.value || !props.conversation?.id) return;
+    
+    const nextPage = currentPage.value + 1;
+    currentPage.value = nextPage;
+    
+    // Store current scroll position
+    const scrollElement = messagesContainer.value;
+    const previousScrollHeight = scrollElement.scrollHeight;
+    
+    await loadMessages(nextPage, true);
+    
+    // Maintain scroll position after loading more messages
+    nextTick(() => {
+        const newScrollHeight = scrollElement.scrollHeight;
+        const scrollDiff = newScrollHeight - previousScrollHeight;
+        scrollElement.scrollTop = scrollDiff;
+    });
+};
+
+// Handle scroll events
+const handleScroll = (event) => {
+    const { scrollTop } = event.target;
+    const threshold = 100; // Load more when 100px from top
+    
+    if (scrollTop < threshold && hasMoreMessages.value && !loadingMoreMessages.value) {
+        loadMoreMessages();
     }
 };
 
 // Scroll to bottom of messages
 const scrollToBottom = () => {
     nextTick(() => {
-        const scrollElement = document.querySelector('.messages-container');
+        const scrollElement = messagesContainer.value;
         if (scrollElement) {
             scrollElement.scrollTo({
                 top: scrollElement.scrollHeight,
@@ -316,6 +383,8 @@ const markConversationAsRead = async (conversationId) => {
 // Watch for conversation changes
 watch(() => props.conversation, (newConversation, oldConversation) => {
     message.value = '';
+    currentPage.value = 1;
+    hasMoreMessages.value = true;
 
     if (newConversation?.id !== oldConversation?.id) {
         loadMessages();

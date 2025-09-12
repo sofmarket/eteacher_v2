@@ -38,7 +38,7 @@ class ConversationResource extends JsonResource
                 );
             }, function() {
                 return $this->getLatestMessage(
-                    $this->messages()->sortByDesc('created_at')->first()
+                    $this->messages()->orderBy('created_at', 'desc')->first()
                 );
             }),
 

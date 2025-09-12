@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ConversationMessage;
 use App\Models\Profile;
 use Illuminate\Database\Seeder;
 use App\Models\Conversation;
@@ -12,33 +13,12 @@ class ConversationSeeder extends Seeder
 {
     public function run()
     {
+        $faker = Faker::create();
+        
         $tutor = User::where('type', 'tutor')->first();
         $users = User::where('type', 'student')->get();
-        $faker = Faker::create();
+        
         foreach ($users as $user) {
-
-            $profile = Profile::where('user_id', $user->id)->first();
-            if (!$profile) {
-                $profile = Profile::create([
-                    'user_id' => $user->id,
-                    'first_name' => $faker->firstName,
-                    'last_name' => $faker->lastName,
-                    'gender' => $faker->randomElement([1, 2]),
-                    'phone_number' => $faker->phoneNumber,
-                    'description' => $faker->sentence,
-                    'tagline' => $faker->sentence,
-                    'keywords' => $faker->sentence,
-                    'native_language' => 'arabic',
-                    'intro_video' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-                ]);
-            } else {
-                $profile->update([
-                    'first_name' => $faker->firstName,
-                    'last_name' => $faker->lastName,
-                    'intro_video' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-                ]);
-            }
-
             Conversation::updateOrCreate(
                 [
                     'sender_id' => $tutor->id,
@@ -49,5 +29,17 @@ class ConversationSeeder extends Seeder
                 ]
             );
         }
+
+        $conversation = Conversation::first();
+
+        for ($i = 0; $i < 150; $i++) {
+            ConversationMessage::create([
+                'conversation_id' => $conversation->id,
+                'sender_id' => $conversation->sender_id,
+                'receiver_id' => $conversation->receiver_id,
+                'body' => $faker->sentence,
+            ]);
+        }
+
     }
 }
