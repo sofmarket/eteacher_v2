@@ -69,12 +69,12 @@
                 <Link v-else :href="item.path" :class="[
                   'menu-item group',
                   {
-                    'menu-item-active': isActive(item.path),
-                    'menu-item-inactive': !isActive(item.path),
+                    'menu-item-active': isActive(item.component),
+                    'menu-item-inactive': !isActive(item.component),
                   },
                 ]">
                   <span :class="[
-                    isActive(item.path)
+                    isActive(item.component)
                       ? 'menu-item-icon-active'
                       : 'menu-item-icon-inactive',
                   ]">
@@ -93,10 +93,10 @@
                           'menu-dropdown-item',
                           {
                             'menu-dropdown-item-active': isActive(
-                              subItem.path
+                              subItem.component
                             ),
                             'menu-dropdown-item-inactive': !isActive(
-                              subItem.path
+                              subItem.component
                             ),
                           },
                         ]">
@@ -106,10 +106,10 @@
                               'menu-dropdown-badge',
                               {
                                 'menu-dropdown-badge-active': isActive(
-                                  subItem.path
+                                  subItem.component
                                 ),
                                 'menu-dropdown-badge-inactive': !isActive(
-                                  subItem.path
+                                  subItem.component
                                 ),
                               },
                             ]">
@@ -119,10 +119,10 @@
                               'menu-dropdown-badge',
                               {
                                 'menu-dropdown-badge-active': isActive(
-                                  subItem.path
+                                  subItem.component
                                 ),
                                 'menu-dropdown-badge-inactive': !isActive(
-                                  subItem.path
+                                  subItem.component
                                 ),
                               },
                             ]">
@@ -145,7 +145,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { Link, usePage } from "@inertiajs/vue3";
 
 import {
@@ -169,8 +169,7 @@ const menuGroups = computed(() => {
   return [];
 });
 
-// const isActive = (path) => route.path === path;
-const isActive = (path) => false;
+const isActive = (path) => page.component.includes(path);
 
 const toggleSubmenu = (groupIndex, itemIndex) => {
   const key = `${groupIndex}-${itemIndex}`;
@@ -181,7 +180,7 @@ const isAnySubmenuRouteActive = computed(() => {
   return menuGroups.value.some((group) =>
     group.items.some(
       (item) =>
-        item.subItems && item.subItems.some((subItem) => isActive(subItem.path))
+        item.subItems && item.subItems.some((subItem) => isActive(subItem.component))
     )
   );
 });
@@ -192,7 +191,7 @@ const isSubmenuOpen = (groupIndex, itemIndex) => {
     openSubmenu.value === key ||
     (isAnySubmenuRouteActive.value &&
       menuGroups.value[groupIndex].items[itemIndex].subItems?.some((subItem) =>
-        isActive(subItem.path)
+        isActive(subItem.component)
       ))
   );
 };
