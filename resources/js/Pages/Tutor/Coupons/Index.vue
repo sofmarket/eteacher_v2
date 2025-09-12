@@ -1,4 +1,7 @@
 <template>
+
+    <Breadcrumbs title="Coupons" />
+
     <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="flex justify-between items-center mb-6">
@@ -63,7 +66,7 @@
 
                     <!-- Updated Coupons Grid -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        <div v-for="coupon in filteredCoupons" :key="coupon.id" class="max-w-md mx-auto w-full">
+                        <div v-for="coupon in coupons.data" :key="coupon.id" class="max-w-md mx-auto w-full">
                             <div class="rounded-lg overflow-hidden shadow-lg">
                                 <!-- Top section with discount -->
                                 <div class="bg-black text-white p-4 relative">
@@ -72,7 +75,8 @@
                                             <span class="text-3xl font-bold">{{ coupon.discount }}</span>
                                             <span class="text-xl mx-2">% OFF</span>
                                             <div class="mt-1">
-                                                <p class="text-gray-200 truncate">Course: <em class="elipsis">{{ coupon.courseName }}</em></p>
+                                                <p class="text-gray-200 truncate">Name: <em class="elipsis">{{
+                                                    coupon.name }}</em></p>
                                             </div>
                                         </div>
                                         <div>
@@ -107,7 +111,7 @@
                                         <span v-if="copiedId === coupon.id"
                                             class="ml-2 text-sm text-green-600">Copied!</span>
                                     </div>
-                                    <p class="text-gray-600 mt-2">Valid until: {{ coupon.validUntil }}</p>
+                                    <p class="text-gray-600 mt-2">Valid until: {{ coupon.expire_at }}</p>
                                 </div>
                             </div>
                         </div>
@@ -121,24 +125,14 @@
 <script setup>
 import Breadcrumbs from '@/Components/common/Breadcrumbs.vue';
 import { ref, computed } from 'vue';
+import { usePage } from '@inertiajs/vue3';
 
 const searchQuery = ref('');
 const activeTab = ref('active');
 const copiedId = ref(null);
 
-// Sample data - replace with actual data from your backend
-const coupons = ref([
-    {
-        id: 1,
-        discount: 100,
-        discountType: '%',
-        code: 'JST',
-        courseName: 'Leadership Essentials: Inspiring and Motivating Others',
-        validUntil: '30 Apr 2026',
-        status: 'active'
-    },
-    // Add more sample coupons as needed
-]);
+const page = usePage();
+const coupons = computed(() => page.props.coupons);
 
 const copyCode = (code, id) => {
     navigator.clipboard.writeText(code);
@@ -149,15 +143,16 @@ const copyCode = (code, id) => {
 };
 
 const filteredCoupons = computed(() => {
-    return coupons.value.filter(coupon => {
-        const matchesSearch = searchQuery.value === '' ||
-            coupon.code.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-            coupon.courseName.toLowerCase().includes(searchQuery.value.toLowerCase());
-        const matchesTab = activeTab.value === 'all' ||
-            (activeTab.value === 'active' && coupon.status === 'active') ||
-            (activeTab.value === 'inactive' && coupon.status === 'inactive');
-        return matchesSearch && matchesTab;
-    });
+    return [];
+    // return coupons.value.filter(coupon => {
+    //     const matchesSearch = searchQuery.value === '' ||
+    //         coupon.code.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    //         coupon.courseName.toLowerCase().includes(searchQuery.value.toLowerCase());
+    //     const matchesTab = activeTab.value === 'all' ||
+    //         (activeTab.value === 'active' && coupon.status === 'active') ||
+    //         (activeTab.value === 'inactive' && coupon.status === 'inactive');
+    //     return matchesSearch && matchesTab;
+    // });
 });
 </script>
 
@@ -174,4 +169,3 @@ const filteredCoupons = computed(() => {
     border-color: #101828;
 }
 </style>
-
