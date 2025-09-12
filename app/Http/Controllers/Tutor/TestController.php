@@ -11,7 +11,6 @@ use App\Models\ConversationMessage;
 use App\Models\UserSubjectSlot;
 use App\Notifications\MessageReceivedNotification;
 
-
 class TestController extends Controller
 {
     public function __invoke()

@@ -28,7 +28,7 @@ class SlotBookingResource extends JsonResource
                     'id'        => $this->student->id,
                     'email'     => $this->student->email,
                     'name'      => $this->student->profile?->fullName,
-                    'avatar'    => $this->student->profile?->image ?? 'https://ui-avatars.com/api/?name=' . $this->booker->profile?->fullName,
+                    'avatar'    => $this->student->profile?->image ?? 'https://ui-avatars.com/api/?name=' . $this->student->profile?->fullName,
                 ];
             }),
 

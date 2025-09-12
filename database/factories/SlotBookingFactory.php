@@ -1,15 +1,19 @@
 <?php
 
 namespace Database\Factories;
+use App\Models\User;
+use App\Models\UserSubjectGroupSubject;
+use App\Models\UserSubjectSlot;
 use Illuminate\Database\Eloquent\Factories\Factory;
 class SlotBookingFactory extends Factory
 {
     public function definition()
     {
+        $tutorId = 1;
         return [
-            'student_id' => rand(2, 10),
-            'tutor_id' => 1,
-            'user_subject_slot_id' => rand(2, 7),
+            'student_id' => $this->faker->randomElement(User::where('type', 'student')->pluck('id')),
+            'tutor_id' => $tutorId,
+            'user_subject_slot_id' => $this->faker->randomElement(UserSubjectSlot::where('tutor_id', $tutorId)->pluck('id')),
             'session_fee' => rand(30, 200),
             'booked_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'status' => 1,

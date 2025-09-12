@@ -29,6 +29,7 @@ class CreateUserSubjectSlotAction
 
         return [
             'user_subject_group_subject_id' => $data['user_subject_group_subject_id'],
+            'tutor_id' => auth()->id(),
             'start_time' => $startDateTime,
             'end_time' => $endDateTime,
             'spaces' => $data['spaces'],

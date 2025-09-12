@@ -11,13 +11,23 @@ use Illuminate\Http\Request;
 
 class ConversationsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $conversations = Conversation::with('sender', 'receiver')
+
+        $query = Conversation::with('sender', 'receiver')
             ->orderBy('last_time_message', 'desc')
-            ->get();
+            ->when($request->has('search'), function ($query) use ($request) {
+                $query->search($request->search);
+            });
+
+        $conversations = ConversationResource::collection($query->paginate(20));
+
+        if ($request->wantsJson()) {
+            return $conversations;
+        }
+
         return inertia('Conversations/Index', [
-            'conversations' => ConversationResource::collection($conversations),
+            'conversations' => $conversations,
         ]);
     }
 
@@ -42,7 +52,7 @@ class ConversationsController extends Controller
             ->update(['read' => true]);
 
         return response()->json([
-            'success' => true, 
+            'success' => true,
             'message' => 'Conversation marked as read'
         ]);
     }

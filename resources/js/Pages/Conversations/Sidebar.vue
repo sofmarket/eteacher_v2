@@ -32,7 +32,7 @@
                 </button>
                 <div class="relative w-full my-2">
                     <form>
-                        <button class="absolute -translate-y-1/2 left-4 top-1/2">
+                        <button class="absolute -translate-y-1/2 left-4 top-1/2 hidden sm:block">
                             <svg class="fill-gray-500 dark:fill-gray-400" width="20" height="20" viewBox="0 0 20 20"
                                 fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -40,15 +40,34 @@
                                     fill="" />
                             </svg>
                         </button>
-                        <input type="text" placeholder="Search..."
-                            class="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pl-[42px] pr-3.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
+                        <div class="relative">
+                            <input type="text" placeholder="Search..." v-model="search"
+                                class="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pl-[42px] pr-3.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
+                            <button v-if="search.length > 0 && !searching"
+                                class="absolute right-2.5 top-1/2 inline-flex -translate-y-1/2 items-center gap-0.5 px-[7px] py-[4.5px] text-xs -tracking-[0.2px] text-gray-500 dark:text-gray-100"
+                                @click="search = ''">
+                                <svg width="18" height="18" viewBox="0 0 12 12" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 3L3 9M3 3L9 9" stroke="currentColor" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button>
+
+                            <span v-if="searching" class="absolute right-2.5 top-1/2 inline-flex -translate-y-1/2 items-center gap-0.5 px-[7px] py-[4.5px] text-xs -tracking-[0.2px] text-gray-500 dark:text-gray-100">
+                                <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+                                    <path class="opacity-25" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </span>
+                            
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
-        <div class="flex-1 overflow-y-auto px-4 pb-4 sm:px-5">
+        <div class="flex-1 overflow-y-auto px-4 pb-4 sm:px-5 hidden md:block coversation-list" ref="conversationList" @scroll="handleScroll">
             <div class="space-y-4">
-                <button v-for="conversation in conversations" :key="conversation.id"
+                <button v-if="conversations.length > 0" v-for="conversation in conversations" :key="conversation.id"
                     @click="openConversation(conversation)"
                     class="flex w-full items-center gap-3 rounded-xl p-3 transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-white/[0.04]"
                     :class="{ 'bg-gray-100 dark:bg-white/[0.04]': selectedConversation?.id === conversation.id }">
@@ -59,20 +78,33 @@
                             class="absolute bottom-0 right-0 block h-3 w-3 rounded-full border-[1.5px] border-white bg-success-500 dark:border-gray-900"></span>
                     </div>
                     <div class="flex-1 text-left min-w-0">
-                        <h5 class="text-sm font-medium text-gray-800 dark:text-white/90 truncate">{{ conversation.receiver.name
+                        <h5 class="text-sm font-medium text-gray-800 dark:text-white/90 truncate">{{
+                            conversation.receiver.name
                             }}</h5>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 truncate">{{conversation.latest_message.body}}</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 truncate">
+                            {{ conversation.latest_message?.body }}</p>
                     </div>
                     <div class="flex flex-col items-end gap-1">
                         <div class="text-xs text-gray-500 dark:text-gray-400">
                             {{ formatTimeAgo(new Date(conversation.last_time_message)) }}
                         </div>
-                        <div v-if="conversation.unread_count > 0" 
-                             class="flex items-center justify-center min-w-[20px] h-5 px-2 text-xs font-medium text-white bg-red-500 rounded-full">
+                        <div v-if="conversation.unread_count > 0"
+                            class="flex items-center justify-center min-w-[20px] h-5 px-2 text-xs font-medium text-white bg-red-500 rounded-full">
                             {{ conversation.unread_count > 99 ? '99+' : conversation.unread_count }}
                         </div>
                     </div>
                 </button>
+                <div v-else class="flex items-center justify-center py-5 h-full">
+                    <div class="text-gray-500 dark:text-gray-400">No conversations found</div>
+                </div>
+            </div>
+            
+            <!-- Loading indicator for pagination -->
+            <div v-if="loadingMore" class="flex items-center justify-center py-4">
+                <svg class="animate-spin h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+                    <path class="opacity-25" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
             </div>
         </div>
     </div>
@@ -81,14 +113,10 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, nextTick, watch } from 'vue';
 import { usePage } from '@inertiajs/vue3';
-import { formatTimeAgo   } from '@vueuse/core'
-
-
-const page = usePage();
-const conversations = computed(() => page.props.conversations?.data || [])  ;   
-const sharedUser = computed(() => page.props.sharedUser?.data ?? null)
+import { formatTimeAgo, useDebounceFn } from '@vueuse/core'
+import axios from 'axios';
 
 defineProps({
     selectedConversation: {
@@ -98,18 +126,105 @@ defineProps({
     },
 });
 
+const page = usePage();
+const sharedUser = computed(() => page.props.sharedUser?.data ?? null)
+const conversations = ref(page.props.conversations?.data || []);
+const searching = ref(false);
+const search = ref('');
+const conversationList = ref(null);
+const loadingMore = ref(false);
+const currentPage = ref(1);
+const hasMorePages = ref(true);
+const paginationMeta = ref(page.props.conversations?.meta || null);
+
+// Initialize pagination meta from initial data
+if (paginationMeta.value) {
+    hasMorePages.value = paginationMeta.value.current_page < paginationMeta.value.last_page;
+}
+
+const searchConversations = useDebounceFn(() => {
+    searching.value = true;
+    currentPage.value = 1;
+    hasMorePages.value = true;
+    
+    if (search.value.trim()) {
+        axios.get(route('conversations.index'), {
+            params: {
+                search: search.value,
+            },
+        }).then(response => {
+            conversations.value = response.data.data;
+            paginationMeta.value = response.data.meta;
+            hasMorePages.value = response.data.meta.current_page < response.data.meta.last_page;
+        }).finally(() => {
+            searching.value = false;
+        });
+    } else {
+        axios.get(route('conversations.index')).then(response => {
+            conversations.value = response.data.data;
+            paginationMeta.value = response.data.meta;
+            hasMorePages.value = response.data.meta.current_page < response.data.meta.last_page;
+        }).finally(() => {
+            searching.value = false;
+        });
+    }
+}, 500);
+
+const loadMoreConversations = async () => {
+    if (loadingMore.value || !hasMorePages.value || searching.value) return;
+    
+    loadingMore.value = true;
+    currentPage.value += 1;
+    
+    try {
+        const params = {
+            page: currentPage.value,
+        };
+        
+        if (search.value.trim()) {
+            params.search = search.value;
+        }
+        
+        const response = await axios.get(route('conversations.index'), { params });
+        
+        // Append new conversations to existing ones
+        conversations.value = [...conversations.value, ...response.data.data];
+        paginationMeta.value = response.data.meta;
+        hasMorePages.value = response.data.meta.current_page < response.data.meta.last_page;
+        
+    } catch (error) {
+        console.error('Error loading more conversations:', error);
+        currentPage.value -= 1; // Revert page increment on error
+    } finally {
+        loadingMore.value = false;
+    }
+};
+
+const handleScroll = (event) => {
+    const { scrollTop, scrollHeight, clientHeight } = event.target;
+    const threshold = 100; // Load more when 100px from bottom
+    
+    if (scrollHeight - scrollTop - clientHeight < threshold) {
+        loadMoreConversations();
+    }
+};
+
 const emit = defineEmits(['openConversation']);
 
 const openConversation = (conversation) => {
     emit('openConversation', conversation);
 };
 
+watch(search, () => {
+    searchConversations();
+});
+
 onMounted(() => {
-  window.Echo.private('user.' + sharedUser.value.id)
-    .listen('.message.received', (e) => {
-      conversations.value.find(conversation => conversation.id === e.conversation_id).latest_message = e.message;
-      conversations.value.find(conversation => conversation.id === e.conversation_id).last_time_message = e.message.created_at;
-    });
+    window.Echo.private('user.' + sharedUser.value.id)
+        .listen('.message.received', (e) => {
+            conversations.value.find(conversation => conversation.id === e.conversation_id).latest_message = e.message;
+            conversations.value.find(conversation => conversation.id === e.conversation_id).last_time_message = e.message.created_at;
+        });
 });
 
 </script>

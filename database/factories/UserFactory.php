@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -28,6 +29,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'type' => $this->faker->randomElement(['student', 'tutor']),
         ];
     }
 
@@ -36,8 +38,33 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    /**
+     * Configure the model factory.
+     *
+     * @return $this
+     */
+    public function configure()
+    {
+        return $this->afterCreating(function (User $user) {
+            // Perform actions after a User is created
+            // For example, create a related profile for the user
+            $user->profile()->create([
+                'first_name' => $this->faker->firstName(),
+                'last_name' => $this->faker->lastName(),
+                'gender' => $this->faker->randomElement([1, 2]),
+                'phone_number' => $this->faker->phoneNumber(),
+                'description' => $this->faker->sentence(),
+                'slug' => Str::slug($this->faker->firstName()),
+                'tagline' => $this->faker->sentence(),
+                'keywords' => $this->faker->sentence(),
+                'native_language' => 'arabic',
+                'intro_video' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            ]);
+        });
     }
 }

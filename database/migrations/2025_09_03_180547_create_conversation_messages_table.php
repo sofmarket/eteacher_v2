@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('body')->nullable();
             $table->boolean('read')->default(0);
             $table->string('type')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

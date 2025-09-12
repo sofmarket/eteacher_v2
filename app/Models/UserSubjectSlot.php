@@ -25,6 +25,10 @@ class UserSubjectSlot extends Model {
         'meta_data'     => 'array'
     ];
 
+    public function tutor() {
+        return $this->belongsTo(User::class, 'tutor_id');
+    }
+
     public function subjectGroupSubject() {
         return $this->belongsTo(UserSubjectGroupSubject::class, 'user_subject_group_subject_id', 'id');
     }

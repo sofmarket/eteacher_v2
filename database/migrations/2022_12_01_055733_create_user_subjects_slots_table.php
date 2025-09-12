@@ -14,6 +14,7 @@ return new class extends Migration {
         Schema::create('user_subject_slots', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_subject_group_subject_id')->constrained('user_subject_group_subjects');
+            $table->foreignId('tutor_id')->constrained('users');
             $table->timestamp('start_time')->nullable();
             $table->timestamp('end_time')->nullable();
             $table->integer('spaces')->default(0);
