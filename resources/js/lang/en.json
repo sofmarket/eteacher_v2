@@ -62,6 +62,384 @@
         "students": "Students",
         "bookings": "Bookings"
       }
+    },
+    "bookings": {
+      "tabs": {
+        "subjects_i_can_teach": "Subjects I Can Teach",
+        "manage_sessions": "Manage Sessions",
+        "upcoming_bookings": "Upcoming Bookings"
+      },
+      "manage_sessions": {
+        "title": "Manage Sessions",
+        "today": "Today",
+        "add_new_session": "Add new Session",
+        "sessions": "sessions",
+        "session": "session",
+        "days_of_week": {
+          "sun": "Sun",
+          "mon": "Mon",
+          "tue": "Tue",
+          "wed": "Wed",
+          "thu": "Thu",
+          "fri": "Fri",
+          "sat": "Sat"
+        }
+      },
+      "add_session_modal": {
+        "title": "Add Session Details",
+        "select_subject": "Select subject",
+        "select_a_subject": "Select a subject",
+        "start_time": "Start time",
+        "select_start_time": "Select start time",
+        "session_fee": "Session Fee",
+        "session_date": "Session date",
+        "choose_session_date": "Choose session date",
+        "session_duration": "Session duration",
+        "select_session_duration": "Select session duration",
+        "duration_options": {
+          "30_minutes": "30 minutes",
+          "1_hour": "1 hour",
+          "1_5_hours": "1.5 hours",
+          "2_hours": "2 hours"
+        },
+        "session_seats": "Session Seats",
+        "what_will_be_covered": "What will be covered in this session",
+        "enter_session_description": "Enter session description..."
+      },
+      "teached_subjects": {
+        "title": "Subjects I Can Teach",
+        "description": "Please provide your educational background to help us assess your qualifications.",
+        "add_new": "Add New",
+        "hourly_rate": "Hourly rate: ${rate}",
+        "edit": "Edit",
+        "delete": "Delete",
+        "are_you_sure": "Are you sure?",
+        "delete_subject_warning": "You will not be able to recover this subject!",
+        "yes_delete_it": "Yes, delete it!",
+        "deleted": "Deleted!",
+        "subject_deleted": "Subject has been deleted.",
+        "edit_group": "Edit Group",
+        "delete_group": "Delete Group",
+        "delete_group_warning": "You will not be able to recover this group!",
+        "group_deleted": "Group has been deleted.",
+        "add_new_subject": "Add new subject"
+      },
+      "subject_group_modal": {
+        "title": "Add Subject Groups",
+        "choose_subject_category": "Choose subject category you can teach"
+      },
+      "subject_modal": {
+        "add_new_subject": "Add New Subject",
+        "edit_subject": "Edit Subject",
+        "subject": "Subject",
+        "select_a_subject": "Select a subject",
+        "hourly_rate": "Hourly Rate ($)",
+        "enter_hourly_rate": "Enter hourly rate",
+        "description": "Description",
+        "describe_expertise": "Describe your expertise in this subject",
+        "subject_image": "Subject Image"
+      },
+      "upcoming_bookings": {
+        "title": "Upcoming Bookings",
+        "today": "Today",
+        "search_here": "Search here",
+        "time": "Time",
+        "no_sessions": "No sessions",
+        "views": {
+          "daily": "Daily",
+          "weekly": "Weekly",
+          "monthly": "Monthly"
+        }
+      }
+    },
+    "chats": {
+      "title": "Chats",
+      "search_placeholder": "Search...",
+      "type_message_placeholder": "Type a message...",
+      "sample_messages": {
+        "hello_help": "Hello! How can I help you today?",
+        "math_homework": "I need help with my math homework",
+        "hello": "hello",
+        "hi": "hi",
+        "sent_voice_note": "Sent you a voice note"
+      },
+      "sample_names": {
+        "sarah_chapman": "Sarah Chapman",
+        "ann_coleman": "Ann Coleman",
+        "amento_tech": "Amento Tech",
+        "amentotech_02": "amentotech 02",
+        "test_test": "test test",
+        "evelyn_harper": "Evelyn Harper",
+        "arianne_kearns": "Arianne Kearns"
+      }
+    },
+    "invoices": {
+      "title": "Invoices",
+      "table": {
+        "invoice_id": "#Invoice Id",
+        "date": "Date",
+        "student_name": "Student Name",
+        "amount": "Amount",
+        "tutor_payout": "Tutor Payout",
+        "status": "Status",
+        "actions": "Actions",
+        "no_invoices_found": "No invoices found."
+      },
+      "status": {
+        "paid": "paid",
+        "pending": "pending",
+        "complete": "Complete",
+        "failed": "Failed",
+        "refunded": "Refunded"
+      },
+      "filters": {
+        "filter_by": "Filter by:",
+        "all_invoices": "All Invoices"
+      },
+      "pagination": {
+        "show": "Show",
+        "showing_results": "Showing {from} to {to} of {total} results"
+      }
+    },
+    "payouts": {
+      "title": "Payouts",
+      "table": {
+        "ref": "#Ref",
+        "method": "Method",
+        "date": "Date",
+        "amount": "Amount",
+        "status": "Status"
+      },
+      "status": {
+        "complete": "Complete",
+        "pending": "Pending",
+        "failed": "Failed",
+        "refunded": "Refunded"
+      },
+      "filters": {
+        "filter_by": "Filter by:",
+        "all_payouts": "All Payouts"
+      },
+      "pagination": {
+        "show": "Show",
+        "showing_results": "Showing {from} to {to} of {total} results"
+      }
+    },
+    "profile": {
+      "title": "User Profile",
+      "tabs": {
+        "personal_information": "Personal Information",
+        "account_settings": "Account Settings",
+        "resume_highlights": "Resume Highlights",
+        "identity_verification": "Identity Verification"
+      },
+      "personal_information": {
+        "title": "Personal Information",
+        "fullname": "Full Name",
+        "email_address": "Email Address",
+        "phone": "Phone",
+        "gender": "Gender",
+        "male": "Male",
+        "female": "Female",
+        "tag_line": "Tag Line",
+        "meta_keywords": "Meta Keywords",
+        "address": "Address",
+        "city": "City",
+        "select_city": "Select City",
+        "zip_code": "Zip Code",
+        "native_language": "Native Language",
+        "select_native_language": "Select Native Language",
+        "languages_i_know": "Languages I Know",
+        "brief_introduction": "A brief introduction",
+        "profile_image": "Profile Image",
+        "introduction_video": "Introduction Video",
+        "social_links": "Social Links"
+      },
+      "account_settings": {
+        "title": "Account Settings",
+        "current_password": "Current Password",
+        "password": "Password",
+        "confirm_password": "Confirm Password",
+        "save_and_update": "Save & Update",
+        "save_and_update_description": "Save and update the latest changes to the live"
+      },
+      "resume_highlights": {
+        "title": "Resume Highlights",
+        "tabs": {
+          "education": "Education",
+          "experience": "Experience",
+          "certifications": "Certificates & Awards"
+        },
+        "education": {
+          "title": "Education Details",
+          "description": "Please provide your educational background to help us assess your qualifications.",
+          "add_new": "Add New Education",
+          "course_title": "Course Title",
+          "institute_name": "Institute Name",
+          "country": "Country",
+          "city": "City",
+          "start_date": "Start Date",
+          "end_date": "End Date",
+          "issued": "Issued",
+          "expiry": "Expiry"
+        },
+        "experience": {
+          "title": "Experience Details",
+          "description": "Detail your job titles, responsibilities, achievements and duration of each role",
+          "add_new": "Add New Experience",
+          "job_title": "Job Title",
+          "company_name": "Company Name",
+          "employment_type": "Employment Type",
+          "employment_location": "Employment Location",
+          "start_date": "Start Date",
+          "end_date": "End Date"
+        },
+        "certificates": {
+          "title": "Certificates & Awards",
+          "description": "List your certificates, awards, issuing organizations and dates received.",
+          "add_new": "Add New Certificate",
+          "upload_photo": "Upload Certificates & Awards Photo",
+          "certificate_title": "Certificates/Awards title",
+          "university_institute": "University/institute title",
+          "issue_date": "Issue date",
+          "expiry_date": "Expiry date",
+          "description": "Description"
+        }
+      },
+      "identity_verification": {
+        "title": "Identity Verification",
+        "fullname": "Fullname",
+        "date_of_birth": "Date of birth",
+        "address": "Address",
+        "city": "City",
+        "zip_code": "Zip Code",
+        "personal_photo": "Personal Photo",
+        "government_id": "Government-Issued ID",
+        "save_and_update": "Save & Update",
+        "save_and_update_description": "Save & update the latest changes to the live"
+      },
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "add_new": "+ Add New"
+      },
+      "modals": {
+        "delete_confirmation": {
+          "title": "Are you sure?",
+          "certificate_text": "You will not be able to recover this certificate!",
+          "education_text": "You will not be able to recover this education!",
+          "experience_text": "You will not be able to recover this experience!",
+          "confirm_button": "Yes, delete it!",
+          "cancel_button": "Cancel"
+        }
+      }
+    },
+    "coupons": {
+      "title": "Coupons",
+      "page_title": "All Coupons",
+      "description": "Browse and manage all your certificates conveniently in one place.",
+      "create_coupon": "Create Coupon",
+      "search": {
+        "placeholder": "Search by keyword"
+      },
+      "tabs": {
+        "active": "Active",
+        "inactive": "In Active"
+      },
+      "coupon_card": {
+        "name_label": "Name:",
+        "coupon_code": "Coupon Code",
+        "valid_until": "Valid until:",
+        "copied": "Copied!",
+        "percent_off": "% OFF"
+      },
+      "actions": {
+        "copy_code": "Copy Code"
+      }
+    },
+    "disputes": {
+      "title": "Disputes",
+      "page_title": "Support Tickets",
+      "description": "Your most recent support tickets list",
+      "dispute_details": "Dispute Details",
+      "search": {
+        "placeholder": "Search..."
+      },
+      "table": {
+        "dispute_id": "Dispute ID",
+        "requested_by": "Requested By",
+        "subject": "Subject",
+        "create_date": "Create Date",
+        "status": "Status",
+        "action": "Action"
+      },
+      "empty_state": {
+        "title": "No disputes found",
+        "description": "There are no disputes matching your current filters."
+      },
+      "pagination": {
+        "showing_results": "Showing {from} to {to} of {total} results"
+      },
+      "actions": {
+        "view_more": "View More"
+      },
+      "status": {
+        "closed": "Closed",
+        "under_review": "Under Review",
+        "in_discussion": "In Discussion",
+        "pending": "Pending",
+        "in_progress": "In-Progress",
+        "solved": "Solved",
+        "on_hold": "On-Hold"
+      },
+      "details": {
+        "student": "Student",
+        "email": "Email",
+        "dispute_id": "Dispute ID",
+        "dispute_reason": "Dispute Reason",
+        "created": "Created",
+        "status": "Status"
+      },
+      "conversation": {
+        "reply_placeholder": "Type your reply here...",
+        "attach": "Attach",
+        "reply": "Reply",
+        "status_label": "Status:"
+      },
+      "statistics": {
+        "total_disputes": "Total disputes",
+        "pending_disputes": "Pending disputes",
+        "closed_disputes": "Closed disputes"
+      }
+    },
+    "conversations": {
+      "title": "Chats",
+      "search": {
+        "placeholder": "Search..."
+      },
+      "empty_state": {
+        "no_conversations": "No conversations found"
+      },
+      "chat_area": {
+        "close_chat": "Close Chat",
+        "delete_chat": "Delete Chat",
+        "loading_messages": "Loading messages...",
+        "loading_more_messages": "Loading more messages...",
+        "no_messages": "No messages yet",
+        "start_conversation": "Start the conversation by sending a message below.",
+        "type_message": "Type a message...",
+        "welcome": "Welcome, {name}",
+        "welcome_description": "Start a conversation and connect with others, Share ideas, ask questions, or simply say hello."
+      },
+      "modals": {
+        "delete_confirmation": {
+          "title": "Are you sure?",
+          "text": "You will not be able to recover this conversation!",
+          "confirm_button": "Yes, delete it!",
+          "deleted_title": "Deleted!",
+          "deleted_text": "Conversation has been deleted."
+        }
+      }
     }
   }
 }

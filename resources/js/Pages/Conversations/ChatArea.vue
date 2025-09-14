@@ -37,12 +37,12 @@
                             <button @click="closeConversation"
                                 class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150">
                                 <CloseIcon class="w-4 h-4 mr-3" />
-                                Close Chat
+                                {{ t('tutor.conversations.chat_area.close_chat') }}
                             </button>
                             <button @click="deleteConversation"
                                 class="flex items-center w-full px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-150">
                                 <DeleteIcon class="w-4 h-4 mr-3" />
-                                Delete Chat
+                                {{ t('tutor.conversations.chat_area.delete_chat') }}
                             </button>
                         </div>
                     </Transition>
@@ -56,7 +56,7 @@
             <div v-if="loadingMoreMessages" class="flex justify-center items-center py-4">
                 <div class="flex items-center space-x-2">
                     <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-primary-500"></div>
-                    <span class="text-sm text-gray-500 dark:text-gray-400">Loading more messages...</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ t('tutor.conversations.chat_area.loading_more_messages') }}</span>
                 </div>
             </div>
 
@@ -64,7 +64,7 @@
             <div v-if="isLoadingMessages" class="flex justify-center items-center h-full">
                 <div class="flex items-center space-x-2">
                     <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary-500"></div>
-                    <span class="text-sm text-gray-500 dark:text-gray-400">Loading messages...</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ t('tutor.conversations.chat_area.loading_messages') }}</span>
                 </div>
             </div>
 
@@ -90,8 +90,8 @@
                         d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z">
                     </path>
                 </svg>
-                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">No messages yet</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Start the conversation by sending a message below.
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">{{ t('tutor.conversations.chat_area.no_messages') }}</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">{{ t('tutor.conversations.chat_area.start_conversation') }}
                 </p>
             </div>
         </div>
@@ -112,7 +112,7 @@
                         </svg>
                     </button>
 
-                    <input type="text" v-model="message" placeholder="Type a message..." @keyup.enter="sendMessage()"
+                    <input type="text" v-model="message" :placeholder="t('tutor.conversations.chat_area.type_message')" @keyup.enter="sendMessage()"
                         class="h-9 w-full border-none bg-transparent pl-12 pr-5 text-sm text-gray-800 outline-hidden placeholder:text-gray-400 focus:border-0 focus:ring-0 dark:text-white/90">
                 </div>
 
@@ -175,9 +175,9 @@
         class="flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] md:w-3/5">
         <div class="w-full h-full flex flex-col items-center justify-center">
             <img :src="sharedUser?.avatar" alt="Empty State" class="w-20 h-20 rounded-full">
-            <h1 class="text-2xl mt-7">Welcome, {{ sharedUser?.name }} </h1>
+            <h1 class="text-2xl mt-7">{{ t('tutor.conversations.chat_area.welcome', { name: sharedUser?.name }) }}</h1>
             <div class="text-gray-500 dark:text-gray-400 mt-5 text-center max-w-sm">
-                Start a conversation and connect with others, Share ideas, ask questions, or simply say hello.
+                {{ t('tutor.conversations.chat_area.welcome_description') }}
             </div>
         </div>
     </div>
@@ -191,6 +191,9 @@ import { usePage } from '@inertiajs/vue3';
 import { onClickOutside } from '@vueuse/core';
 import axios from 'axios';
 import { CloseIcon, DeleteIcon, SendIcon } from '@/icons';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 // reactive reference to props
 const page = usePage();

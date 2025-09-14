@@ -9,8 +9,7 @@
             <div class="flex justify-between items-start">
                 <div>
                     <h4 class="font-semibold text-gray-800 dark:text-gray-200">{{ subject.name }}</h4>
-                    <p class="text-sm text-blue-600 dark:text-blue-400 font-medium">Hourly rate: ${{ subject.hour_rate
-                    }}</p>
+                    <p class="text-sm text-blue-600 dark:text-blue-400 font-medium">{{ $t('tutor.bookings.teached_subjects.hourly_rate', { rate: subject.hour_rate }) }}</p>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ subject.description }}</p>
                 </div>
                 <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1 ml-2 flex-shrink-0" @click="isDropdownOpen = !isDropdownOpen">
@@ -32,7 +31,7 @@
                                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                             </svg>
-                            Edit
+                            {{ $t('tutor.bookings.teached_subjects.edit') }}
                         </button>
                         <button
                             class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center gap-2"
@@ -43,7 +42,7 @@
                                 <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
                                 <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
                             </svg>
-                            Delete
+                            {{ $t('tutor.bookings.teached_subjects.delete') }}
                         </button>
                     </div>
                 </div>
@@ -84,21 +83,21 @@ const handleDelete = () => {
     isDropdownOpen.value = false;
     
     Swal.fire({
-        title: 'Are you sure?',
-        text: 'You will not be able to recover this subject!',
+        title: $t('tutor.bookings.teached_subjects.are_you_sure'),
+        text: $t('tutor.bookings.teached_subjects.delete_subject_warning'),
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: $t('tutor.bookings.teached_subjects.yes_delete_it')
     }).then((result) => {
         if (result.isConfirmed) {
             const form = useForm({});
             form.delete(route('tutor.user.subject.destroy', props.subject.id), {
                 onSuccess: () => {
                     Swal.fire(
-                        'Deleted!',
-                        'Subject has been deleted.',
+                        $t('tutor.bookings.teached_subjects.deleted'),
+                        $t('tutor.bookings.teached_subjects.subject_deleted'),
                         'success'
                     );
                 }

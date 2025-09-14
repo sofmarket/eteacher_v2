@@ -2,7 +2,7 @@
 
   <div>
 
-    <Breadcrumbs :title="t('user_profile')" />
+    <Breadcrumbs :title="$t('tutor.profile.title')" />
 
     <Tabs :tabs="tabs">
 
@@ -40,9 +40,9 @@ import AccountSettings from './Components/AccountSettings.vue';
 const { t } = useI18n();
 
 const tabs = [
-  { id: 'personal-information', label: t('personal_information') },
-  { id: 'account-settings', label: t('account_settings') },
-  { id: 'resume-highlights', label: t('resume_highlights') },
-  { id: 'identity-verification', label: t('identity_verification') }
+  { id: 'personal-information', label: t('tutor.profile.tabs.personal_information') },
+  { id: 'account-settings', label: t('tutor.profile.tabs.account_settings') },
+  { id: 'resume-highlights', label: t('tutor.profile.tabs.resume_highlights') },
+  { id: 'identity-verification', label: t('tutor.profile.tabs.identity_verification') }
 ];
 </script>

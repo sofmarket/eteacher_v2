@@ -29,6 +29,9 @@ import Sidebar from './Sidebar.vue';
 import ChatArea from './ChatArea.vue';
 import Swal from 'sweetalert2';
 import { useForm } from '@inertiajs/vue3';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const selectedConversation = ref(null);
 const newMessage = ref(null);
@@ -44,13 +47,13 @@ const closeConversation = () => {
 const handleDeleteConversation = (conversationId) => {
 
   Swal.fire({
-    title: 'Are you sure?',
-    text: 'You will not be able to recover this conversation!',
+    title: t('tutor.conversations.modals.delete_confirmation.title'),
+    text: t('tutor.conversations.modals.delete_confirmation.text'),
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
+    confirmButtonText: t('tutor.conversations.modals.delete_confirmation.confirm_button')
   }).then((result) => {
     if (result.isConfirmed) {
       const form = useForm({});
@@ -58,8 +61,8 @@ const handleDeleteConversation = (conversationId) => {
         onSuccess: () => {
           selectedConversation.value = null;
           Swal.fire(
-            'Deleted!',
-            'Conversation has been deleted.',
+            t('tutor.conversations.modals.delete_confirmation.deleted_title'),
+            t('tutor.conversations.modals.delete_confirmation.deleted_text'),
             'success'
           );
         }

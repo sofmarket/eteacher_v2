@@ -5,30 +5,30 @@
   "tutor": {
     "home": {
       "customer_demographic": {
-        "title": "Démographie des Clients",
+        "title": "Démographie des clients",
         "description": "Nombre de clients par pays",
         "customers": "Clients",
         "hello_egypt": "Bonjour l'Égypte"
       },
       "monthly_sessions": {
-        "title": "Sessions Mensuelles",
+        "title": "Sessions mensuelles",
         "sessions": "Sessions"
       },
       "monthly_target": {
-        "title": "Objectif Mensuel",
+        "title": "Objectif mensuel",
         "target": "Objectif",
         "revenue": "Revenus",
         "today": "Aujourd'hui",
-        "earn_message": "Vous avez gagné {amount} aujourd'hui, continuez votre bon travail !",
-        "view_more": "Voir Plus",
+        "earn_message": "Vous gagnez {amount} aujourd'hui, continuez votre bon travail !",
+        "view_more": "Voir plus",
         "delete": "Supprimer"
       },
       "recent_bookings": {
-        "title": "Réservations Récentes",
+        "title": "Réservations récentes",
         "see_all": "Voir tout",
         "student": "Étudiant",
         "subject": "Matière",
-        "session_fee": "Frais de Session",
+        "session_fee": "Frais de session",
         "status": "Statut",
         "statuses": {
           "completed": "terminé",
@@ -61,6 +61,384 @@
       "stats": {
         "students": "Étudiants",
         "bookings": "Réservations"
+      }
+    },
+    "bookings": {
+      "tabs": {
+        "subjects_i_can_teach": "Matières que je peux enseigner",
+        "manage_sessions": "Gérer les sessions",
+        "upcoming_bookings": "Réservations à venir"
+      },
+      "manage_sessions": {
+        "title": "Gérer les sessions",
+        "today": "Aujourd'hui",
+        "add_new_session": "Ajouter une nouvelle session",
+        "sessions": "sessions",
+        "session": "session",
+        "days_of_week": {
+          "sun": "Dim",
+          "mon": "Lun",
+          "tue": "Mar",
+          "wed": "Mer",
+          "thu": "Jeu",
+          "fri": "Ven",
+          "sat": "Sam"
+        }
+      },
+      "add_session_modal": {
+        "title": "Ajouter les détails de la session",
+        "select_subject": "Sélectionner la matière",
+        "select_a_subject": "Sélectionner une matière",
+        "start_time": "Heure de début",
+        "select_start_time": "Sélectionner l'heure de début",
+        "session_fee": "Frais de session",
+        "session_date": "Date de session",
+        "choose_session_date": "Choisir la date de session",
+        "session_duration": "Durée de la session",
+        "select_session_duration": "Sélectionner la durée de la session",
+        "duration_options": {
+          "30_minutes": "30 minutes",
+          "1_hour": "1 heure",
+          "1_5_hours": "1,5 heures",
+          "2_hours": "2 heures"
+        },
+        "session_seats": "Places de session",
+        "what_will_be_covered": "Ce qui sera couvert dans cette session",
+        "enter_session_description": "Entrer la description de la session..."
+      },
+      "teached_subjects": {
+        "title": "Matières que je peux enseigner",
+        "description": "Veuillez fournir votre formation pour nous aider à évaluer vos qualifications.",
+        "add_new": "Ajouter nouveau",
+        "hourly_rate": "Taux horaire : ${rate}",
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "are_you_sure": "Êtes-vous sûr ?",
+        "delete_subject_warning": "Vous ne pourrez pas récupérer cette matière !",
+        "yes_delete_it": "Oui, supprimez-la !",
+        "deleted": "Supprimé !",
+        "subject_deleted": "La matière a été supprimée.",
+        "edit_group": "Modifier le groupe",
+        "delete_group": "Supprimer le groupe",
+        "delete_group_warning": "Vous ne pourrez pas récupérer ce groupe !",
+        "group_deleted": "Le groupe a été supprimé.",
+        "add_new_subject": "Ajouter une nouvelle matière"
+      },
+      "subject_group_modal": {
+        "title": "Ajouter des groupes de matières",
+        "choose_subject_category": "Choisir la catégorie de matière que vous pouvez enseigner"
+      },
+      "subject_modal": {
+        "add_new_subject": "Ajouter une nouvelle matière",
+        "edit_subject": "Modifier la matière",
+        "subject": "Matière",
+        "select_a_subject": "Sélectionner une matière",
+        "hourly_rate": "Taux horaire ($)",
+        "enter_hourly_rate": "Entrer le taux horaire",
+        "description": "Description",
+        "describe_expertise": "Décrivez votre expertise dans cette matière",
+        "subject_image": "Image de la matière"
+      },
+      "upcoming_bookings": {
+        "title": "Réservations à venir",
+        "today": "Aujourd'hui",
+        "search_here": "Rechercher ici",
+        "time": "Heure",
+        "no_sessions": "Aucune session",
+        "views": {
+          "daily": "Quotidien",
+          "weekly": "Hebdomadaire",
+          "monthly": "Mensuel"
+        }
+      }
+    },
+    "chats": {
+      "title": "Discussions",
+      "search_placeholder": "Rechercher...",
+      "type_message_placeholder": "Tapez un message...",
+      "sample_messages": {
+        "hello_help": "Bonjour ! Comment puis-je vous aider aujourd'hui ?",
+        "math_homework": "J'ai besoin d'aide avec mes devoirs de mathématiques",
+        "hello": "bonjour",
+        "hi": "salut",
+        "sent_voice_note": "Vous a envoyé un message vocal"
+      },
+      "sample_names": {
+        "sarah_chapman": "Sarah Chapman",
+        "ann_coleman": "Ann Coleman",
+        "amento_tech": "Amento Tech",
+        "amentotech_02": "amentotech 02",
+        "test_test": "test test",
+        "evelyn_harper": "Evelyn Harper",
+        "arianne_kearns": "Arianne Kearns"
+      }
+    },
+    "invoices": {
+      "title": "Factures",
+      "table": {
+        "invoice_id": "#ID Facture",
+        "date": "Date",
+        "student_name": "Nom de l'étudiant",
+        "amount": "Montant",
+        "tutor_payout": "Paiement tuteur",
+        "status": "Statut",
+        "actions": "Actions",
+        "no_invoices_found": "Aucune facture trouvée."
+      },
+      "status": {
+        "paid": "payé",
+        "pending": "en attente",
+        "complete": "Terminé",
+        "failed": "Échoué",
+        "refunded": "Remboursé"
+      },
+      "filters": {
+        "filter_by": "Filtrer par :",
+        "all_invoices": "Toutes les factures"
+      },
+      "pagination": {
+        "show": "Afficher",
+        "showing_results": "Affichage de {from} à {to} sur {total} résultats"
+      }
+    },
+    "payouts": {
+      "title": "Paiements",
+      "table": {
+        "ref": "#Réf",
+        "method": "Méthode",
+        "date": "Date",
+        "amount": "Montant",
+        "status": "Statut"
+      },
+      "status": {
+        "complete": "Terminé",
+        "pending": "En attente",
+        "failed": "Échoué",
+        "refunded": "Remboursé"
+      },
+      "filters": {
+        "filter_by": "Filtrer par :",
+        "all_payouts": "Tous les paiements"
+      },
+      "pagination": {
+        "show": "Afficher",
+        "showing_results": "Affichage de {from} à {to} sur {total} résultats"
+      }
+    },
+    "profile": {
+      "title": "Profil utilisateur",
+      "tabs": {
+        "personal_information": "Informations personnelles",
+        "account_settings": "Paramètres du compte",
+        "resume_highlights": "Points forts du CV",
+        "identity_verification": "Vérification d'identité"
+      },
+      "personal_information": {
+        "title": "Informations personnelles",
+        "fullname": "Nom complet",
+        "email_address": "Adresse e-mail",
+        "phone": "Téléphone",
+        "gender": "Genre",
+        "male": "Homme",
+        "female": "Femme",
+        "tag_line": "Slogan",
+        "meta_keywords": "Mots-clés méta",
+        "address": "Adresse",
+        "city": "Ville",
+        "select_city": "Sélectionner une ville",
+        "zip_code": "Code postal",
+        "native_language": "Langue maternelle",
+        "select_native_language": "Sélectionner la langue maternelle",
+        "languages_i_know": "Langues que je connais",
+        "brief_introduction": "Une brève introduction",
+        "profile_image": "Image de profil",
+        "introduction_video": "Vidéo de présentation",
+        "social_links": "Liens sociaux"
+      },
+      "account_settings": {
+        "title": "Paramètres du compte",
+        "current_password": "Mot de passe actuel",
+        "password": "Mot de passe",
+        "confirm_password": "Confirmer le mot de passe",
+        "save_and_update": "Enregistrer et mettre à jour",
+        "save_and_update_description": "Enregistrer et mettre à jour les dernières modifications en direct"
+      },
+      "resume_highlights": {
+        "title": "Points forts du CV",
+        "tabs": {
+          "education": "Formation",
+          "experience": "Expérience",
+          "certifications": "Certificats et récompenses"
+        },
+        "education": {
+          "title": "Détails de la formation",
+          "description": "Veuillez fournir votre formation pour nous aider à évaluer vos qualifications.",
+          "add_new": "Ajouter une nouvelle formation",
+          "course_title": "Titre du cours",
+          "institute_name": "Nom de l'institut",
+          "country": "Pays",
+          "city": "Ville",
+          "start_date": "Date de début",
+          "end_date": "Date de fin",
+          "issued": "Émis",
+          "expiry": "Expiration"
+        },
+        "experience": {
+          "title": "Détails de l'expérience",
+          "description": "Détaillez vos titres de poste, responsabilités, réalisations et durée de chaque rôle",
+          "add_new": "Ajouter une nouvelle expérience",
+          "job_title": "Titre du poste",
+          "company_name": "Nom de l'entreprise",
+          "employment_type": "Type d'emploi",
+          "employment_location": "Lieu d'emploi",
+          "start_date": "Date de début",
+          "end_date": "Date de fin"
+        },
+        "certificates": {
+          "title": "Certificats et récompenses",
+          "description": "Listez vos certificats, récompenses, organisations émettrice et dates reçues.",
+          "add_new": "Ajouter un nouveau certificat",
+          "upload_photo": "Télécharger la photo des certificats et récompenses",
+          "certificate_title": "Titre des certificats/récompenses",
+          "university_institute": "Titre université/institut",
+          "issue_date": "Date d'émission",
+          "expiry_date": "Date d'expiration",
+          "description": "Description"
+        }
+      },
+      "identity_verification": {
+        "title": "Vérification d'identité",
+        "fullname": "Nom complet",
+        "date_of_birth": "Date de naissance",
+        "address": "Adresse",
+        "city": "Ville",
+        "zip_code": "Code postal",
+        "personal_photo": "Photo personnelle",
+        "government_id": "Pièce d'identité officielle",
+        "save_and_update": "Enregistrer et mettre à jour",
+        "save_and_update_description": "Enregistrer et mettre à jour les dernières modifications en direct"
+      },
+      "actions": {
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "add_new": "+ Ajouter nouveau"
+      },
+      "modals": {
+        "delete_confirmation": {
+          "title": "Êtes-vous sûr ?",
+          "certificate_text": "Vous ne pourrez pas récupérer ce certificat !",
+          "education_text": "Vous ne pourrez pas récupérer cette formation !",
+          "experience_text": "Vous ne pourrez pas récupérer cette expérience !",
+          "confirm_button": "Oui, supprimez-le !",
+          "cancel_button": "Annuler"
+        }
+      }
+    },
+    "coupons": {
+      "title": "Coupons",
+      "page_title": "Tous les coupons",
+      "description": "Parcourez et gérez tous vos certificats facilement en un seul endroit.",
+      "create_coupon": "Créer un coupon",
+      "search": {
+        "placeholder": "Rechercher par mot-clé"
+      },
+      "tabs": {
+        "active": "Actif",
+        "inactive": "Inactif"
+      },
+      "coupon_card": {
+        "name_label": "Nom :",
+        "coupon_code": "Code coupon",
+        "valid_until": "Valide jusqu'au :",
+        "copied": "Copié !",
+        "percent_off": "% DE RÉDUCTION"
+      },
+      "actions": {
+        "copy_code": "Copier le code"
+      }
+    },
+    "disputes": {
+      "title": "Litiges",
+      "page_title": "Tickets de support",
+      "description": "Votre liste de tickets de support les plus récents",
+      "dispute_details": "Détails du litige",
+      "search": {
+        "placeholder": "Rechercher..."
+      },
+      "table": {
+        "dispute_id": "ID du litige",
+        "requested_by": "Demandé par",
+        "subject": "Sujet",
+        "create_date": "Date de création",
+        "status": "Statut",
+        "action": "Action"
+      },
+      "empty_state": {
+        "title": "Aucun litige trouvé",
+        "description": "Il n'y a aucun litige correspondant à vos filtres actuels."
+      },
+      "pagination": {
+        "showing_results": "Affichage de {from} à {to} sur {total} résultats"
+      },
+      "actions": {
+        "view_more": "Voir plus"
+      },
+      "status": {
+        "closed": "Fermé",
+        "under_review": "En cours d'examen",
+        "in_discussion": "En discussion",
+        "pending": "En attente",
+        "in_progress": "En cours",
+        "solved": "Résolu",
+        "on_hold": "En attente"
+      },
+      "details": {
+        "student": "Étudiant",
+        "email": "E-mail",
+        "dispute_id": "ID du litige",
+        "dispute_reason": "Raison du litige",
+        "created": "Créé",
+        "status": "Statut"
+      },
+      "conversation": {
+        "reply_placeholder": "Tapez votre réponse ici...",
+        "attach": "Joindre",
+        "reply": "Répondre",
+        "status_label": "Statut :"
+      },
+      "statistics": {
+        "total_disputes": "Total des litiges",
+        "pending_disputes": "Litiges en attente",
+        "closed_disputes": "Litiges fermés"
+      }
+    },
+    "conversations": {
+      "title": "Discussions",
+      "search": {
+        "placeholder": "Rechercher..."
+      },
+      "empty_state": {
+        "no_conversations": "Aucune conversation trouvée"
+      },
+      "chat_area": {
+        "close_chat": "Fermer la discussion",
+        "delete_chat": "Supprimer la discussion",
+        "loading_messages": "Chargement des messages...",
+        "loading_more_messages": "Chargement de plus de messages...",
+        "no_messages": "Aucun message pour le moment",
+        "start_conversation": "Commencez la conversation en envoyant un message ci-dessous.",
+        "type_message": "Tapez un message...",
+        "welcome": "Bienvenue, {name}",
+        "welcome_description": "Commencez une conversation et connectez-vous avec d'autres, partagez des idées, posez des questions ou dites simplement bonjour."
+      },
+      "modals": {
+        "delete_confirmation": {
+          "title": "Êtes-vous sûr ?",
+          "text": "Vous ne pourrez pas récupérer cette conversation !",
+          "confirm_button": "Oui, supprimez-la !",
+          "deleted_title": "Supprimé !",
+          "deleted_text": "La conversation a été supprimée."
+        }
       }
     }
   }

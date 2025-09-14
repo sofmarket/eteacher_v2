@@ -1,13 +1,13 @@
 <template>
   <div>
 
-    <Breadcrumbs title="Manage Sessions" />
+    <Breadcrumbs :title="$t('tutor.bookings.manage_sessions.title')" />
 
     <RoutedTabs :tabs="tabs">
       <div class="">
         <!-- Header: Month Navigation and Title -->
         <div class="flex items-center justify-between mb-4">
-          <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Manage Sessions</h2>
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $t('tutor.bookings.manage_sessions.title') }}</h2>
           <div class="flex items-center space-x-2">
             <button @click="previousMonth" class="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
               <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor"
@@ -17,7 +17,7 @@
             </button>
             <button @click="goToToday"
               class="px-3 py-1 text-sm rounded border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
-              Today
+              {{ $t('tutor.bookings.manage_sessions.today') }}
             </button>
             <button @click="nextMonth" class="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
               <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor"
@@ -30,7 +30,7 @@
             <!-- Add Session Button -->
             <button @click="openAddSessionModal"
               class="ml-4 px-4 py-2 text-sm font-medium text-white bg-green-900 rounded-lg hover:bg-green-800 flex items-center gap-1">
-              Add new Session
+              {{ $t('tutor.bookings.manage_sessions.add_new_session') }}
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
@@ -57,7 +57,7 @@
           <!-- Day Headers -->
           <div v-for="day in daysOfWeek" :key="day"
             class="text-center py-2 border-r border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 text-sm font-medium text-gray-600 dark:text-gray-400">
-            {{ day }}
+            {{ $t(day) }}
           </div>
 
           <!-- Calendar Days -->
@@ -78,7 +78,7 @@
               class="absolute bottom-2 left-2 right-2 text-xs text-gray-600 dark:text-gray-400 hidden md:flex flex-col items-center">
               <span class="font-medium">{{ getSlotsForDay(day).total_booked }}/{{ getSlotsForDay(day).spaces }}</span>
               <div class="w-full h-1 bg-blue-400 rounded mt-1"></div>
-              <span class="text-xs opacity-75">{{ getSlotsForDay(day).slots.length }} session{{ getSlotsForDay(day).slots.length > 1 ? 's' : '' }}</span>
+              <span class="text-xs opacity-75">{{ getSlotsForDay(day).slots.length }} {{ getSlotsForDay(day).slots.length > 1 ? $t('tutor.bookings.manage_sessions.sessions') : $t('tutor.bookings.manage_sessions.session') }}</span>
             </div>
           </div>
         </div>
@@ -98,14 +98,14 @@ import Breadcrumbs from '@/Components/common/Breadcrumbs.vue';
 import RoutedTabs from '../Components/RoutedTabs.vue';
 import { usePage } from '@inertiajs/vue3';
 
-const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const daysOfWeek = ['tutor.bookings.manage_sessions.days_of_week.sun', 'tutor.bookings.manage_sessions.days_of_week.mon', 'tutor.bookings.manage_sessions.days_of_week.tue', 'tutor.bookings.manage_sessions.days_of_week.wed', 'tutor.bookings.manage_sessions.days_of_week.thu', 'tutor.bookings.manage_sessions.days_of_week.fri', 'tutor.bookings.manage_sessions.days_of_week.sat'];
 
 const precessing = ref(false);
 
 const tabs = [
-    { id: 'teached-subjects', label: 'Subjects I Can Teach', route: 'tutor.bookings.teached-subjects', isActive: false },
-    { id: 'manage-sessions', label: 'Manage Sessions', route: 'tutor.bookings.manage-sessions', isActive: true },
-    { id: 'upcoming-bookings', label: 'Upcoming Bookings', route: 'tutor.bookings.upcoming-bookings', isActive: false },
+    { id: 'teached-subjects', label: 'tutor.bookings.tabs.subjects_i_can_teach', route: 'tutor.bookings.teached-subjects', isActive: false },
+    { id: 'manage-sessions', label: 'tutor.bookings.tabs.manage_sessions', route: 'tutor.bookings.manage-sessions', isActive: true },
+    { id: 'upcoming-bookings', label: 'tutor.bookings.tabs.upcoming_bookings', route: 'tutor.bookings.upcoming-bookings', isActive: false },
 ];
 
 

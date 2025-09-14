@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Breadcrumbs title="Invoices" />
+        <Breadcrumbs :title="$t('tutor.invoices.title')" />
 
         <div class="py-7">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-full">
@@ -16,24 +16,24 @@
                                 <tr>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                        #Invoice Id</th>
+                                        {{ $t('tutor.invoices.table.invoice_id') }}</th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                        Date</th>
+                                        {{ $t('tutor.invoices.table.date') }}</th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                        Student Name</th>
+                                        {{ $t('tutor.invoices.table.student_name') }}</th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                        Amount</th>
+                                        {{ $t('tutor.invoices.table.amount') }}</th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                        Tutor Payout</th>
+                                        {{ $t('tutor.invoices.table.tutor_payout') }}</th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                        Status</th>
+                                        {{ $t('tutor.invoices.table.status') }}</th>
                                     <th scope="col" class="relative px-6 py-3">
-                                        <span class="sr-only">Actions</span>
+                                        <span class="sr-only">{{ $t('tutor.invoices.table.actions') }}</span>
                                     </th>
                                 </tr>
                             </thead>
@@ -41,7 +41,7 @@
                                 <tr v-if="!invoices.data.length">
                                     <td colspan="9"
                                         class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 text-center">
-                                        No invoices found.
+                                        {{ $t('tutor.invoices.table.no_invoices_found') }}
                                     </td>
                                 </tr>
                                 <tr v-for="invoice in invoices.data" :key="invoice.id"
@@ -111,7 +111,7 @@
                     <div v-if="invoices.data.length"
                         class="mt-6 flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
                         <div class="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-400">
-                            <span>Show</span>
+                            <span>{{ $t('tutor.invoices.pagination.show') }}</span>
                             <select v-model="itemsPerPage" @change="changeItemsPerPage"
                                 class="block w-20 rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:text-gray-300 text-sm">
                                 <option value="5">5</option>
@@ -120,8 +120,7 @@
                                 <option value="50">50</option>
                                 <option value="100">100</option>
                             </select>
-                            <span class="hidden sm:inline">| Showing {{ invoices.meta.from }} to {{
-                                invoices.meta.to }} of {{ invoices.meta.total }} results</span>
+                            <span class="hidden sm:inline">| {{ $t('tutor.invoices.pagination.showing_results', { from: invoices.meta.from, to: invoices.meta.to, total: invoices.meta.total }) }}</span>
                         </div>
                         <Pagination :links="invoices.meta.links" />
                     </div>

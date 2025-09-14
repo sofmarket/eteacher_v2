@@ -5,7 +5,7 @@
         <div class="sticky px-4 pt-4 pb-4 sm:px-5 sm:pt-5 xl:pb-0">
             <div class="flex items-start justify-between">
                 <div>
-                    <h3 class="font-semibold text-gray-800 text-theme-xl dark:text-white/90 sm:text-2xl">Chats</h3>
+                    <h3 class="font-semibold text-gray-800 text-theme-xl dark:text-white/90 sm:text-2xl">{{ t('tutor.conversations.title') }}</h3>
                 </div>
                 <div class="relative">
                     <!-- <div class="relative">
@@ -41,7 +41,7 @@
                             </svg>
                         </button>
                         <div class="relative">
-                            <input type="text" placeholder="Search..." v-model="search"
+                            <input type="text" :placeholder="t('tutor.conversations.search.placeholder')" v-model="search"
                                 class="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pl-[42px] pr-3.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
                             <button v-if="search.length > 0 && !searching"
                                 class="absolute right-2.5 top-1/2 inline-flex -translate-y-1/2 items-center gap-0.5 px-[7px] py-[4.5px] text-xs -tracking-[0.2px] text-gray-500 dark:text-gray-100"
@@ -95,7 +95,7 @@
                     </div>
                 </button>
                 <div v-else class="flex items-center justify-center py-5 h-full">
-                    <div class="text-gray-500 dark:text-gray-400">No conversations found</div>
+                    <div class="text-gray-500 dark:text-gray-400">{{ t('tutor.conversations.empty_state.no_conversations') }}</div>
                 </div>
             </div>
             
@@ -117,6 +117,9 @@ import { ref, computed, onMounted, nextTick, watch } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import { formatTimeAgo, useDebounceFn } from '@vueuse/core'
 import axios from 'axios';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const props = defineProps({
     selectedConversation: {

@@ -1,19 +1,19 @@
 <template>
 
-    <Breadcrumbs title="Coupons" />
+    <Breadcrumbs :title="$t('tutor.coupons.title')" />
 
     <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="flex justify-between items-center mb-6">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">All Coupons</h1>
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ $t('tutor.coupons.page_title') }}</h1>
                     <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                        Browse and manage all your certificates conveniently in one place.
+                        {{ $t('tutor.coupons.description') }}
                     </p>
                 </div>
                 <button
                     class="inline-flex items-center px-4 py-2 bg-[#2B5F4A] hover:bg-[#224b3a] text-white text-sm font-medium rounded-lg">
-                    <span class="mr-2">Create Coupon</span>
+                    <span class="mr-2">{{ $t('tutor.coupons.create_coupon') }}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd"
                             d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
@@ -29,7 +29,7 @@
                         <!-- Search -->
                         <div class="w-full sm:w-96">
                             <div class="relative">
-                                <input v-model="searchQuery" type="text" placeholder="Search by keyword" class="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                                <input v-model="searchQuery" type="text" :placeholder="$t('tutor.coupons.search.placeholder')" class="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
                                     focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-500 focus:border-transparent
                                     bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100" />
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -51,7 +51,7 @@
                                     ? 'bg-blue-50 text-blue-600 dark:bg-blue-900/50 dark:text-blue-400'
                                     : 'bg-white text-gray-700 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-white'
                             ]">
-                                Active
+                                {{ $t('tutor.coupons.tabs.active') }}
                             </button>
                             <button @click="activeTab = 'inactive'" :class="[
                                 'px-4 py-2 text-sm font-medium rounded-r-lg border-l border-gray-200 dark:border-gray-700',
@@ -59,7 +59,7 @@
                                     ? 'bg-blue-50 text-blue-600 dark:bg-blue-900/50 dark:text-blue-400'
                                     : 'bg-white text-gray-700 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-white'
                             ]">
-                                In Active
+                                {{ $t('tutor.coupons.tabs.inactive') }}
                             </button>
                         </div>
                     </div>
@@ -73,9 +73,9 @@
                                     <div class="flex justify-between items-center">
                                         <div>
                                             <span class="text-3xl font-bold">{{ coupon.discount }}</span>
-                                            <span class="text-xl mx-2">% OFF</span>
+                                            <span class="text-xl mx-2">{{ $t('tutor.coupons.coupon_card.percent_off') }}</span>
                                             <div class="mt-1">
-                                                <p class="text-gray-200 truncate">Name: <em class="elipsis">{{
+                                                <p class="text-gray-200 truncate">{{ $t('tutor.coupons.coupon_card.name_label') }} <em class="elipsis">{{
                                                     coupon.name }}</em></p>
                                             </div>
                                         </div>
@@ -97,7 +97,7 @@
 
                                 <!-- Bottom section with coupon code -->
                                 <div class="bg-gray-100 p-4">
-                                    <p class="text-gray-600 mb-2">Coupon Code</p>
+                                    <p class="text-gray-600 mb-2">{{ $t('tutor.coupons.coupon_card.coupon_code') }}</p>
                                     <div class="flex items-center">
                                         <span class="text-xl font-semibold text-gray-700 mr-2">{{ coupon.code }}</span>
                                         <button @click="copyCode(coupon.code, coupon.id)"
@@ -109,9 +109,9 @@
                                             </svg>
                                         </button>
                                         <span v-if="copiedId === coupon.id"
-                                            class="ml-2 text-sm text-green-600">Copied!</span>
+                                            class="ml-2 text-sm text-green-600">{{ $t('tutor.coupons.coupon_card.copied') }}</span>
                                     </div>
-                                    <p class="text-gray-600 mt-2">Valid until: {{ coupon.expire_at }}</p>
+                                    <p class="text-gray-600 mt-2">{{ $t('tutor.coupons.coupon_card.valid_until') }} {{ coupon.expire_at }}</p>
                                 </div>
                             </div>
                         </div>

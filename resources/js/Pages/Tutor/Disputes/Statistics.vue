@@ -16,7 +16,7 @@
                     {{ statistics.total_disputes }}
                 </h3>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                    Total disputes
+                    {{ $t('tutor.disputes.statistics.total_disputes') }}
                 </p>
             </div>
         </article>
@@ -36,7 +36,7 @@
                     {{ statistics.total_disputes_pending }}
                 </h3>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                    Pending disputes
+                    {{ $t('tutor.disputes.statistics.pending_disputes') }}
                 </p>
             </div>
         </article>
@@ -56,7 +56,7 @@
                     {{ statistics.total_disputes_closed }}
                 </h3>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                    Closed disputes
+                    {{ $t('tutor.disputes.statistics.closed_disputes') }}
                 </p>
             </div>
         </article>
@@ -66,7 +66,9 @@
 <script setup>
 import { usePage } from '@inertiajs/vue3';
 import { computed, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const page = usePage();
 const statistics = computed(() => page.props.statistics);
 

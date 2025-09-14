@@ -3,14 +3,14 @@
         <div class="flex justify-between items-center">
             <div class="flex flex-col">
                 <h5 class="text-lg font-medium text-gray-800 dark:text-white/90">
-                    Experience Details
+                    {{ $t('tutor.profile.resume_highlights.experience.title') }}
                 </h5>
                 <span class="text-sm text-gray-500 hidden xl:block">
-                    Detail your job titles, responsibilities, acchievements and duration of each role
+                    {{ $t('tutor.profile.resume_highlights.experience.description') }}
                 </span>
             </div>
             <div class="">
-                <Button variant="primary" size="sm" text="+ Add New" @click="handleAddNew" />
+                <Button variant="primary" size="sm" :text="$t('tutor.profile.actions.add_new')" @click="handleAddNew" />
             </div>
         </div>
 
@@ -20,34 +20,34 @@
         </div>
 
         <Modal :modalActive="modalActive" @close="modalActive = false" :fullScreenBackdrop="true"
-            title="Add New Education" @reset="modalActive = false" @submit="handleSubmit" :loading="form.processing">
+            :title="$t('tutor.profile.resume_highlights.experience.add_new')" @reset="modalActive = false" @submit="handleSubmit" :loading="form.processing">
             <template #body>
                 <form class="flex flex-col gap-4" @submit.prevent="handleSubmit">
 
-                    <UniversalInput :inline="false" label="Job Title" v-model="form.title"
+                    <UniversalInput :inline="false" :label="$t('tutor.profile.resume_highlights.experience.job_title')" v-model="form.title"
                         :errors="form.errors.title" dir="ltr" />
 
-                    <UniversalInput :inline="false" label="Company Name" v-model="form.company"
+                    <UniversalInput :inline="false" :label="$t('tutor.profile.resume_highlights.experience.company_name')" v-model="form.company"
                         :errors="form.errors.company" />
 
-                    <UniversalInput :inline="false" label="Country" v-model="form.country"
+                    <UniversalInput :inline="false" :label="$t('tutor.profile.resume_highlights.education.country')" v-model="form.country"
                         :errors="form.errors.country" />
 
-                    <UniversalInput :inline="false" label="City" v-model="form.city" :errors="form.errors.city" />
+                    <UniversalInput :inline="false" :label="$t('tutor.profile.resume_highlights.education.city')" v-model="form.city" :errors="form.errors.city" />
 
-                    <SelectInput v-model="form.employment_type" label="Employment Type" :errors="form.errors.employment_type">
+                    <SelectInput v-model="form.employment_type" :label="$t('tutor.profile.resume_highlights.experience.employment_type')" :errors="form.errors.employment_type">
                         <option v-for="employmentType,employmentValue  in employmentTypes" :value="employmentValue"
                             :key="employmentValue">{{ employmentType }}</option>
                     </SelectInput>
 
-                    <SelectInput v-model="form.location" label="Employment Location" :errors="form.errors.location">
+                    <SelectInput v-model="form.location" :label="$t('tutor.profile.resume_highlights.experience.employment_location')" :errors="form.errors.location">
                         <option v-for="location,value  in employmentLocations" :value="value"
                             :key="value">{{ location }}</option>
                     </SelectInput>
 
-                    <DateInput label="Start Date" v-model="form.start_date" :errors="form.errors.start_date" />
+                    <DateInput :label="$t('tutor.profile.resume_highlights.experience.start_date')" v-model="form.start_date" :errors="form.errors.start_date" />
 
-                    <DateInput label="End Date" v-model="form.end_date" :errors="form.errors.end_date" />
+                    <DateInput :label="$t('tutor.profile.resume_highlights.experience.end_date')" v-model="form.end_date" :errors="form.errors.end_date" />
 
                 </form>
             </template>
@@ -58,6 +58,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
+import { useI18n } from 'vue-i18n';
 import ExperienceCard from './ExperienceCard.vue';
 import Button from '@/Components/ui/Button.vue';
 import Modal from '@/Components/ui/Modal.vue';
@@ -67,6 +68,7 @@ import UniversalInput from '@/Components/forms/FormElements/UniversalInput.vue';
 import DateInput from '@/Components/forms/FormElements/DateInput.vue';
 import SelectInput from '@/Components/forms/FormElements/SelectInput.vue';
 
+const { t } = useI18n();
 const modalActive = ref(false);
 
 const page = usePage();
@@ -92,13 +94,13 @@ const handleEdit = (experience) => {
 
 const handleDelete = (experience) => {
     Swal.fire({
-        title: 'Are you sure?',
-        text: 'You will not be able to recover this experience!',
+        title: t('tutor.profile.modals.delete_confirmation.title'),
+        text: t('tutor.profile.modals.delete_confirmation.experience_text'),
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: t('tutor.profile.modals.delete_confirmation.confirm_button')
     }).then((result) => {
         if (result.isConfirmed) {
             // console.log('Delete experience:', experience);

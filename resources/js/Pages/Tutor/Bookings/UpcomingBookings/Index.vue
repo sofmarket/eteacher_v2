@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <Breadcrumbs title="Upcoming Bookings" />
+        <Breadcrumbs :title="$t('tutor.bookings.upcoming_bookings.title')" />
 
         <RoutedTabs :tabs="tabs">
 
@@ -20,7 +20,7 @@
                         </button>
                         <button @click="goToToday"
                             class="px-3 py-1 text-sm rounded border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
-                            Today
+                            {{ $t('tutor.bookings.upcoming_bookings.today') }}
                         </button>
                         <button @click="next" class="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
                             <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor"
@@ -44,7 +44,7 @@
                     <!-- Search & Filters -->
                     <div class="flex items-center space-x-2 flex-grow sm:flex-grow-0">
                         <div class="relative flex-grow sm:flex-grow-0">
-                            <input type="text" placeholder="Search here"
+                            <input type="text" :placeholder="$t('tutor.bookings.upcoming_bookings.search_here')"
                                 class="pl-8 pr-2 py-1.5 text-sm rounded border border-gray-300 dark:border-gray-600 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:text-gray-300 w-full sm:w-40">
                             <svg class="w-4 h-4 text-gray-400 absolute left-2 top-1/2 transform -translate-y-1/2"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -74,7 +74,7 @@
                                 'rounded-r': view.value === 'monthly',
                                 'border-l border-r border-gray-300 dark:border-gray-600': view.value === 'weekly'
                             }">
-                            {{ view.label }}
+                            {{ $t(view.label) }}
                         </button>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                             <!-- Time Column Header -->
                             <div
                                 class="border-b border-r border-gray-200 dark:border-gray-700 px-2 py-5 text-sm font-medium text-gray-600 dark:text-gray-400 w-20 text-center">
-                                Time</div>
+                                {{ $t('tutor.bookings.upcoming_bookings.time') }}</div>
                             <!-- Date Header -->
                             <div
                                 class="border-b border-gray-200 dark:border-gray-700 px-2 py-5 text-sm font-medium text-gray-600 dark:text-gray-400 flex-1 text-center">
@@ -131,7 +131,7 @@
                             :class="{ 'bg-blue-50 dark:bg-blue-900/10': isToday(day) }">
                             <div
                                 class="bg-gray-50 dark:bg-gray-700/50 rounded p-2 text-center text-xs text-gray-500 dark:text-gray-400">
-                                No sessions
+                                {{ $t('tutor.bookings.upcoming_bookings.no_sessions') }}
                             </div>
                         </div>
                     </div>
@@ -177,15 +177,15 @@ import RoutedTabs from '../Components/RoutedTabs.vue';
 import Breadcrumbs from '@/Components/common/Breadcrumbs.vue';
 
 const tabs = [
-    { id: 'teached-subjects', label: 'Subjects I Can Teach', route: 'tutor.bookings.teached-subjects', isActive: false },
-    { id: 'manage-sessions', label: 'Manage Sessions', route: 'tutor.bookings.manage-sessions', isActive: false },
-    { id: 'upcoming-bookings', label: 'Upcoming Bookings', route: 'tutor.bookings.upcoming-bookings', isActive: true },
+    { id: 'teached-subjects', label: 'tutor.bookings.tabs.subjects_i_can_teach', route: 'tutor.bookings.teached-subjects', isActive: false },
+    { id: 'manage-sessions', label: 'tutor.bookings.tabs.manage_sessions', route: 'tutor.bookings.manage-sessions', isActive: false },
+    { id: 'upcoming-bookings', label: 'tutor.bookings.tabs.upcoming_bookings', route: 'tutor.bookings.upcoming-bookings', isActive: true },
 ];
 
 const views = [
-    { label: 'Daily', value: 'daily' },
-    { label: 'Weekly', value: 'weekly' },
-    { label: 'Monthly', value: 'monthly' },
+    { label: 'tutor.bookings.upcoming_bookings.views.daily', value: 'daily' },
+    { label: 'tutor.bookings.upcoming_bookings.views.weekly', value: 'weekly' },
+    { label: 'tutor.bookings.upcoming_bookings.views.monthly', value: 'monthly' },
 ];
 
 const currentView = ref('daily'); // Default view

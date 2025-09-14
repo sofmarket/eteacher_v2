@@ -1,5 +1,445 @@
 {
   "dashboard": {
-    "target_for_each_month": "هدفك المحدد لكل شهر"
+    "target_for_each_month": "الهدف الذي حددته لكل شهر"
+  },
+  "tutor": {
+    "home": {
+      "customer_demographic": {
+        "title": "ديموغرافية العملاء",
+        "description": "عدد العملاء حسب البلد",
+        "customers": "العملاء",
+        "hello_egypt": "مرحباً مصر"
+      },
+      "monthly_sessions": {
+        "title": "الجلسات الشهرية",
+        "sessions": "الجلسات"
+      },
+      "monthly_target": {
+        "title": "الهدف الشهري",
+        "target": "الهدف",
+        "revenue": "الإيرادات",
+        "today": "اليوم",
+        "earn_message": "لقد ربحت {amount} اليوم، استمر في عملك الجيد!",
+        "view_more": "عرض المزيد",
+        "delete": "حذف"
+      },
+      "recent_bookings": {
+        "title": "الحجوزات الأخيرة",
+        "see_all": "عرض الكل",
+        "student": "الطالب",
+        "subject": "المادة",
+        "session_fee": "رسوم الجلسة",
+        "status": "الحالة",
+        "statuses": {
+          "completed": "مكتمل",
+          "active": "نشط",
+          "rescheduled": "مؤجل"
+        }
+      },
+      "statistics": {
+        "title": "الإحصائيات",
+        "bookings": "الحجوزات",
+        "revenue": "الإيرادات",
+        "monthly": "شهري",
+        "quarterly": "ربعي",
+        "annually": "سنوي",
+        "months": {
+          "january": "يناير",
+          "february": "فبراير",
+          "march": "مارس",
+          "april": "أبريل",
+          "may": "مايو",
+          "june": "يونيو",
+          "july": "يوليو",
+          "august": "أغسطس",
+          "september": "سبتمبر",
+          "october": "أكتوبر",
+          "november": "نوفمبر",
+          "december": "ديسمبر"
+        }
+      },
+      "stats": {
+        "students": "الطلاب",
+        "bookings": "الحجوزات"
+      }
+    },
+    "bookings": {
+      "tabs": {
+        "subjects_i_can_teach": "المواد التي يمكنني تدريسها",
+        "manage_sessions": "إدارة الجلسات",
+        "upcoming_bookings": "الحجوزات القادمة"
+      },
+      "manage_sessions": {
+        "title": "إدارة الجلسات",
+        "today": "اليوم",
+        "add_new_session": "إضافة جلسة جديدة",
+        "sessions": "الجلسات",
+        "session": "الجلسة",
+        "days_of_week": {
+          "sun": "أحد",
+          "mon": "اثنين",
+          "tue": "ثلاثاء",
+          "wed": "أربعاء",
+          "thu": "خميس",
+          "fri": "جمعة",
+          "sat": "سبت"
+        }
+      },
+      "add_session_modal": {
+        "title": "إضافة تفاصيل الجلسة",
+        "select_subject": "اختر المادة",
+        "select_a_subject": "اختر مادة",
+        "start_time": "وقت البداية",
+        "select_start_time": "اختر وقت البداية",
+        "session_fee": "رسوم الجلسة",
+        "session_date": "تاريخ الجلسة",
+        "choose_session_date": "اختر تاريخ الجلسة",
+        "session_duration": "مدة الجلسة",
+        "select_session_duration": "اختر مدة الجلسة",
+        "duration_options": {
+          "30_minutes": "30 دقيقة",
+          "1_hour": "ساعة واحدة",
+          "1_5_hours": "ساعة ونصف",
+          "2_hours": "ساعتان"
+        },
+        "session_seats": "مقاعد الجلسة",
+        "what_will_be_covered": "ما سيتم تغطيته في هذه الجلسة",
+        "enter_session_description": "أدخل وصف الجلسة..."
+      },
+      "teached_subjects": {
+        "title": "المواد التي يمكنني تدريسها",
+        "description": "يرجى تقديم خلفيتك التعليمية لمساعدتنا في تقييم مؤهلاتك.",
+        "add_new": "إضافة جديد",
+        "hourly_rate": "المعدل بالساعة: ${rate}",
+        "edit": "تعديل",
+        "delete": "حذف",
+        "are_you_sure": "هل أنت متأكد؟",
+        "delete_subject_warning": "لن تتمكن من استرداد هذه المادة!",
+        "yes_delete_it": "نعم، احذفها!",
+        "deleted": "تم الحذف!",
+        "subject_deleted": "تم حذف المادة.",
+        "edit_group": "تعديل المجموعة",
+        "delete_group": "حذف المجموعة",
+        "delete_group_warning": "لن تتمكن من استرداد هذه المجموعة!",
+        "group_deleted": "تم حذف المجموعة.",
+        "add_new_subject": "إضافة مادة جديدة"
+      },
+      "subject_group_modal": {
+        "title": "إضافة مجموعات المواد",
+        "choose_subject_category": "اختر فئة المادة التي يمكنك تدريسها"
+      },
+      "subject_modal": {
+        "add_new_subject": "إضافة مادة جديدة",
+        "edit_subject": "تعديل المادة",
+        "subject": "المادة",
+        "select_a_subject": "اختر مادة",
+        "hourly_rate": "المعدل بالساعة ($)",
+        "enter_hourly_rate": "أدخل المعدل بالساعة",
+        "description": "الوصف",
+        "describe_expertise": "اوصف خبرتك في هذه المادة",
+        "subject_image": "صورة المادة"
+      },
+      "upcoming_bookings": {
+        "title": "الحجوزات القادمة",
+        "today": "اليوم",
+        "search_here": "ابحث هنا",
+        "time": "الوقت",
+        "no_sessions": "لا توجد جلسات",
+        "views": {
+          "daily": "يومي",
+          "weekly": "أسبوعي",
+          "monthly": "شهري"
+        }
+      }
+    },
+    "chats": {
+      "title": "المحادثات",
+      "search_placeholder": "ابحث...",
+      "type_message_placeholder": "اكتب رسالة...",
+      "sample_messages": {
+        "hello_help": "مرحباً! كيف يمكنني مساعدتك اليوم؟",
+        "math_homework": "أحتاج مساعدة في واجباتي الرياضية",
+        "hello": "مرحباً",
+        "hi": "أهلاً",
+        "sent_voice_note": "أرسل لك رسالة صوتية"
+      },
+      "sample_names": {
+        "sarah_chapman": "سارة تشابمان",
+        "ann_coleman": "آن كولمان",
+        "amento_tech": "أمينتو تك",
+        "amentotech_02": "أمينتو تك 02",
+        "test_test": "اختبار اختبار",
+        "evelyn_harper": "إيفلين هاربر",
+        "arianne_kearns": "أريان كيرنز"
+      }
+    },
+    "invoices": {
+      "title": "الفواتير",
+      "table": {
+        "invoice_id": "#رقم الفاتورة",
+        "date": "التاريخ",
+        "student_name": "اسم الطالب",
+        "amount": "المبلغ",
+        "tutor_payout": "دفع المعلم",
+        "status": "الحالة",
+        "actions": "الإجراءات",
+        "no_invoices_found": "لم يتم العثور على فواتير."
+      },
+      "status": {
+        "paid": "مدفوع",
+        "pending": "في الانتظار",
+        "complete": "مكتمل",
+        "failed": "فشل",
+        "refunded": "مسترد"
+      },
+      "filters": {
+        "filter_by": "تصفية حسب:",
+        "all_invoices": "جميع الفواتير"
+      },
+      "pagination": {
+        "show": "عرض",
+        "showing_results": "عرض {from} إلى {to} من {total} نتيجة"
+      }
+    },
+    "payouts": {
+      "title": "المدفوعات",
+      "table": {
+        "ref": "#المرجع",
+        "method": "الطريقة",
+        "date": "التاريخ",
+        "amount": "المبلغ",
+        "status": "الحالة"
+      },
+      "status": {
+        "complete": "مكتمل",
+        "pending": "في الانتظار",
+        "failed": "فشل",
+        "refunded": "مسترد"
+      },
+      "filters": {
+        "filter_by": "تصفية حسب:",
+        "all_payouts": "جميع المدفوعات"
+      },
+      "pagination": {
+        "show": "عرض",
+        "showing_results": "عرض {from} إلى {to} من {total} نتيجة"
+      }
+    },
+    "profile": {
+      "title": "ملف المستخدم",
+      "tabs": {
+        "personal_information": "المعلومات الشخصية",
+        "account_settings": "إعدادات الحساب",
+        "resume_highlights": "نقاط بارزة في السيرة الذاتية",
+        "identity_verification": "التحقق من الهوية"
+      },
+      "personal_information": {
+        "title": "المعلومات الشخصية",
+        "fullname": "الاسم الكامل",
+        "email_address": "عنوان البريد الإلكتروني",
+        "phone": "الهاتف",
+        "gender": "الجنس",
+        "male": "ذكر",
+        "female": "أنثى",
+        "tag_line": "العبارة المميزة",
+        "meta_keywords": "كلمات مفتاحية",
+        "address": "العنوان",
+        "city": "المدينة",
+        "select_city": "اختر المدينة",
+        "zip_code": "الرمز البريدي",
+        "native_language": "اللغة الأم",
+        "select_native_language": "اختر اللغة الأم",
+        "languages_i_know": "اللغات التي أعرفها",
+        "brief_introduction": "مقدمة مختصرة",
+        "profile_image": "صورة الملف الشخصي",
+        "introduction_video": "فيديو التعريف",
+        "social_links": "الروابط الاجتماعية"
+      },
+      "account_settings": {
+        "title": "إعدادات الحساب",
+        "current_password": "كلمة المرور الحالية",
+        "password": "كلمة المرور",
+        "confirm_password": "تأكيد كلمة المرور",
+        "save_and_update": "حفظ وتحديث",
+        "save_and_update_description": "حفظ وتحديث أحدث التغييرات مباشرة"
+      },
+      "resume_highlights": {
+        "title": "نقاط بارزة في السيرة الذاتية",
+        "tabs": {
+          "education": "التعليم",
+          "experience": "الخبرة",
+          "certifications": "الشهادات والجوائز"
+        },
+        "education": {
+          "title": "تفاصيل التعليم",
+          "description": "يرجى تقديم خلفيتك التعليمية لمساعدتنا في تقييم مؤهلاتك.",
+          "add_new": "إضافة تعليم جديد",
+          "course_title": "عنوان الدورة",
+          "institute_name": "اسم المعهد",
+          "country": "البلد",
+          "city": "المدينة",
+          "start_date": "تاريخ البداية",
+          "end_date": "تاريخ النهاية",
+          "issued": "صادر",
+          "expiry": "انتهاء الصلاحية"
+        },
+        "experience": {
+          "title": "تفاصيل الخبرة",
+          "description": "اوصف عناوين وظائفك ومسؤولياتك وإنجازاتك ومدة كل دور",
+          "add_new": "إضافة خبرة جديدة",
+          "job_title": "عنوان الوظيفة",
+          "company_name": "اسم الشركة",
+          "employment_type": "نوع التوظيف",
+          "employment_location": "موقع التوظيف",
+          "start_date": "تاريخ البداية",
+          "end_date": "تاريخ النهاية"
+        },
+        "certificates": {
+          "title": "الشهادات والجوائز",
+          "description": "اذكر شهاداتك وجوائزك والمنظمات المصدرة والتواريخ المستلمة.",
+          "add_new": "إضافة شهادة جديدة",
+          "upload_photo": "رفع صورة الشهادات والجوائز",
+          "certificate_title": "عنوان الشهادات/الجوائز",
+          "university_institute": "عنوان الجامعة/المعهد",
+          "issue_date": "تاريخ الإصدار",
+          "expiry_date": "تاريخ انتهاء الصلاحية",
+          "description": "الوصف"
+        }
+      },
+      "identity_verification": {
+        "title": "التحقق من الهوية",
+        "fullname": "الاسم الكامل",
+        "date_of_birth": "تاريخ الميلاد",
+        "address": "العنوان",
+        "city": "المدينة",
+        "zip_code": "الرمز البريدي",
+        "personal_photo": "الصورة الشخصية",
+        "government_id": "الهوية الحكومية",
+        "save_and_update": "حفظ وتحديث",
+        "save_and_update_description": "حفظ وتحديث أحدث التغييرات مباشرة"
+      },
+      "actions": {
+        "edit": "تعديل",
+        "delete": "حذف",
+        "add_new": "+ إضافة جديد"
+      },
+      "modals": {
+        "delete_confirmation": {
+          "title": "هل أنت متأكد؟",
+          "certificate_text": "لن تتمكن من استرداد هذه الشهادة!",
+          "education_text": "لن تتمكن من استرداد هذا التعليم!",
+          "experience_text": "لن تتمكن من استرداد هذه الخبرة!",
+          "confirm_button": "نعم، احذفها!",
+          "cancel_button": "إلغاء"
+        }
+      }
+    },
+    "coupons": {
+      "title": "الكوبونات",
+      "page_title": "جميع الكوبونات",
+      "description": "تصفح وأدر جميع شهاداتك بسهولة في مكان واحد.",
+      "create_coupon": "إنشاء كوبون",
+      "search": {
+        "placeholder": "البحث بالكلمة المفتاحية"
+      },
+      "tabs": {
+        "active": "نشط",
+        "inactive": "غير نشط"
+      },
+      "coupon_card": {
+        "name_label": "الاسم:",
+        "coupon_code": "كود الكوبون",
+        "valid_until": "صالح حتى:",
+        "copied": "تم النسخ!",
+        "percent_off": "% خصم"
+      },
+      "actions": {
+        "copy_code": "نسخ الكود"
+      }
+    },
+    "disputes": {
+      "title": "النزاعات",
+      "page_title": "تذاكر الدعم",
+      "description": "قائمة تذاكر الدعم الأكثر حداثة",
+      "dispute_details": "تفاصيل النزاع",
+      "search": {
+        "placeholder": "ابحث..."
+      },
+      "table": {
+        "dispute_id": "رقم النزاع",
+        "requested_by": "طلب بواسطة",
+        "subject": "الموضوع",
+        "create_date": "تاريخ الإنشاء",
+        "status": "الحالة",
+        "action": "الإجراء"
+      },
+      "empty_state": {
+        "title": "لم يتم العثور على نزاعات",
+        "description": "لا توجد نزاعات تطابق المرشحات الحالية."
+      },
+      "pagination": {
+        "showing_results": "عرض {from} إلى {to} من {total} نتيجة"
+      },
+      "actions": {
+        "view_more": "عرض المزيد"
+      },
+      "status": {
+        "closed": "مغلق",
+        "under_review": "قيد المراجعة",
+        "in_discussion": "قيد المناقشة",
+        "pending": "في الانتظار",
+        "in_progress": "قيد التقدم",
+        "solved": "محلول",
+        "on_hold": "معلق"
+      },
+      "details": {
+        "student": "الطالب",
+        "email": "البريد الإلكتروني",
+        "dispute_id": "رقم النزاع",
+        "dispute_reason": "سبب النزاع",
+        "created": "تم الإنشاء",
+        "status": "الحالة"
+      },
+      "conversation": {
+        "reply_placeholder": "اكتب ردك هنا...",
+        "attach": "إرفاق",
+        "reply": "رد",
+        "status_label": "الحالة:"
+      },
+      "statistics": {
+        "total_disputes": "إجمالي النزاعات",
+        "pending_disputes": "النزاعات المعلقة",
+        "closed_disputes": "النزاعات المغلقة"
+      }
+    },
+    "conversations": {
+      "title": "المحادثات",
+      "search": {
+        "placeholder": "ابحث..."
+      },
+      "empty_state": {
+        "no_conversations": "لم يتم العثور على محادثات"
+      },
+      "chat_area": {
+        "close_chat": "إغلاق المحادثة",
+        "delete_chat": "حذف المحادثة",
+        "loading_messages": "جاري تحميل الرسائل...",
+        "loading_more_messages": "جاري تحميل المزيد من الرسائل...",
+        "no_messages": "لا توجد رسائل بعد",
+        "start_conversation": "ابدأ المحادثة بإرسال رسالة أدناه.",
+        "type_message": "اكتب رسالة...",
+        "welcome": "مرحباً، {name}",
+        "welcome_description": "ابدأ محادثة وتواصل مع الآخرين، شارك الأفكار، اطرح الأسئلة أو قل مرحباً ببساطة."
+      },
+      "modals": {
+        "delete_confirmation": {
+          "title": "هل أنت متأكد؟",
+          "text": "لن تتمكن من استرداد هذه المحادثة!",
+          "confirm_button": "نعم، احذفها!",
+          "deleted_title": "تم الحذف!",
+          "deleted_text": "تم حذف المحادثة."
+        }
+      }
+    }
   }
 }

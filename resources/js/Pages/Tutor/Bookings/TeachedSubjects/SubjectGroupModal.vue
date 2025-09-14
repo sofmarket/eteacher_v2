@@ -1,9 +1,9 @@
 <template>
-    <Modal :modalActive="modalActive" @close="closeModal" :fullScreenBackdrop="true" title="Add Subject Groups"
+    <Modal :modalActive="modalActive" @close="closeModal" :fullScreenBackdrop="true" :title="$t('tutor.bookings.subject_group_modal.title')"
         @reset="closeModal" @submit="handleSubmit" :loading="form.processing">
         <template #body>
             <form class="flex flex-col gap-4" @submit.prevent="handleSubmit">
-                <ChoicesInput label="Choose subject category you can teach" multiple v-model="form.subject_groups">
+                <ChoicesInput :label="$t('tutor.bookings.subject_group_modal.choose_subject_category')" multiple v-model="form.subject_groups">
                     <option v-for="group in subjectGroups" :value="group.id" :key="group.id">{{ group.name }}
                     </option>
                 </ChoicesInput>

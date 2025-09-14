@@ -3,7 +3,7 @@
     :modalActive="modalActive" 
     @close="closeModal" 
     :fullScreenBackdrop="true" 
-    title="Add Session Details"
+    :title="$t('tutor.bookings.add_session_modal.title')"
     @reset="closeModal" 
     @submit="submitForm" 
     :loading="form.processing"
@@ -17,12 +17,12 @@
             <!-- Select subject -->
             <SelectInput 
               :inline="false" 
-              label="Select subject" 
+              :label="$t('tutor.bookings.add_session_modal.select_subject')" 
               v-model="form.user_subject_group_subject_id"
               :errors="form.errors.user_subject_group_subject_id"
               :required="true"
             >
-              <option value="">Select a subject</option>
+              <option value="">{{ $t('tutor.bookings.add_session_modal.select_a_subject') }}</option>
               <template v-for="group in userSubjectGroups" :key="group.id">
                 <optgroup v-if="group.subjects.length > 0" :label="group.name">
                   <option v-for="subject in group.subjects" :key="subject.id" :value="subject.id">
@@ -35,18 +35,18 @@
             <!-- Start time -->
             <UniversalInput 
               :inline="false" 
-              label="Start time" 
+              :label="$t('tutor.bookings.add_session_modal.start_time')" 
               v-model="form.start_time"
               :errors="form.errors.start_time"
               :required="true"
               type="time"
-              placeholder="Select start time"
+              :placeholder="$t('tutor.bookings.add_session_modal.select_start_time')"
             />
 
             <!-- Session Fee -->
             <UniversalInput 
               :inline="false" 
-              label="Session Fee" 
+              :label="$t('tutor.bookings.add_session_modal.session_fee')" 
               v-model="form.session_fee"
               :errors="form.errors.session_fee"
               :required="true"
@@ -63,11 +63,11 @@
             <!-- Start date -->
             <DateInput 
               :inline="false" 
-              label="Session date" 
+              :label="$t('tutor.bookings.add_session_modal.session_date')" 
               v-model="form.start_date"
               :errors="form.errors.start_date"
               :required="true"
-              placeholder="Choose session date"
+              :placeholder="$t('tutor.bookings.add_session_modal.choose_session_date')"
             />
 
             <!-- End date -->
@@ -83,22 +83,22 @@
             <!-- Session duration -->
             <SelectInput 
               :inline="false" 
-              label="Session duration" 
+              :label="$t('tutor.bookings.add_session_modal.session_duration')" 
               v-model="form.duration"
               :errors="form.errors.duration"
               :required="true"
             >
-              <option value="">Select session duration</option>
-              <option value="30">30 minutes</option>
-              <option value="60">1 hour</option>
-              <option value="90">1.5 hours</option>
-              <option value="120">2 hours</option>
+              <option value="">{{ $t('tutor.bookings.add_session_modal.select_session_duration') }}</option>
+              <option value="30">{{ $t('tutor.bookings.add_session_modal.duration_options.30_minutes') }}</option>
+              <option value="60">{{ $t('tutor.bookings.add_session_modal.duration_options.1_hour') }}</option>
+              <option value="90">{{ $t('tutor.bookings.add_session_modal.duration_options.1_5_hours') }}</option>
+              <option value="120">{{ $t('tutor.bookings.add_session_modal.duration_options.2_hours') }}</option>
             </SelectInput>
 
              <!-- Session Fee -->
              <UniversalInput 
               :inline="false" 
-              label="Session Seats" 
+              :label="$t('tutor.bookings.add_session_modal.session_seats')" 
               v-model="form.spaces"
               :errors="form.errors.spaces"
               :required="true"
@@ -124,10 +124,10 @@
 
         <!-- Text Area -->
         <TextArea 
-            label="What will be covered in this session"
+            :label="$t('tutor.bookings.add_session_modal.what_will_be_covered')"
             v-model="form.description"
             :errors="form.errors.description"
-            placeholder="Enter session description..."
+            :placeholder="$t('tutor.bookings.add_session_modal.enter_session_description')"
             :rows="6"
           />
 

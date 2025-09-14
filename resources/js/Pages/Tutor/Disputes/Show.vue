@@ -1,5 +1,5 @@
 <template>
-    <Breadcrumbs :breadcrumbs="breadcrumbs" title="Dispute Details" />
+    <Breadcrumbs :breadcrumbs="breadcrumbs" :title="$t('tutor.disputes.dispute_details')" />
 
     <div class="overflow-hidden xl:h-[calc(100vh-180px)]">
         <div class="grid h-full grid-cols-1 gap-5 xl:grid-cols-12">
@@ -31,7 +31,7 @@
                             <div
                                 class="mx-auto max-h-[162px] w-full rounded-2xl border border-gray-200 shadow-xs dark:border-gray-800 dark:bg-gray-800">
                                 <!-- Textarea -->
-                                <textarea placeholder="Type your reply here..."
+                                <textarea :placeholder="$t('tutor.disputes.conversation.reply_placeholder')"
                                     class="h-20 w-full resize-none border-none bg-transparent p-5 font-normal text-gray-800 outline-none placeholder:text-gray-400 focus:ring-0 dark:text-white"></textarea>
 
                                 <!-- Bottom Section -->
@@ -45,12 +45,12 @@
                                                 stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
                                                 stroke-linejoin="round"></path>
                                         </svg>
-                                        Attach
+                                        {{ $t('tutor.disputes.conversation.attach') }}
                                     </button>
                                     <!-- Send Button -->
                                     <button
                                         class="bg-brand-500 hover:bg-brand-600 shadow-theme-xs inline-flex h-9 items-center justify-center rounded-lg px-4 py-3 text-sm font-medium text-white">
-                                        Reply
+                                        {{ $t('tutor.disputes.conversation.reply') }}
                                     </button>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
 
                         <!-- Status -->
                         <div class="mt-6 flex flex-wrap items-center gap-4">
-                            <span class="text-gray-500 dark:text-gray-400">Status:</span>
+                            <span class="text-gray-500 dark:text-gray-400">{{ $t('tutor.disputes.conversation.status_label') }}</span>
                             <div x-data="{ selected: 'in-progress' }" class="flex items-center gap-4">
                                 <!-- In-Progress -->
                                 <label for="radioLabelOne"
@@ -72,7 +72,7 @@
                                                 :class="false ? 'bg-white' : 'bg-white dark:bg-[#171f2e]'"></span>
                                         </div>
                                     </div>
-                                    In-Progress
+                                    {{ $t('tutor.disputes.status.in_progress') }}
                                 </label>
 
                                 <!-- Solved -->
@@ -87,7 +87,7 @@
                                                 :class="false ? 'bg-white' : 'bg-white dark:bg-[#171f2e]'"></span>
                                         </div>
                                     </div>
-                                    Solved
+                                    {{ $t('tutor.disputes.status.solved') }}
                                 </label>
 
                                 <!-- On-Hold -->
@@ -102,7 +102,7 @@
                                                 :class="true ? 'bg-white' : 'bg-white dark:bg-[#171f2e]'"></span>
                                         </div>
                                     </div>
-                                    On-Hold
+                                    {{ $t('tutor.disputes.status.on_hold') }}
                                 </label>
                             </div>
                         </div>
@@ -119,14 +119,16 @@
 
 import { computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
+import { useI18n } from 'vue-i18n';
 import Breadcrumbs from '@/Components/common/Breadcrumbs.vue';
 import DisputeConversationMessage from './DisputeConversationMessage.vue';
 import DisputeDetails from './DisputeDetails.vue';
+const { t } = useI18n();
 const page = usePage();
 const dispute = computed(() => page.props.dispute?.data);
 
 const breadcrumbs = computed(() => [
-    { label: 'Disputes', href: route('tutor.disputes') },
+    { label: t('tutor.disputes.title'), href: route('tutor.disputes') },
     { label: `${dispute.value.ref}` }
 ]);
 

@@ -5,24 +5,24 @@
             <form class="flex flex-col gap-4" @submit.prevent="handleSubmit">
 
                 <!-- Subject Selection (only for create mode) -->
-                <SelectInput v-if="!isEditMode" :inline="false" label="Subject" v-model="form.subject_id"
+                <SelectInput v-if="!isEditMode" :inline="false" :label="$t('tutor.bookings.subject_modal.subject')" v-model="form.subject_id"
                     :errors="form.errors.subject_id">
-                    <option value="">Select a subject</option>
+                    <option value="">{{ $t('tutor.bookings.subject_modal.select_a_subject') }}</option>
                     <option v-for="option in subjectOptions" :key="option.value" :value="option.value">
                         {{ option.label }}
                     </option>
                 </SelectInput>
 
                 <!-- Hourly Rate -->
-                <UniversalInput :inline="false" label="Hourly Rate ($)" v-model="form.hour_rate"
-                    :errors="form.errors.hour_rate" type="number" placeholder="Enter hourly rate" min="0" step="0.01" />
+                <UniversalInput :inline="false" :label="$t('tutor.bookings.subject_modal.hourly_rate')" v-model="form.hour_rate"
+                    :errors="form.errors.hour_rate" type="number" :placeholder="$t('tutor.bookings.subject_modal.enter_hourly_rate')" min="0" step="0.01" />
 
                 <!-- Description -->
-                <Textarea label="Description" v-model="form.description" :errors="form.errors.description"
-                    placeholder="Describe your expertise in this subject" :rows="3" />
+                <Textarea :label="$t('tutor.bookings.subject_modal.description')" v-model="form.description" :errors="form.errors.description"
+                    :placeholder="$t('tutor.bookings.subject_modal.describe_expertise')" :rows="3" />
 
                 <!-- Image Upload -->
-                <FileInput :inline="false" label="Subject Image" :errors="form.errors.image"
+                <FileInput :inline="false" :label="$t('tutor.bookings.subject_modal.subject_image')" :errors="form.errors.image"
                     @file-selected="onFileSelected" />
 
             </form>
@@ -38,9 +38,9 @@ import UniversalInput from '@/Components/forms/FormElements/UniversalInput.vue';
 import FileInput from '@/Components/forms/FormElements/FileInput.vue';
 import SelectInput from '@/Components/forms/FormElements/SelectInput.vue';
 import Textarea from '@/Components/forms/FormElements/TextArea.vue';
-
+import { useI18n } from 'vue-i18n';
 const emit = defineEmits(['update:modalActive'])
-
+const { t } = useI18n();
 const props = defineProps({
     modalActive: {
         type: Boolean,
@@ -72,7 +72,7 @@ const subjectOptions = computed(() => {
 const isEditMode = computed(() => !!props.subjectToEdit);
 
 const modalTitle = computed(() => {
-    return isEditMode.value ? 'Edit Subject' : 'Add New Subject';
+    return isEditMode.value ? t('tutor.bookings.subject_modal.edit_subject') : t('tutor.bookings.subject_modal.add_new_subject');
 });
 
 const closeModal = () => emit('update:modalActive', false);

@@ -3,14 +3,14 @@
         <div class="flex justify-between items-center">
             <div class="flex flex-col">
                 <h5 class="text-lg font-medium text-gray-800 dark:text-white/90">
-                    Education Details
+                    {{ $t('tutor.profile.resume_highlights.education.title') }}
                 </h5>
                 <span class="text-sm text-gray-500 hidden xl:block">
-                    Please provide your educational background to help us assess your qualifications.
+                    {{ $t('tutor.profile.resume_highlights.education.description') }}
                 </span>
             </div>
             <div class="">
-                <Button variant="primary" size="sm" text="+ Add New" @click="handleAddNew" />
+                <Button variant="primary" size="sm" :text="$t('tutor.profile.actions.add_new')" @click="handleAddNew" />
             </div>
         </div>
 
@@ -20,24 +20,24 @@
         </div>
 
         <Modal :modalActive="modalActive" @close="modalActive = false" :fullScreenBackdrop="true"
-            title="Add New Education" @reset="modalActive = false" @submit="handleSubmit" :loading="form.processing">
+            :title="$t('tutor.profile.resume_highlights.education.add_new')" @reset="modalActive = false" @submit="handleSubmit" :loading="form.processing">
             <template #body>
                 <form class="flex flex-col gap-4" @submit.prevent="handleSubmit">
 
-                    <UniversalInput :inline="false" label="Course Title" v-model="form.course_title"
+                    <UniversalInput :inline="false" :label="$t('tutor.profile.resume_highlights.education.course_title')" v-model="form.course_title"
                         :errors="form.errors.course_title" dir="ltr" />
 
-                    <UniversalInput :inline="false" label="Institute Name" v-model="form.institute_name"
+                    <UniversalInput :inline="false" :label="$t('tutor.profile.resume_highlights.education.institute_name')" v-model="form.institute_name"
                         :errors="form.errors.institute_name" />
 
-                    <UniversalInput :inline="false" label="Country" v-model="form.country"
+                    <UniversalInput :inline="false" :label="$t('tutor.profile.resume_highlights.education.country')" v-model="form.country"
                         :errors="form.errors.country" />
 
-                    <UniversalInput :inline="false" label="City" v-model="form.city" :errors="form.errors.city" />
+                    <UniversalInput :inline="false" :label="$t('tutor.profile.resume_highlights.education.city')" v-model="form.city" :errors="form.errors.city" />
 
-                    <DateInput label="Start Date" v-model="form.start_date" :errors="form.errors.start_date" />
+                    <DateInput :label="$t('tutor.profile.resume_highlights.education.start_date')" v-model="form.start_date" :errors="form.errors.start_date" />
 
-                    <DateInput label="End Date" v-model="form.end_date" :errors="form.errors.end_date" />
+                    <DateInput :label="$t('tutor.profile.resume_highlights.education.end_date')" v-model="form.end_date" :errors="form.errors.end_date" />
 
                 </form>
             </template>
@@ -48,6 +48,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
+import { useI18n } from 'vue-i18n';
 import EducationCard from './EducationCard.vue';
 import Button from '@/Components/ui/Button.vue';
 import Modal from '@/Components/ui/Modal.vue';
@@ -56,6 +57,7 @@ import Swal from 'sweetalert2';
 import UniversalInput from '@/Components/forms/FormElements/UniversalInput.vue';
 import DateInput from '@/Components/forms/FormElements/DateInput.vue';
 
+const { t } = useI18n();
 const modalActive = ref(false);
 
 const page = usePage();
@@ -77,13 +79,13 @@ const handleEdit = (education) => {
 
 const handleDelete = (education) => {
     Swal.fire({
-        title: 'Are you sure?',
-        text: 'You will not be able to recover this education!',
+        title: t('tutor.profile.modals.delete_confirmation.title'),
+        text: t('tutor.profile.modals.delete_confirmation.education_text'),
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: t('tutor.profile.modals.delete_confirmation.confirm_button')
     }).then((result) => {
         if (result.isConfirmed) {
             // console.log('Delete education:', education);

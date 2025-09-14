@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-6">
-        <Breadcrumbs title="Disputes" />
+        <Breadcrumbs :title="$t('tutor.disputes.title')" />
 
         <Statistics />
 
@@ -11,10 +11,10 @@
                 <div class="flex items-center justify-between border-b border-gray-200 px-5 py-4 dark:border-gray-800">
                     <div>
                         <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">
-                            Support Tickets
+                            {{ $t('tutor.disputes.page_title') }}
                         </h3>
                         <p class="text-sm text-gray-500 dark:text-gray-400">
-                            Your most recent support tickets list
+                            {{ $t('tutor.disputes.description') }}
                         </p>
                     </div>
                     <div class="flex gap-3.5">
@@ -40,7 +40,7 @@
                                             fill=""></path>
                                     </svg>
                                 </span>
-                                <input type="text" placeholder="Search..."
+                                <input type="text" :placeholder="$t('tutor.disputes.search.placeholder')"
                                     class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pr-4 pl-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden xl:w-[300px] dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30">
                             </div>
 
@@ -56,27 +56,27 @@
                         <tr class="border-b border-gray-200 dark:border-gray-700">
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                Dispute ID
+                                {{ $t('tutor.disputes.table.dispute_id') }}
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                Requested By
+                                {{ $t('tutor.disputes.table.requested_by') }}
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                Subject
+                                {{ $t('tutor.disputes.table.subject') }}
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                Create Date
+                                {{ $t('tutor.disputes.table.create_date') }}
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                Status
+                                {{ $t('tutor.disputes.table.status') }}
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                Action
+                                {{ $t('tutor.disputes.table.action') }}
                             </th>
                         </tr>
                     </thead>
@@ -90,9 +90,9 @@
                                             d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
                                         </path>
                                     </svg>
-                                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">No disputes found
+                                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">{{ $t('tutor.disputes.empty_state.title') }}
                                     </h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">There are no disputes matching
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ $t('tutor.disputes.empty_state.description') }}
                                         your current filters.</p>
                                 </div>
                             </td>
@@ -149,7 +149,7 @@
                                 <div class="flex items-center justify-end space-x-2">
                                     <Link :href="route('tutor.disputes.show', dispute.id)"
                                         class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors duration-200">
-                                    View More
+                                    {{ $t('tutor.disputes.actions.view_more') }}
                                     </Link>
                                 </div>
                             </td>
@@ -172,7 +172,7 @@
                             </select>
                         </div>
                         <div class="text-gray-800 dark:text-white/90">
-                            Showing {{ disputes.meta.from }} to {{ disputes.meta.to }} of {{ disputes.meta.total }}
+                            {{ $t('tutor.disputes.pagination.showing_results', { from: disputes.meta.from, to: disputes.meta.to, total: disputes.meta.total }) }}
                             results
                         </div>
                     </div>

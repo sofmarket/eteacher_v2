@@ -3,14 +3,14 @@
         <div class="flex justify-between items-center">
             <div class="flex flex-col">
                 <h5 class="text-lg font-medium text-gray-800 dark:text-white/90">
-                    Certificates & Awards
+                    {{ $t('tutor.profile.resume_highlights.certificates.title') }}
                 </h5>
                 <span class="text-sm text-gray-500 hidden xl:block">
-                    List your certificates, awards, issuing organizations and dates received.
+                    {{ $t('tutor.profile.resume_highlights.certificates.description') }}
                 </span>
             </div>
             <div class="">
-                <Button variant="primary" size="sm" text="+ Add New" @click="handleAddNew" />
+                <Button variant="primary" size="sm" :text="$t('tutor.profile.actions.add_new')" @click="handleAddNew" />
             </div>
         </div>
 
@@ -20,25 +20,25 @@
         </div>
 
         <Modal :modalActive="modalActive" @close="modalActive = false" :fullScreenBackdrop="true"
-            title="Add New Certificate" @reset="modalActive = false" @submit="handleSubmit" :loading="form.processing">
+            :title="$t('tutor.profile.resume_highlights.certificates.add_new')" @reset="modalActive = false" @submit="handleSubmit" :loading="form.processing">
             <template #body>
                 <form class="flex flex-col gap-4" @submit.prevent="handleSubmit">
 
-                    <FileInput label="Upload Certificates & Awards Photo" :errors="form.errors.photo"
+                    <FileInput :label="$t('tutor.profile.resume_highlights.certificates.upload_photo')" :errors="form.errors.photo"
                         @file-selected="onFileSelected" :inline="false" />
 
-                    <UniversalInput :inline="false" label="Certificates/Awards title" v-model="form.title"
+                    <UniversalInput :inline="false" :label="$t('tutor.profile.resume_highlights.certificates.certificate_title')" v-model="form.title"
                         :errors="form.errors.title" dir="ltr" />
 
-                    <UniversalInput :inline="false" label="University/institute title" v-model="form.institute_name"
+                    <UniversalInput :inline="false" :label="$t('tutor.profile.resume_highlights.certificates.university_institute')" v-model="form.institute_name"
                         :errors="form.errors.institute_name" />
 
                     <div class="flex-1 flex gap-4 grid grid-cols-2">
-                        <DateInput label="Issue date" v-model="form.issue_date" :errors="form.errors.issue_date" />
-                        <DateInput label="Expiry date" v-model="form.expiry_date" :errors="form.errors.expiry_date" />
+                        <DateInput :label="$t('tutor.profile.resume_highlights.certificates.issue_date')" v-model="form.issue_date" :errors="form.errors.issue_date" />
+                        <DateInput :label="$t('tutor.profile.resume_highlights.certificates.expiry_date')" v-model="form.expiry_date" :errors="form.errors.expiry_date" />
                     </div>
 
-                    <TextArea label="Description" v-model="form.description" :errors="form.errors.description" />
+                    <TextArea :label="$t('tutor.profile.resume_highlights.certificates.description')" v-model="form.description" :errors="form.errors.description" />
 
                 </form>
             </template>
@@ -49,6 +49,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
+import { useI18n } from 'vue-i18n';
 import CertificateCard from './CertificateCard.vue';
 import Button from '@/Components/ui/Button.vue';
 import Modal from '@/Components/ui/Modal.vue';
@@ -59,6 +60,7 @@ import DateInput from '@/Components/forms/FormElements/DateInput.vue';
 import FileInput from '@/Components/forms/FormElements/FileInput.vue';
 import TextArea from '@/Components/forms/FormElements/TextArea.vue';
 
+const { t } = useI18n();
 const modalActive = ref(false);
 
 const page = usePage();
@@ -78,13 +80,13 @@ const handleEdit = (certificate) => {
 
 const handleDelete = (certificate) => {
     Swal.fire({
-        title: 'Are you sure?',
-        text: 'You will not be able to recover this certificate!',
+        title: t('tutor.profile.modals.delete_confirmation.title'),
+        text: t('tutor.profile.modals.delete_confirmation.certificate_text'),
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: t('tutor.profile.modals.delete_confirmation.confirm_button')
     }).then((result) => {
         if (result.isConfirmed) {
             // console.log('Delete certificate:', certificate);
