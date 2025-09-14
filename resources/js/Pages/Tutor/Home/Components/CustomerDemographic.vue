@@ -5,10 +5,10 @@
     <div class="flex justify-between">
       <div>
         <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">
-          Customers Demographic
+          {{ $t('tutor.home.customer_demographic.title') }}
         </h3>
         <p class="mt-1 text-gray-500 text-theme-sm dark:text-gray-400">
-          Number of customer based on country
+          {{ $t('tutor.home.customer_demographic.description') }}
         </p>
       </div>
     </div>
@@ -30,7 +30,7 @@
           <div>
             <p class="font-semibold text-gray-800 text-theme-sm dark:text-white/90">USA</p>
             <span class="block text-gray-500 text-theme-xs dark:text-gray-400">
-              2,379 Customers
+              2,379 {{ $t('tutor.home.customer_demographic.customers') }}
             </span>
           </div>
         </div>
@@ -53,7 +53,7 @@
           <div>
             <p class="font-semibold text-gray-800 text-theme-sm dark:text-white/90">France</p>
             <span class="block text-gray-500 text-theme-xs dark:text-gray-400">
-              589 Customers
+              589 {{ $t('tutor.home.customer_demographic.customers') }}
             </span>
           </div>
         </div>
@@ -126,7 +126,7 @@ const initMap = () => {
       onRegionTooltipShow: function (event: MouseEvent, tooltip: any) {
         const code = (event.target as HTMLElement).getAttribute('data-code')
         if (code === 'EG') {
-          tooltip.setContent(tooltip.text() + ' (Hello Egypt)')
+          tooltip.setContent(tooltip.text() + ' (' + this.$t('tutor.home.customer_demographic.hello_egypt') + ')')
         }
       },
     })

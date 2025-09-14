@@ -4,7 +4,7 @@
   >
     <div class="flex flex-col gap-5 mb-6 sm:flex-row sm:justify-between">
       <div class="w-full">
-        <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">Statistics</h3>
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">{{ $t('tutor.home.statistics.title') }}</h3>
         <p class="mt-1 text-gray-500 text-theme-sm dark:text-gray-400">
           {{ $t('dashboard.target_for_each_month') }}
         </p>
@@ -39,14 +39,16 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
+import { useI18n } from 'vue-i18n';
 
 const page = usePage();
+const { t } = useI18n();
 const monthlyRevenue = computed(() => page.props.monthlyRevenue);
 
 const options = [
-  { value: 'optionOne', label: 'Monthly' },
-  { value: 'optionTwo', label: 'Quarterly' },
-  { value: 'optionThree', label: 'Annually' },
+  { value: 'optionOne', label: t('tutor.home.statistics.monthly') },
+  { value: 'optionTwo', label: t('tutor.home.statistics.quarterly') },
+  { value: 'optionThree', label: t('tutor.home.statistics.annually') },
 ];
 
 const selected = ref('optionOne');
@@ -55,19 +57,19 @@ import VueApexCharts from 'vue3-apexcharts';
 
 const getMonthName = (monthNumber) => {
   const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
+    t('tutor.home.statistics.months.january'), t('tutor.home.statistics.months.february'), t('tutor.home.statistics.months.march'), t('tutor.home.statistics.months.april'), t('tutor.home.statistics.months.may'), t('tutor.home.statistics.months.june'),
+    t('tutor.home.statistics.months.july'), t('tutor.home.statistics.months.august'), t('tutor.home.statistics.months.september'), t('tutor.home.statistics.months.october'), t('tutor.home.statistics.months.november'), t('tutor.home.statistics.months.december')
   ];
   return months[parseInt(monthNumber) - 1] || monthNumber;
 };
 
 const series = ref([
   {
-    name: 'Bookings',
+    name: t('tutor.home.statistics.bookings'),
     data: monthlyRevenue.value.map(revenue => revenue.bookings_count),
   },
   {
-    name: 'Revenue',
+    name: t('tutor.home.statistics.revenue'),
     data: monthlyRevenue.value.map(revenue => revenue.revenue),
   },
 ]);

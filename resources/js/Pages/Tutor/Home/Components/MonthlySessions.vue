@@ -3,7 +3,7 @@
     class="overflow-hidden rounded-2xl border border-gray-200 bg-white px-5 pt-5 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6 sm:pt-6"
   v-if="monthlySessions.length > 0">
     <div class="flex items-center justify-between">
-      <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">Monthly Sessions</h3>
+      <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">{{ $t('tutor.home.monthly_sessions.title') }}</h3>
 
       <!-- <div class="relative h-fit">
         <DropdownMenu :menu-items="menuItems">
@@ -38,15 +38,17 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
+import { useI18n } from 'vue-i18n';
 
 const page = usePage();
+const { t } = useI18n();
 const monthlySessions = computed(() => page.props.monthlySessions);
 
 import VueApexCharts from 'vue3-apexcharts'
 
 const series = ref([
   {
-    name: 'Sessions',
+    name: t('tutor.home.monthly_sessions.sessions'),
     data: monthlySessions.value.map(session => session.count),
   },
 ])

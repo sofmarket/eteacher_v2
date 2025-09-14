@@ -3,7 +3,7 @@
     <div class="px-5 pt-5 bg-white shadow-default rounded-2xl pb-11 dark:bg-gray-900 sm:px-6 sm:pt-6">
       <div class="flex justify-between">
         <div>
-          <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">Monthly Target</h3>
+          <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">{{ $t('tutor.home.monthly_target.title') }}</h3>
           <p class="mt-1 text-gray-500 text-theme-sm dark:text-gray-400">
             {{ $t('dashboard.target_for_each_month') }}
           </p>
@@ -19,14 +19,14 @@
           class="absolute left-1/2 top-[85%] -translate-x-1/2 -translate-y-[85%] rounded-full bg-success-50 px-3 py-1 text-xs font-medium text-success-600 dark:bg-success-500/15 dark:text-success-500">+10%</span> -->
       </div>
       <p class="mx-auto mt-1.5 w-full max-w-[380px] text-center text-sm text-gray-500 sm:text-base">
-        You earn {{ stats.today_revenue }} today, Keep up your good work!
+        {{ $t('tutor.home.monthly_target.earn_message', { amount: stats.today_revenue }) }}
       </p>
     </div>
 
     <div class="flex items-center justify-center gap-5 px-6 py-3.5 sm:gap-8 sm:py-5">
       <div>
         <p class="mb-1 text-center text-gray-500 text-theme-xs dark:text-gray-400 sm:text-sm">
-          Target
+          {{ $t('tutor.home.monthly_target.target') }}
         </p>
         <p
           class="flex items-center justify-center gap-1 text-base font-semibold text-gray-800 dark:text-white/90 sm:text-lg">
@@ -43,7 +43,7 @@
 
       <div>
         <p class="mb-1 text-center text-gray-500 text-theme-xs dark:text-gray-400 sm:text-sm">
-          Revenue
+          {{ $t('tutor.home.monthly_target.revenue') }}
         </p>
         <p
           class="flex items-center justify-center gap-1 text-base font-semibold text-gray-800 dark:text-white/90 sm:text-lg">
@@ -60,7 +60,7 @@
 
       <div>
         <p class="mb-1 text-center text-gray-500 text-theme-xs dark:text-gray-400 sm:text-sm">
-          Today
+          {{ $t('tutor.home.monthly_target.today') }}
         </p>
         <p
           class="flex items-center justify-center gap-1 text-base font-semibold text-gray-800 dark:text-white/90 sm:text-lg">

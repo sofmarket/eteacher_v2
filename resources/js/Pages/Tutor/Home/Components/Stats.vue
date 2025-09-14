@@ -12,7 +12,7 @@
 
       <div class="flex items-end justify-between mt-5">
         <div>
-          <span class="text-sm text-gray-500 dark:text-gray-400">Students</span>
+          <span class="text-sm text-gray-500 dark:text-gray-400">{{ $t('tutor.home.stats.students') }}</span>
           <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">{{ stats.total_students }}</h4>
         </div>
 
@@ -42,7 +42,7 @@
 
       <div class="flex items-end justify-between mt-5">
         <div>
-          <span class="text-sm text-gray-500 dark:text-gray-400">Bookings</span>
+          <span class="text-sm text-gray-500 dark:text-gray-400">{{ $t('tutor.home.stats.bookings') }}</span>
           <h4 class="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">{{ stats.total_bookings }}</h4>
         </div>
 

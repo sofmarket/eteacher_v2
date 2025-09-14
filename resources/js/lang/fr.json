@@ -1,5 +1,67 @@
 {
   "dashboard": {
-    "target_for_each_month": "Objectif que vous avez défini pour chaque mois"
+    "target_for_each_month": "Objectif que vous avez fixé pour chaque mois"
+  },
+  "tutor": {
+    "home": {
+      "customer_demographic": {
+        "title": "Démographie des Clients",
+        "description": "Nombre de clients par pays",
+        "customers": "Clients",
+        "hello_egypt": "Bonjour l'Égypte"
+      },
+      "monthly_sessions": {
+        "title": "Sessions Mensuelles",
+        "sessions": "Sessions"
+      },
+      "monthly_target": {
+        "title": "Objectif Mensuel",
+        "target": "Objectif",
+        "revenue": "Revenus",
+        "today": "Aujourd'hui",
+        "earn_message": "Vous avez gagné {amount} aujourd'hui, continuez votre bon travail !",
+        "view_more": "Voir Plus",
+        "delete": "Supprimer"
+      },
+      "recent_bookings": {
+        "title": "Réservations Récentes",
+        "see_all": "Voir tout",
+        "student": "Étudiant",
+        "subject": "Matière",
+        "session_fee": "Frais de Session",
+        "status": "Statut",
+        "statuses": {
+          "completed": "terminé",
+          "active": "actif",
+          "rescheduled": "reprogrammé"
+        }
+      },
+      "statistics": {
+        "title": "Statistiques",
+        "bookings": "Réservations",
+        "revenue": "Revenus",
+        "monthly": "Mensuel",
+        "quarterly": "Trimestriel",
+        "annually": "Annuel",
+        "months": {
+          "january": "Janvier",
+          "february": "Février",
+          "march": "Mars",
+          "april": "Avril",
+          "may": "Mai",
+          "june": "Juin",
+          "july": "Juillet",
+          "august": "Août",
+          "september": "Septembre",
+          "october": "Octobre",
+          "november": "Novembre",
+          "december": "Décembre"
+        }
+      },
+      "stats": {
+        "students": "Étudiants",
+        "bookings": "Réservations"
+      }
+    }
   }
 }

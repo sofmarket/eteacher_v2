@@ -1,5 +1,67 @@
 {
   "dashboard": {
-    "target_for_each_month": "Target you’ve set for each month"
+    "target_for_each_month": "Target you've set for each month"
+  },
+  "tutor": {
+    "home": {
+      "customer_demographic": {
+        "title": "Customers Demographic",
+        "description": "Number of customer based on country",
+        "customers": "Customers",
+        "hello_egypt": "Hello Egypt"
+      },
+      "monthly_sessions": {
+        "title": "Monthly Sessions",
+        "sessions": "Sessions"
+      },
+      "monthly_target": {
+        "title": "Monthly Target",
+        "target": "Target",
+        "revenue": "Revenue",
+        "today": "Today",
+        "earn_message": "You earn {amount} today, Keep up your good work!",
+        "view_more": "View More",
+        "delete": "Delete"
+      },
+      "recent_bookings": {
+        "title": "Recent Bookings",
+        "see_all": "See all",
+        "student": "Student",
+        "subject": "Subject",
+        "session_fee": "Session Fee",
+        "status": "Status",
+        "statuses": {
+          "completed": "completed",
+          "active": "active",
+          "rescheduled": "rescheduled"
+        }
+      },
+      "statistics": {
+        "title": "Statistics",
+        "bookings": "Bookings",
+        "revenue": "Revenue",
+        "monthly": "Monthly",
+        "quarterly": "Quarterly",
+        "annually": "Annually",
+        "months": {
+          "january": "January",
+          "february": "February",
+          "march": "March",
+          "april": "April",
+          "may": "May",
+          "june": "June",
+          "july": "July",
+          "august": "August",
+          "september": "September",
+          "october": "October",
+          "november": "November",
+          "december": "December"
+        }
+      },
+      "stats": {
+        "students": "Students",
+        "bookings": "Bookings"
+      }
+    }
   }
 }

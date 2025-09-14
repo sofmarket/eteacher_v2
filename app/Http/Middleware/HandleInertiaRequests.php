@@ -54,9 +54,7 @@ class HandleInertiaRequests extends Middleware
                     'message' => session('message'),
                 ];
             },
-            'locale' => function () use ($request) {
-                return session('locale', config('app.locale'));
-            },
+            'locale' => App::currentLocale(),
             'sidebarMenu' => function () {
                 return SidebarMenu::render();
             }
