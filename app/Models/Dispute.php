@@ -6,8 +6,11 @@ use App\Casts\DisputeStatus;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\SlotBooking;
 use App\Models\DisputeConversation;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 class Dispute extends Model
 {
+    use HasFactory;
     protected $guarded = [];
 
     protected $casts = [

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Tutor;
 
+use App\Casts\DisputeStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\DisputeResource;
 use App\Models\Dispute;
-use App\Models\DisputeConversation;
 use App\Models\SlotBooking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,29 +17,30 @@ class DisputesController extends Controller
     /**
      * Display a listing of the disputes.
      *
-     * @return \Inertia\Response
      */
     public function index(Request $request)
     {
         $user = Auth::user();
-        
+
+        $perPage = $request->get('per_page', 10);
+
         $query = Dispute::with([
             'disputable',
             'creatorBy.profile',
             'responsibleBy.profile',
             'favourTo.profile',
             'resolvedBy.profile',
-            'disputeConversations' => function($query) {
+            'disputeConversations' => function ($query) {
                 $query->latest()->limit(1);
             }
-        ])->where(function($q) use ($user) {
+        ])->where(function ($q) use ($user) {
             $q->where('creator_by', $user->id)
-              ->orWhere('responsible_by', $user->id);
+                ->orWhere('responsible_by', $user->id);
         });
 
         // Filter by status
-        if ($request->has('status') && $request->status !== 'all') {
-            $query->where('status', $request->status);
+        if ($request->has('status') && $request->status !== 'all' && array_key_exists($request->status, DisputeStatus::$statuses)) {
+            $query->where('status', DisputeStatus::$statuses[$request->status]);
         }
 
         // Filter by type (booking disputes)
@@ -46,10 +48,25 @@ class DisputesController extends Controller
             $query->where('disputable_type', SlotBooking::class);
         }
 
-        $disputes = $query->latest()->paginate(10);
+        $disputes = $query->latest()->paginate($perPage);
+
+        if ($request->wantsJson()) {
+            return DisputeResource::collection($disputes);
+        }
+
+        $statisticsQuery = Dispute::query()->where(function ($q) use ($user) {
+            $q->where('creator_by', $user->id)
+                ->orWhere('responsible_by', $user->id);
+        });
+
+        $statistics = [
+            'total_disputes' => (clone $statisticsQuery)->count(),
+            'total_disputes_closed' => (clone $statisticsQuery)->where('status', DisputeStatus::$statuses['closed'])->count(),
+            'total_disputes_pending' => (clone $statisticsQuery)->where('status', DisputeStatus::$statuses['pending'])->count(),
+        ];
 
         return inertia('Tutor/Disputes/Index', [
-            'disputes' => $disputes,
+            'disputes' => DisputeResource::collection($disputes),
             'filters' => $request->only(['status', 'type']),
             'statusOptions' => [
                 ['value' => 'all', 'label' => 'All Disputes'],
@@ -58,6 +75,8 @@ class DisputesController extends Controller
                 ['value' => 'in_discussion', 'label' => 'In Discussion'],
                 ['value' => 'closed', 'label' => 'Closed'],
             ],
+            'per_page' => $perPage,
+            'statistics' => $statistics,
         ]);
     }
 
@@ -70,7 +89,7 @@ class DisputesController extends Controller
     public function show(Dispute $dispute)
     {
         $user = Auth::user();
-        
+
         // Ensure user has access to this dispute
         if ($dispute->creator_by !== $user->id && $dispute->responsible_by !== $user->id) {
             abort(403, 'Unauthorized access to dispute.');
@@ -86,7 +105,7 @@ class DisputesController extends Controller
         ]);
 
         return inertia('Tutor/Disputes/Show', [
-            'dispute' => $dispute,
+            'dispute' => DisputeResource::make($dispute),
         ]);
     }
 
@@ -106,10 +125,10 @@ class DisputesController extends Controller
         ]);
 
         $user = Auth::user();
-        
+
         // Get the disputable model
         $disputable = $validated['disputable_type']::findOrFail($validated['disputable_id']);
-        
+
         // Determine responsible party (opposite of creator)
         $responsibleBy = null;
         if ($disputable instanceof SlotBooking) {
@@ -130,4 +149,4 @@ class DisputesController extends Controller
         return redirect()->route('tutor.disputes.show', $dispute)
             ->with('success', 'Dispute created successfully.');
     }
-} 
+}
