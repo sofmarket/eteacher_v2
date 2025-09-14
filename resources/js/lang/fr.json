@@ -1,1 +1,5 @@
-{}
+{
+  "dashboard": {
+    "target_for_each_month": "Objectif que vous avez défini pour chaque mois"
+  }
+}

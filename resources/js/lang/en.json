@@ -1,25 +1,5 @@
 {
-  "user_profile": "User Profile",
-  "personal_information": "Personal Information",
-  "account_settings": "Account Settings",
-  "resume_highlights": "Resume Highlights",
-  "identity_verification": "Identity Verification",
-  "fullname": "Fullname",
-  "email_address": "Email Address",
-  "phone": "Phone",
-  "male": "Male",
-  "female": "Female",
-  "tag_line": "Tag line",
-  "meta_keywords": "Meta Keywords",
-  "address": "Address",
-  "city": "City",
-  "select_city": "Select City",
-  "native_language": "Native Language",
-  "select_native_language": "Select Native Language",
-  "social_links": "Social Links",
-  "save_and_update": "Save & Update",
-  "save_and_update_the_latest_changes_to_the_live": "Save & update the latest changes to the live",
-  "current_password": "Current Password",
-  "password": "Password",
-  "confirm_password": "Confirm Password"
+  "dashboard": {
+    "target_for_each_month": "Target you’ve set for each month"
+  }
 }

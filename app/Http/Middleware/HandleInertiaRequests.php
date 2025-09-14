@@ -6,6 +6,7 @@ use App\Helpers\SidebarMenu;
 use App\Http\Resources\NotificationResource;
 use App\Http\Resources\SharedUserResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -37,7 +38,7 @@ class HandleInertiaRequests extends Middleware
      * @return array<string, mixed>
      */
     public function share(Request $request): array
-    {
+    {        
         return array_merge(parent::share($request), [
             // Lazily...
             'notifications' => function () use ($request) {
@@ -53,8 +54,8 @@ class HandleInertiaRequests extends Middleware
                     'message' => session('message'),
                 ];
             },
-            'locale' => function () {
-                return session('locale', 'en'); // Default to 'ar' if no locale is set in the session
+            'locale' => function () use ($request) {
+                return session('locale', config('app.locale'));
             },
             'sidebarMenu' => function () {
                 return SidebarMenu::render();

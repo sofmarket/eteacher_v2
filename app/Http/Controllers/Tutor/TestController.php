@@ -47,8 +47,8 @@ class TestController extends Controller
         //     $user->notify(new MessageReceivedNotification($message));
         // }
 
-        dd('done');
+        // dd('done');
 
-        return inertia('Tutor/Test');
+        // return inertia('Tutor/Test');
     }
 }

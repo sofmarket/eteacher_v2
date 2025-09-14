@@ -5,7 +5,7 @@
         <div>
           <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">Monthly Target</h3>
           <p class="mt-1 text-gray-500 text-theme-sm dark:text-gray-400">
-            Target you’ve set for each month
+            {{ $t('dashboard.target_for_each_month') }}
           </p>
         </div>
       </div>

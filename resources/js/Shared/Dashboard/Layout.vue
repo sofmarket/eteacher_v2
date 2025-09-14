@@ -18,12 +18,18 @@ import AppHeader from './AppHeader.vue'
 import { useSidebar } from '@/Composables/useSidebar'
 import Backdrop from './Backdrop.vue'
 import { usePage } from '@inertiajs/vue3';
-import { computed, onMounted, watch } from "vue";
+import { computed, watch } from "vue";
 import { useFlash } from "@/Composables/useFlash";
-
+import { useI18n } from 'vue-i18n';
 const { isExpanded, isHovered } = useSidebar()
 
-const flash = computed(() => usePage().props.flash);
+const page = usePage();
+
+const flash = computed(() => page.props.flash);
+
+const { locale } = useI18n({ useScope: 'global' });
+
+const appLocale = computed(() => page.props.locale);
 
 watch(
     flash,
@@ -36,5 +42,14 @@ watch(
     { immediate: true } // Runs the watcher immediately on mount
 );
 
+watch(
+    appLocale,
+    (newLocale) => {
+        locale.value = newLocale;
+        console.log('appLocale', appLocale.value);
+        console.log('locale', locale.value);
+    },
+    { immediate: true }
+);
 
 </script>

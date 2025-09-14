@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Common\ChangeLocaleController;
 use App\Http\Controllers\ConversationsController;
 use App\Http\Controllers\ConversationMessageController;
 use Illuminate\Support\Facades\Route;
@@ -57,3 +58,6 @@ Route::middleware('auth')->prefix('/conversations')->name('conversations.')->gro
     });
 
 });
+
+// Common routes
+Route::get('/change-locale', ChangeLocaleController::class)->name('change-locale');
