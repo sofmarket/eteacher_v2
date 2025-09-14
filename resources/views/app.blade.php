@@ -15,7 +15,7 @@
 
 </head>
 
-<body>
+<body> <!-- dir="{{ app()->currentLocale() === 'ar' ? 'rtl' : 'ltr' }}" -->
     @inertia
 </body>
 
