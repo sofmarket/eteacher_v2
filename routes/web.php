@@ -23,19 +23,8 @@ Route::middleware('auth')->prefix('/student')->name('student.')->group(function 
 });
 
 // Dashboard routes
-Route::middleware('auth')->prefix('/dashboard')->name('dashboard.')->group(function () {
-    require __DIR__ . '/dashboard.php';
-});
-
-// Notifications
-Route::middleware('auth')->prefix('/notifications')->name('notifications.')->group(function () {
-    // Notifications
-    Route::get('/', [NotificationsController::class, 'index'])->name('index');
-    Route::post('/{id}/read', [NotificationsController::class, 'markAsRead'])->name('read');
-    Route::post('/read-all', [NotificationsController::class, 'markAllAsRead'])->name('read-all');
-    Route::delete('/{id}', [NotificationsController::class, 'destroy'])->name('destroy');
-    Route::delete('/', [NotificationsController::class, 'destroyAll'])->name('destroy-all');
-    Route::get('/unread-count', [NotificationsController::class, 'unreadCount'])->name('unread-count');    
+Route::middleware('auth')->prefix('/dashboard')->name('admin.')->group(function () {
+    require __DIR__ . '/admin.php';
 });
 
 // Conversations
@@ -46,7 +35,6 @@ Route::middleware('auth')->prefix('/conversations')->name('conversations.')->gro
     Route::delete('/{conversation}', [ConversationsController::class, 'destroy'])->name('destroy');
     Route::patch('/{conversation}/read', [ConversationsController::class, 'markAsRead'])->name('read');
 
-    
     // Message routes
     Route::prefix('/{conversation}/messages')->name('messages.')->group(function () {
         Route::get('/', [ConversationMessageController::class, 'index'])->name('index');

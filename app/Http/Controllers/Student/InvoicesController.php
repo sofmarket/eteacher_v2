@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Tutor;
+namespace App\Http\Controllers\Student;
 
 use App\Enums\InvoiceStatusEnum;
 use App\Http\Controllers\Controller;

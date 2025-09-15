@@ -2,10 +2,10 @@
     <div>
         <div class="mb-5 sm:mb-8">
             <h1 class="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
-                Sign In
+                {{ $t('auth.login.title') }}
             </h1>
             <p class="text-sm text-gray-500 dark:text-gray-400">
-                Enter your email and password to sign in!
+                {{ $t('auth.login.description') }}
             </p>
         </div>
         <div>
@@ -14,12 +14,12 @@
                 <div class="space-y-5">
 
                     <!-- Email -->
-                    <UniversalInput :label="$t('email')" :placeholder="$t('email')"
+                    <UniversalInput :label="$t('auth.login.email')" :placeholder="$t('auth.login.email')"
                         v-model="loginForm.username" :errors="loginForm.errors.username" dir="ltr"
                         :required="true" :inline="false" />
 
                     <!-- Password -->
-                    <PasswordInput :label="$t('password')" :placeholder="$t('password')" v-model="loginForm.password"
+                    <PasswordInput :label="$t('auth.login.password')" :placeholder="$t('auth.login.password')" v-model="loginForm.password"
                         :errors="loginForm.errors.password" :required="true" />
 
                     <!-- Checkbox -->
@@ -44,20 +44,19 @@
                                         </span>
                                     </div>
                                 </div>
-                                Keep me logged in
+                                {{ $t('auth.login.keep_logged_in') }}
                             </label>
                         </div>
                         <Link href="/forgot-password"
                             class="text-sm text-brand-500 hover:text-brand-600 dark:text-brand-400">
-                        Forgot
-                        password?</Link>
+                        {{ $t('auth.login.forgot_password') }}</Link>
                     </div>
 
                     <!-- Button -->
                     <div>
                         <button type="submit"
                             class="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600">
-                            Sign In
+                            {{ $t('auth.login.sign_in_button') }}
                         </button>
                     </div>
 
@@ -66,20 +65,19 @@
 
             <div class="mt-5">
                 <p class="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
-                    Don't have an account?
-                    <Link href="/signup" class="text-brand-500 hover:text-brand-600 dark:text-brand-400">Sign
-                    Up</Link>
+                    {{ $t('auth.login.no_account') }}
+                    <Link href="/signup" class="text-brand-500 hover:text-brand-600 dark:text-brand-400">{{ $t('auth.login.sign_up_link') }}</Link>
                 </p>
             </div>
 
             <div class="mt-10">
                 <h2 class="text-md text-gray-300 dark:text-white/90 mb-5 text-center">
-                    Login as
+                    {{ $t('auth.login.login_as') }}
                 </h2>
                 <div class="flex items-center justify-center gap-3">
-                    <button @click="loginAs('tutor')" class="text-sm font-normal text-gray-700 cursor-pointer select-none dark:text-gray-400 border border-gray-300 dark:border-gray-700 rounded-lg px-5 py-2 hover:bg-brand-500 hover:text-white">Tutor</button>
-                    <button @click="loginAs('student')" class="text-sm font-normal text-gray-700 cursor-pointer select-none dark:text-gray-400 border border-gray-300 dark:border-gray-700 rounded-lg px-5 py-2 hover:bg-brand-500 hover:text-white">Student</button>
-                    <button @click="loginAs('admin')" class="text-sm font-normal text-gray-700 cursor-pointer select-none dark:text-gray-400 border border-gray-300 dark:border-gray-700 rounded-lg px-5 py-2 hover:bg-brand-500 hover:text-white">Admin</button>
+                    <button @click="loginAs('tutor')" class="text-sm font-normal text-gray-700 cursor-pointer select-none dark:text-gray-400 border border-gray-300 dark:border-gray-700 rounded-lg px-5 py-2 hover:bg-brand-500 hover:text-white">{{ $t('auth.login.tutor') }}</button>
+                    <button @click="loginAs('student')" class="text-sm font-normal text-gray-700 cursor-pointer select-none dark:text-gray-400 border border-gray-300 dark:border-gray-700 rounded-lg px-5 py-2 hover:bg-brand-500 hover:text-white">{{ $t('auth.login.student') }}</button>
+                    <button @click="loginAs('admin')" class="text-sm font-normal text-gray-700 cursor-pointer select-none dark:text-gray-400 border border-gray-300 dark:border-gray-700 rounded-lg px-5 py-2 hover:bg-brand-500 hover:text-white">{{ $t('auth.login.admin') }}</button>
                 </div>
             </div>
             

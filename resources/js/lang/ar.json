@@ -3,6 +3,45 @@
     "no_results_found": "لم يتم العثور على نتائج",
     "all": "الكل"
   },
+  "auth": {
+    "login": {
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "title": "تسجيل الدخول",
+      "description": "أدخل بريدك الإلكتروني وكلمة المرور لتسجيل الدخول!",
+      "keep_logged_in": "إبقائي مسجل الدخول",
+      "forgot_password": "نسيت كلمة المرور؟",
+      "sign_in_button": "تسجيل الدخول",
+      "no_account": "ليس لديك حساب؟",
+      "sign_up_link": "إنشاء حساب",
+      "login_as": "تسجيل الدخول كـ",
+      "tutor": "معلم",
+      "student": "طالب",
+      "admin": "مدير"
+    },
+    "signup": {
+      "title": "إنشاء حسابك",
+      "description": "انضم إلى مجتمعنا التعليمي",
+      "terms_conditions": "بإنشاء حساب، فإنك توافق على",
+      "terms_conditions_link": "الشروط والأحكام،",
+      "privacy_policy": "وسياسة",
+      "privacy_policy_link": "الخصوصية",
+      "sign_up_button": "إنشاء حساب",
+      "have_account": "لديك حساب بالفعل؟",
+      "login_link": "تسجيل الدخول"
+    },
+    "forgot_password": {
+      "title": "نسيت كلمة المرور؟",
+      "description": "أدخل عنوان البريد الإلكتروني المرتبط بحسابك، وسنرسل لك رابطاً لإعادة تعيين كلمة المرور.",
+      "send_reset_link": "إرسال رابط إعادة التعيين",
+      "remember_password": "انتظر، أتذكر كلمة المرور...",
+      "click_here": "انقر هنا"
+    },
+    "google_signin": {
+      "or": "أو",
+      "sign_in_with_google": "تسجيل الدخول باستخدام جوجل"
+    }
+  },
   "tutor": {
     "dashboard": {
       "target_for_each_month": "الهدف لكل شهر"

@@ -3,6 +3,45 @@
     "no_results_found": "No results found",
     "all": "All"
   },
+  "auth": {
+    "login": {
+      "email": "Email",
+      "password": "Password",
+      "title": "Sign In",
+      "description": "Enter your email and password to sign in!",
+      "keep_logged_in": "Keep me logged in",
+      "forgot_password": "Forgot password?",
+      "sign_in_button": "Sign In",
+      "no_account": "Don't have an account?",
+      "sign_up_link": "Sign Up",
+      "login_as": "Login as",
+      "tutor": "Tutor",
+      "student": "Student",
+      "admin": "Admin"
+    },
+    "signup": {
+      "title": "Create Your Account",
+      "description": "Join our learning community",
+      "terms_conditions": "By creating an account means you agree to the",
+      "terms_conditions_link": "Terms and Conditions,",
+      "privacy_policy": "and our",
+      "privacy_policy_link": "Privacy Policy",
+      "sign_up_button": "Sign Up",
+      "have_account": "Already have an account?",
+      "login_link": "Login"
+    },
+    "forgot_password": {
+      "title": "Forgot Your Password?",
+      "description": "Enter the email address linked to your account, and we'll send you a link to reset your password.",
+      "send_reset_link": "Send Reset Link",
+      "remember_password": "Wait, I remember my password...",
+      "click_here": "Click here"
+    },
+    "google_signin": {
+      "or": "Or",
+      "sign_in_with_google": "Sign in with Google"
+    }
+  },
   "tutor": {
     "dashboard": {
       "target_for_each_month": "Target for each month"

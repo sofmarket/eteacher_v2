@@ -18,6 +18,6 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        return to_route('tutor.home'); // RouteServiceProvider::HOME
+        return redirect()->intended(auth()->user()->redirectAfterLogin);
     }
 }

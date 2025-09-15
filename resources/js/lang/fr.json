@@ -3,6 +3,45 @@
     "no_results_found": "Aucun résultat trouvé",
     "all": "Tous"
   },
+  "auth": {
+    "login": {
+      "email": "Email",
+      "password": "Mot de passe",
+      "title": "Se connecter",
+      "description": "Entrez votre email et mot de passe pour vous connecter !",
+      "keep_logged_in": "Me garder connecté",
+      "forgot_password": "Mot de passe oublié ?",
+      "sign_in_button": "Se connecter",
+      "no_account": "Vous n'avez pas de compte ?",
+      "sign_up_link": "S'inscrire",
+      "login_as": "Se connecter en tant que",
+      "tutor": "Tuteur",
+      "student": "Étudiant",
+      "admin": "Administrateur"
+    },
+    "signup": {
+      "title": "Créer votre compte",
+      "description": "Rejoignez notre communauté d'apprentissage",
+      "terms_conditions": "En créant un compte, vous acceptez les",
+      "terms_conditions_link": "Conditions générales,",
+      "privacy_policy": "et notre",
+      "privacy_policy_link": "Politique de confidentialité",
+      "sign_up_button": "S'inscrire",
+      "have_account": "Vous avez déjà un compte ?",
+      "login_link": "Se connecter"
+    },
+    "forgot_password": {
+      "title": "Mot de passe oublié ?",
+      "description": "Entrez l'adresse email liée à votre compte, et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
+      "send_reset_link": "Envoyer le lien de réinitialisation",
+      "remember_password": "Attendez, je me souviens de mon mot de passe...",
+      "click_here": "Cliquez ici"
+    },
+    "google_signin": {
+      "or": "Ou",
+      "sign_in_with_google": "Se connecter avec Google"
+    }
+  },
   "tutor": {
     "dashboard": {
       "target_for_each_month": "Objectif pour chaque mois"

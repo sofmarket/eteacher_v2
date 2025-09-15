@@ -117,10 +117,10 @@ class User extends Authenticatable implements Wallet
     public function redirectAfterLogin(): Attribute
     {
         return Attribute::make(
-            get: fn() => match ('tutor') {
-                'admin'     => route('admin.insights', absolute: false),
-                'tutor'     => route('tutor.dashboard', absolute: false),
-                'student'   => route('student.bookings', absolute: false),
+            get: fn() => match ($this->attributes['type']) {
+                'admin'     => route('admin.home', absolute: false),
+                'tutor'     => route('tutor.home', absolute: false),
+                'student'   => route('student.home', absolute: false),
                 default     => url('/')
             },
         );

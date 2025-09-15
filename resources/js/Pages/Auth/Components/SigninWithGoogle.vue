@@ -6,7 +6,7 @@
                 <div class="w-full border-t border-gray-200 dark:border-gray-800"></div>
             </div>
             <div class="relative flex justify-center text-sm">
-                <span class="p-2 text-gray-400 bg-white dark:bg-gray-900 sm:px-5 sm:py-2">Or</span>
+                <span class="p-2 text-gray-400 bg-white dark:bg-gray-900 sm:px-5 sm:py-2">{{ $t('auth.google_signin.or') }}</span>
             </div>
         </div>
         <div class="grid grid-cols-1 gap-3"> <!-- sm:grid-cols-2 sm:gap-5 -->
@@ -26,7 +26,7 @@
                         d="M10.1789 4.63331C11.8554 4.63331 12.9864 5.34303 13.6312 5.93612L16.1511 3.525C14.6035 2.11528 12.5895 1.25 10.1789 1.25C6.68676 1.25 3.67088 3.21387 2.20264 6.07218L5.08953 8.26943C5.81381 6.15972 7.81776 4.63331 10.1789 4.63331Z"
                         fill="#EB4335" />
                 </svg>
-                Sign in with Google
+                {{ $t('auth.google_signin.sign_in_with_google') }}
             </button>
         </div>
     </div>

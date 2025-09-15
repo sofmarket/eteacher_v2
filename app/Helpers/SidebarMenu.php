@@ -83,6 +83,42 @@ class SidebarMenu
         return [
             "title" => "Menu",
             "items" => [
+                [
+                    'icon' => 'GridIcon',
+                    'name' => __("sidebar.dashboard"),
+                    'path' => route('student.home'),
+                    'component' => 'Student/Home',
+                ],
+                [
+                    'icon' => 'UserCircleIcon',
+                    'name' => __("sidebar.profile_settings"),
+                    'path' => route('student.profile'),
+                    'component' => 'Student/Profile',
+                ],
+                [
+                    'icon' => 'CalenderIcon',
+                    'name' => __("sidebar.bookings"),
+                    'path' => '',
+                    'component' => 'Student/Bookings',
+                ],
+                [
+                    'icon' => 'ChatIcon',
+                    'name' => __("sidebar.inbox"),
+                    'path' => route('conversations.index'),
+                    'component' => 'Conversations',
+                ],
+                [
+                    'icon' => 'MonyIcon',
+                    'name' => __("sidebar.invoices"),
+                    'path' => route('student.invoices.index'),
+                    'component' => 'Student/Invoices',
+                ],
+                [
+                    'icon' => 'DisputeIcon',
+                    'name' => __("sidebar.disputes"),
+                    'path' => route('student.disputes.index'),
+                    'component' => 'Student/Disputes',
+                ],
             ],
         ];
     }

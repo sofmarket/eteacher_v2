@@ -3,10 +3,10 @@
     <div class="py-5">
         <div class="mb-5 sm:mb-8">
             <h1 class="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
-                Create Your Account
+                {{ $t('auth.signup.title') }}
             </h1>
             <p class="text-sm text-gray-500 dark:text-gray-400">
-                Join our learning community
+                {{ $t('auth.signup.description') }}
             </p>
         </div>
         <div>
@@ -51,17 +51,14 @@
                                         </svg></span>
                                 </div>
                             </div>
-                            <p class="inline-block font-normal text-gray-500 dark:text-gray-400"> By creating an account
-                                means you agree to the <span class="text-gray-800 dark:text-white/90"> Terms and
-                                    Conditions, </span> and our <span class="text-gray-800 dark:text-white"> Privacy
-                                    Policy </span></p>
+                            <p class="inline-block font-normal text-gray-500 dark:text-gray-400"> {{ $t('auth.signup.terms_conditions') }} <span class="text-gray-800 dark:text-white/90"> {{ $t('auth.signup.terms_conditions_link') }} </span> {{ $t('auth.signup.privacy_policy') }} <span class="text-gray-800 dark:text-white"> {{ $t('auth.signup.privacy_policy_link') }} </span></p>
                         </label></div>
 
                     <!-- Button -->
                     <div>
                         <button type="submit"
                             class="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600">
-                            Sign Up
+                            {{ $t('auth.signup.sign_up_button') }}
                         </button>
                     </div>
 
@@ -70,8 +67,8 @@
 
             <div class="mt-5">
                 <p class="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
-                    Already have an account?
-                    <Link href="/login" class="text-brand-500 hover:text-brand-600 dark:text-brand-400">Login</Link>
+                    {{ $t('auth.signup.have_account') }}
+                    <Link href="/login" class="text-brand-500 hover:text-brand-600 dark:text-brand-400">{{ $t('auth.signup.login_link') }}</Link>
                 </p>
             </div>
 

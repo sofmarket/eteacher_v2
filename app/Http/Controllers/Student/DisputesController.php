@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Tutor;
+namespace App\Http\Controllers\Student;
 
 use App\Casts\DisputeStatus;
 use App\Enums\DisputeStatusEnum;
@@ -32,19 +32,12 @@ class DisputesController extends Controller
             'disputeConversations' => function ($query) {
                 $query->latest()->limit(1);
             }
-        ])->where(function ($q) use ($user) {
-            $q->where('creator_by', $user->id)
-                ->orWhere('responsible_by', $user->id);
-        });
+        ])
+        ->where('creator_by', $user->id);
 
         // Filter by status
         if ($request->has('status') && $request->status !== 'all' && array_key_exists($request->status, DisputeStatus::$statuses)) {
             $query->where('status', DisputeStatus::$statuses[$request->status]);
-        }
-
-        // Filter by type (booking disputes)
-        if ($request->has('type') && $request->type === 'booking') {
-            $query->where('disputable_type', SlotBooking::class);
         }
 
         $disputes = $query->latest()->paginate($this->perPage());
@@ -53,19 +46,7 @@ class DisputesController extends Controller
             return DisputeResource::collection($disputes);
         }
 
-        $statisticsQuery = Dispute::query()->where(function ($q) use ($user) {
-            $q->where('creator_by', $user->id)
-                ->orWhere('responsible_by', $user->id);
-        });
-
-        $statistics = [
-            'total_disputes' => (clone $statisticsQuery)->count(),
-            'total_disputes_closed' => (clone $statisticsQuery)->where('status', DisputeStatusEnum::CLOSED->value)->count(),
-            'total_disputes_pending' => (clone $statisticsQuery)->where('status', DisputeStatusEnum::PENDING->value)->count(),
-        ];
-
-        return inertia('Tutor/Disputes/Index', [
-            'statistics' => $statistics,
+        return inertia('Student/Disputes/Index', [
             'disputes' => DisputeResource::collection($disputes),
             'statuses' => DisputeStatusEnum::forDropdown(),
             'status' => request()->get('status', 'all'),
@@ -96,7 +77,7 @@ class DisputesController extends Controller
             'disputeConversations.user.profile'
         ]);
 
-        return inertia('Tutor/Disputes/Show', [
+        return inertia('Student/Disputes/Show', [
             'dispute' => DisputeResource::make($dispute),
         ]);
     }
@@ -138,7 +119,7 @@ class DisputesController extends Controller
             'status' => 'pending',
         ]);
 
-        return redirect()->route('tutor.disputes.show', $dispute)
+        return redirect()->route('student.disputes.show', $dispute)
             ->with('success', 'Dispute created successfully.');
     }
 }

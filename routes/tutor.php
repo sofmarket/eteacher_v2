@@ -17,13 +17,10 @@ use App\Http\Controllers\Tutor\UserSubjectGroupController;
 use App\Http\Controllers\Tutor\UserSubjectGroupSortOrderController;
 use App\Http\Controllers\Tutor\UserSubjectSlotController;
 use App\Http\Controllers\Tutor\SlotBookingsController;
-use App\Http\Controllers\Tutor\TestController;
 use App\Http\Controllers\Tutor\UpdatePasswordController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
-
-Route::get('/test', TestController::class)->name('test');
 
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
 Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');

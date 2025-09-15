@@ -20,14 +20,13 @@ class PayoutsController extends Controller
      */
     public function index()
     {
-        $perPage = request()->get('per_page', env('PAGINATION_LIMIT', 5));
         $withdrawals = UserWithdrawal::query()
             ->where('user_id', auth()->id())
             ->when(request()->has('status') && request()->status !== 'all', function ($query) {
                 $query->where('status', request()->status);
             })
             ->latest()
-            ->paginate($perPage);
+            ->paginate($this->perPage());
         
         $payoutMethods = UserPayoutMethod::query()
             ->where('user_id', auth()->id())
