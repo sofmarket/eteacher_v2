@@ -1,14 +1,17 @@
 <template>
-  <div class="mx-auto mb-2 w-full max-w-60 rounded-2xl bg-gray-50 px-4 pt-5 py-2 text-center dark:bg-white/[0.03]">
-    <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">{{ balance }} MAD</h3>
+  <div class="mx-auto mb-2 w-full max-w-60 rounded-2xl bg-gray-50 px-4 pt-5 py-2 text-center dark:bg-white/[0.03]"
+  v-if="sharedUser?.data?.wallet_balance">
+    <h3 class="mb-2 font-semibold text-gray-900 dark:text-white">{{ sharedUser?.data?.wallet_balance }} MAD</h3>
     <p class="mb-4 text-gray-500 text-theme-sm dark:text-gray-400">
       Wallet Balance
     </p>
-    <hr class="my-4">
-    <a href="#" target="_blank" rel="nofollow"
-      class="flex items-center justify-center p-3 font-medium text-white rounded-lg bg-brand-500 text-theme-sm hover:bg-brand-600">
-      Withdraw now
-    </a>
+    <template v-if="sharedUser?.type === 'tutor'">
+      <hr class="my-4">
+      <a href="#" target="_blank" rel="nofollow" 
+        class="flex items-center justify-center p-3 font-medium text-white rounded-lg bg-brand-500 text-theme-sm hover:bg-brand-600">
+        Withdraw now
+      </a>
+    </template>
   </div>
 
   <Link :href="route('logout')" method="post" as="button"
@@ -30,6 +33,6 @@ import { Link, usePage } from '@inertiajs/vue3';
 
 
 const page = usePage();
-const balance = computed(() => page.props.sharedUser?.data?.wallet_balance);
+const sharedUser = computed(() => page.props.sharedUser);
 
 </script>
