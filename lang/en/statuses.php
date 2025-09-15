@@ -1,4 +1,4 @@
-<?php   
+<?php
 
 return [
     'pending' => 'Pending',
@@ -6,4 +6,7 @@ return [
     'failed' => 'Failed',
     'refunded' => 'Refunded',
     'declined' => 'Declined',
+    'closed' => 'Closed',
+    'under_review' => 'Under Review',
+    'in_discussion' => 'In Discussion',
 ];

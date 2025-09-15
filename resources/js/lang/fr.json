@@ -1,8 +1,12 @@
 {
   "common": {
-    "no_results_found": "Aucun résultat trouvé"
+    "no_results_found": "Aucun résultat trouvé",
+    "all": "Tous"
   },
   "tutor": {
+    "dashboard": {
+      "target_for_each_month": "Objectif pour chaque mois"
+    },
     "home": {
       "customer_demographic": {
         "title": "Démographie des clients",

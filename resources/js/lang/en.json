@@ -1,8 +1,12 @@
 {
   "common": {
-    "no_results_found": "No results found"
+    "no_results_found": "No results found",
+    "all": "All"
   },
   "tutor": {
+    "dashboard": {
+      "target_for_each_month": "Target for each month"
+    },
     "home": {
       "customer_demographic": {
         "title": "Customers Demographic",

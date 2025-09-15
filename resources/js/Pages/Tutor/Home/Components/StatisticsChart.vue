@@ -6,7 +6,7 @@
       <div class="w-full">
         <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">{{ $t('tutor.home.statistics.title') }}</h3>
         <p class="mt-1 text-gray-500 text-theme-sm dark:text-gray-400">
-          {{ $t('dashboard.target_for_each_month') }}
+          {{ $t('tutor.dashboard.target_for_each_month') }}
         </p>
       </div>
 

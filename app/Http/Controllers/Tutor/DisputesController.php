@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tutor;
 
 use App\Casts\DisputeStatus;
+use App\Enums\DisputeStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DisputeResource;
 use App\Models\Dispute;
@@ -22,7 +23,7 @@ class DisputesController extends Controller
     {
         $user = Auth::user();
 
-        $perPage = $request->get('per_page', 10);
+        $perPage = $request->get('per_page', env('PAGINATION_LIMIT', 5));
 
         $query = Dispute::with([
             'disputable',
@@ -61,22 +62,15 @@ class DisputesController extends Controller
 
         $statistics = [
             'total_disputes' => (clone $statisticsQuery)->count(),
-            'total_disputes_closed' => (clone $statisticsQuery)->where('status', DisputeStatus::$statuses['closed'])->count(),
-            'total_disputes_pending' => (clone $statisticsQuery)->where('status', DisputeStatus::$statuses['pending'])->count(),
+            'total_disputes_closed' => (clone $statisticsQuery)->where('status', DisputeStatusEnum::CLOSED->value)->count(),
+            'total_disputes_pending' => (clone $statisticsQuery)->where('status', DisputeStatusEnum::PENDING->value)->count(),
         ];
 
         return inertia('Tutor/Disputes/Index', [
-            'disputes' => DisputeResource::collection($disputes),
-            'filters' => $request->only(['status', 'type']),
-            'statusOptions' => [
-                ['value' => 'all', 'label' => 'All Disputes'],
-                ['value' => 'pending', 'label' => 'Pending'],
-                ['value' => 'under_review', 'label' => 'Under Review'],
-                ['value' => 'in_discussion', 'label' => 'In Discussion'],
-                ['value' => 'closed', 'label' => 'Closed'],
-            ],
-            'per_page' => $perPage,
             'statistics' => $statistics,
+            'disputes' => DisputeResource::collection($disputes),
+            'statuses' => DisputeStatusEnum::forDropdown(),
+            'status' => request()->get('status', 'all'),
         ]);
     }
 

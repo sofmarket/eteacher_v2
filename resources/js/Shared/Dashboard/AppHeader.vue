@@ -41,7 +41,8 @@
           
           <ChangeLocale />
           
-          <!-- <ThemeToggler /> -->
+          <ThemeToggler />
+
           <NotificationMenu />
 
           <Link
@@ -61,7 +62,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useSidebar } from '@/composables/useSidebar'
-import ThemeToggler from '@/Components/common/ThemeToggler.vue' 
+import ThemeToggler from './header/ThemeToggler.vue' 
 import SearchBar from './header/SearchBar.vue'
 import HeaderLogo from './header/HeaderLogo.vue'
 import NotificationMenu from './header/NotificationMenu.vue'
