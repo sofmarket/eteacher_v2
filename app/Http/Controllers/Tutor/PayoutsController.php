@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Tutor;
 
+use App\Enums\UserWithrawalStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserPayoutMethodsResource;
 use App\Http\Resources\UserWithdrawalsResource;
@@ -19,10 +20,14 @@ class PayoutsController extends Controller
      */
     public function index()
     {
+        $perPage = request()->get('per_page', env('PAGINATION_LIMIT', 5));
         $withdrawals = UserWithdrawal::query()
             ->where('user_id', auth()->id())
+            ->when(request()->has('status') && request()->status !== 'all', function ($query) {
+                $query->where('status', request()->status);
+            })
             ->latest()
-            ->paginate(request()->per_page ?? 5);
+            ->paginate($perPage);
         
         $payoutMethods = UserPayoutMethod::query()
             ->where('user_id', auth()->id())
@@ -32,6 +37,8 @@ class PayoutsController extends Controller
         return inertia('Tutor/Payouts/Index', [
             'payouts' => UserWithdrawalsResource::collection($withdrawals),
             'payout_methods' => UserPayoutMethodsResource::collection($payoutMethods),
+            'statuses' => UserWithrawalStatusEnum::forDropdown(),
+            'status' => request()->get('status', 'all'),
         ]);
     }
 

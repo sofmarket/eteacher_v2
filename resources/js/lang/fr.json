@@ -1,6 +1,6 @@
 {
-  "dashboard": {
-    "target_for_each_month": "Objectif que vous avez fixé pour chaque mois"
+  "common": {
+    "no_results_found": "Aucun résultat trouvé"
   },
   "tutor": {
     "home": {
@@ -203,6 +203,7 @@
     },
     "payouts": {
       "title": "Paiements",
+      "description": "Voir vos revenus passés et suivre votre historique de paiement avec facilité.",
       "table": {
         "ref": "#Réf",
         "method": "Méthode",
@@ -213,7 +214,7 @@
       "status": {
         "complete": "Terminé",
         "pending": "En attente",
-        "failed": "Échoué",
+        "declined": "Refusé",
         "refunded": "Remboursé"
       },
       "filters": {

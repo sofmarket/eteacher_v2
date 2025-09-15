@@ -1,6 +1,6 @@
 {
-  "dashboard": {
-    "target_for_each_month": "الهدف الذي حددته لكل شهر"
+  "common": {
+    "no_results_found": "لم يتم العثور على نتائج"
   },
   "tutor": {
     "home": {
@@ -203,6 +203,7 @@
     },
     "payouts": {
       "title": "المدفوعات",
+      "description": "تحقق من أرباحك السابقة وتتبع تاريخ الدفع الخاص بك بسهولة.",
       "table": {
         "ref": "#المرجع",
         "method": "الطريقة",
@@ -213,7 +214,7 @@
       "status": {
         "complete": "مكتمل",
         "pending": "في الانتظار",
-        "failed": "فشل",
+        "declined": "مرفوض",
         "refunded": "مسترد"
       },
       "filters": {

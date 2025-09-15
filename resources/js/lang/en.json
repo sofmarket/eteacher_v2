@@ -1,6 +1,6 @@
 {
-  "dashboard": {
-    "target_for_each_month": "Target you've set for each month"
+  "common": {
+    "no_results_found": "No results found"
   },
   "tutor": {
     "home": {
@@ -203,6 +203,7 @@
     },
     "payouts": {
       "title": "Payouts",
+      "description": "Review your past earnings and track your payout history with ease.",
       "table": {
         "ref": "#Ref",
         "method": "Method",
@@ -213,7 +214,7 @@
       "status": {
         "complete": "Complete",
         "pending": "Pending",
-        "failed": "Failed",
+        "declined": "Declined",
         "refunded": "Refunded"
       },
       "filters": {
