@@ -34,11 +34,11 @@ class ConversationResource extends JsonResource
             
             'latest_message'                => $this->whenLoaded('messages', function () {
                 return $this->getLatestMessage(
-                    $this->messages->sortByDesc('created_at')->first()
+                    $this->messages->where('receiver_id', auth()->id())->sortByDesc('created_at')->first()
                 );
             }, function() {
                 return $this->getLatestMessage(
-                    $this->messages()->orderBy('created_at', 'desc')->first()
+                    $this->messages()->where('receiver_id', auth()->id())->orderBy('created_at', 'desc')->first()
                 );
             }),
 

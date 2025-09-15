@@ -16,6 +16,10 @@ class ConversationsController extends Controller
 
         $query = Conversation::with('sender', 'receiver')
             ->orderBy('last_time_message', 'desc')
+            ->where(function ($query) {
+                $query->where('sender_id', auth()->id())
+                    ->orWhere('receiver_id', auth()->id());
+            })
             ->when($request->has('search'), function ($query) use ($request) {
                 $query->search($request->search);
             });

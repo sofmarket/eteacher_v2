@@ -72,17 +72,18 @@
                     class="flex w-full items-center gap-3 rounded-xl p-3 transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-white/[0.04]"
                     :class="{ 'bg-gray-100 dark:bg-white/[0.04]': selectedConversation?.id === conversation.id }">
                     <div class="relative h-12 w-full max-w-[48px] rounded-full">
-                        <img :src="conversation.receiver.avatar" :alt="conversation.receiver.name"
+                        <img :src="getReceiver(conversation).avatar" :alt="getReceiver(conversation).name"
                             class="object-cover object-center w-full h-full overflow-hidden rounded-full" />
-                        <span v-if="conversation.receiver.online"
+                        <span v-if="getReceiver(conversation).online"
                             class="absolute bottom-0 right-0 block h-3 w-3 rounded-full border-[1.5px] border-white bg-success-500 dark:border-gray-900"></span>
                     </div>
                     <div class="flex-1 text-left min-w-0">
-                        <h5 class="text-sm font-medium text-gray-800 dark:text-white/90 truncate">{{
-                            conversation.receiver.name
-                            }}</h5>
+                        <h5 class="text-sm font-medium text-gray-800 dark:text-white/90 truncate">
+                            {{ getReceiver(conversation).name }}
+                        </h5>
                         <p class="text-xs text-gray-500 dark:text-gray-400 truncate">
-                            {{ conversation.latest_message?.body }}</p>
+                            {{ conversation.latest_message?.body }}
+                        </p>
                     </div>
                     <div class="flex flex-col items-end gap-1">
                         <div class="text-xs text-gray-500 dark:text-gray-400">
@@ -148,6 +149,10 @@ const paginationMeta = ref(page.props.conversations?.meta || null);
 // Initialize pagination meta from initial data
 if (paginationMeta.value) {
     hasMorePages.value = paginationMeta.value.current_page < paginationMeta.value.last_page;
+}
+
+const getReceiver = (conversation) => {
+    return conversation.sender_id === sharedUser.value.id ? conversation.receiver : conversation.sender;
 }
 
 const searchConversations = useDebounceFn(() => {

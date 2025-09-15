@@ -93,9 +93,9 @@ class ConversationMessageRequest extends FormRequest
                 }
                 
                 // Check if user is not trying to send message to themselves
-                if ($receiverId === auth()->id()) {
-                    $validator->errors()->add('receiver_id', 'You cannot send a message to yourself.');
-                }
+                // if ($receiverId === auth()->id()) {
+                //     $validator->errors()->add('receiver_id', 'You cannot send a message to yourself.');
+                // }
             }
         });
     }
