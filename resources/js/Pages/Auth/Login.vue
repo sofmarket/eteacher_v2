@@ -71,6 +71,17 @@
                     Up</Link>
                 </p>
             </div>
+
+            <div class="mt-10">
+                <h2 class="text-md text-gray-300 dark:text-white/90 mb-5 text-center">
+                    Login as
+                </h2>
+                <div class="flex items-center justify-center gap-3">
+                    <button @click="loginAs('tutor')" class="text-sm font-normal text-gray-700 cursor-pointer select-none dark:text-gray-400 border border-gray-300 dark:border-gray-700 rounded-lg px-5 py-2 hover:bg-brand-500 hover:text-white">Tutor</button>
+                    <button @click="loginAs('student')" class="text-sm font-normal text-gray-700 cursor-pointer select-none dark:text-gray-400 border border-gray-300 dark:border-gray-700 rounded-lg px-5 py-2 hover:bg-brand-500 hover:text-white">Student</button>
+                    <button @click="loginAs('admin')" class="text-sm font-normal text-gray-700 cursor-pointer select-none dark:text-gray-400 border border-gray-300 dark:border-gray-700 rounded-lg px-5 py-2 hover:bg-brand-500 hover:text-white">Admin</button>
+                </div>
+            </div>
             
             <SigninWithGoogle />
 
@@ -97,5 +108,22 @@ const loginForm = useForm({
 function handleSubmit() {
     loginForm.post('/login'); // route('front.login')
 };
+
+function loginAs(type) {
+    switch (type) {
+        case 'tutor':
+            loginForm.username = 'tutor@test.com'
+            loginForm.password = 'password'
+            break
+        case 'student':
+            loginForm.username = 'student@test.com'
+            loginForm.password = 'password'
+            break
+        case 'admin':
+            loginForm.username = 'admin@test.com'
+            loginForm.password = 'password'
+            break
+    }
+}
 
 </script>
