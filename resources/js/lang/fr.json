@@ -1,7 +1,8 @@
 {
   "common": {
     "no_results_found": "Aucun résultat trouvé",
-    "all": "Tous"
+    "all": "Tous",
+    "bookings": "Réservations"
   },
   "auth": {
     "login": {

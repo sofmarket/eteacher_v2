@@ -98,7 +98,7 @@ class SidebarMenu
                 [
                     'icon' => 'CalenderIcon',
                     'name' => __("sidebar.bookings"),
-                    'path' => '',
+                    'path' => route('student.bookings.index'),
                     'component' => 'Student/Bookings',
                 ],
                 [

@@ -1,7 +1,8 @@
 {
   "common": {
     "no_results_found": "No results found",
-    "all": "All"
+    "all": "All",
+    "bookings": "Bookings"
   },
   "auth": {
     "login": {

@@ -1,7 +1,8 @@
 {
   "common": {
     "no_results_found": "لم يتم العثور على نتائج",
-    "all": "الكل"
+    "all": "الكل",
+    "bookings": "الحجوزات"
   },
   "auth": {
     "login": {
