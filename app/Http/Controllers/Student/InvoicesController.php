@@ -13,14 +13,14 @@ class InvoicesController extends Controller
     {
         $invoices = Invoice::query()
             ->with('invoiceable', 'student')
-            ->where('tutor_id', auth()->id())
+            ->where('student_id', auth()->id())
             ->when(request()->has('status') && request()->status !== 'all', function ($query) {
                 $query->where('status', request()->status);
             })
             ->latest()
             ->paginate($this->perPage());
 
-        return inertia('Tutor/Invoices/Index', [
+        return inertia('Student/Invoices/Index', [
             'invoices' => InvoiceResource::collection($invoices),
             'statuses' => InvoiceStatusEnum::forDropdown(),
             'status' => request()->get('status', 'all'),

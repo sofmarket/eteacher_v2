@@ -30,7 +30,7 @@ class ConversationsController extends Controller
             return $conversations;
         }
 
-        return inertia('Conversations/Index', [
+        return inertia('Common/Conversations/Index', [
             'conversations' => $conversations,
         ]);
     }
@@ -38,7 +38,7 @@ class ConversationsController extends Controller
     public function show(Conversation $conversation)
     {
         $conversation->load('messages');
-        return inertia('Conversations/Show', [
+        return inertia('/Conversations/Show', [
             'conversation' => new ConversationResource($conversation),
         ]);
     }

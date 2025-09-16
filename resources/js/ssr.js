@@ -48,8 +48,7 @@ createInertiaApp({
                 name.startsWith('Admin') ||
                 name.startsWith('Tutor') ||
                 name.startsWith('Student') ||
-                name.startsWith('Notifications') ||
-                name.startsWith('Conversations')
+                name.startsWith('Common')
             ) {
                 return layouts.DashboardLayout().then(layout => {
                     page.default.layout = layout.default || layout;
