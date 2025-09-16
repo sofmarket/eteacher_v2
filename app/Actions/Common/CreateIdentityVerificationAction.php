@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Tutor;
+namespace App\Actions\Common;
 
 use App\Models\User;
 

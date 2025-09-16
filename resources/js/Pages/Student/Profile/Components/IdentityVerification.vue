@@ -87,7 +87,7 @@ const form = useForm({
 });
 
 const onSave = () => {
-    form.post(route('tutor.profile.identity_verification'), {
+    form.post(route('profile.identity_verification'), {
         forceFormData: true,
         onSuccess: () => {
             form.reset();

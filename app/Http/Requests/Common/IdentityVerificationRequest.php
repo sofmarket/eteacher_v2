@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Tutor;
+namespace App\Http\Requests\Common;
 
-use App\Enums\SocialPlatforms;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Enum;
 
 class IdentityVerificationRequest extends FormRequest
 {
