@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\UserSubjectSlot;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Profile;
@@ -11,12 +12,9 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
-        for ($i = 1; $i <= 10; $i++) {
-            User::factory()->create([
-                'email' => "student$i@test.com",
-                'password' => 'password',
-                'type' => 'student',
-            ]);
-        }
+        $this->call([
+            TutorSeeder::class,
+            StudentSeeder::class,
+        ]);
     }
 }

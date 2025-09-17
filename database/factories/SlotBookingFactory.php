@@ -9,11 +9,11 @@ class SlotBookingFactory extends Factory
 {
     public function definition()
     {
-        $tutorId = 1;
+        $tutorId = User::tutor()->has('subjectSlots')->inRandomOrder()->first()->id;
         return [
-            'student_id' => $this->faker->randomElement(User::where('type', 'student')->pluck('id')),
+            'student_id' => User::student()->inRandomOrder()->first()->id,
             'tutor_id' => $tutorId,
-            'user_subject_slot_id' => $this->faker->randomElement(UserSubjectSlot::where('tutor_id', $tutorId)->pluck('id')),
+            'user_subject_slot_id' => UserSubjectSlot::where('tutor_id', $tutorId)->inRandomOrder()->first()->id,
             'session_fee' => rand(30, 200),
             'booked_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'status' => 1,

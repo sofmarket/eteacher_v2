@@ -10,7 +10,10 @@ class TutorsController extends Controller
 {
     public function index()
     {
-        return inertia('Front/Tutors/Index');
+        $tutors = User::where('type', 'tutor')->paginate(15);
+        return inertia('Front/Tutors/Index', [
+            'tutors' => UserResource::collection($tutors),
+        ]);
     }
 
     public function show(User $tutor)

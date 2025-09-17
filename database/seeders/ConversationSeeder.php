@@ -13,16 +13,17 @@ class ConversationSeeder extends Seeder
 {
     public function run()
     {
+
         $faker = Faker::create();
         
-        $tutor = User::where('type', 'tutor')->first();
-        $users = User::where('type', 'student')->get();
+        $tutor = User::tutor()->first();
+        $students = User::student()->get();
         
-        foreach ($users as $user) {
+        foreach ($students as $student) {
             Conversation::updateOrCreate(
                 [
                     'sender_id' => $tutor->id,
-                    'receiver_id' => $user->id,
+                    'receiver_id' => $student->id,
                 ],
                 [
                     'last_time_message' => now(),

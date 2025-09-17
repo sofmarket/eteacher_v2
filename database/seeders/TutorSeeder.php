@@ -2,20 +2,23 @@
 
 namespace Database\Seeders;
 
+use App\Models\UserSubjectSlot;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 
-class StudentSeeder extends Seeder
+class TutorSeeder extends Seeder
 {
     public function run()
     {
         User::factory()->create([
-            'email' => 'student@test.com',
-            'type' => 'student',
+            'email' => 'tutor@test.com',
+            'type' => 'tutor',
         ]);
 
         User::factory(50)->create([
-            'type' => 'student',
+            'type' => 'tutor',
         ]);
+
+        UserSubjectSlot::factory(100)->create();
     }
 }

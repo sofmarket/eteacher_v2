@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -40,7 +41,7 @@ class UserWithdrawalFactory extends Factory
         };
 
         return [
-            'user_id' => 1,
+            'user_id' => User::tutor()->inRandomOrder()->first()->id,
             'amount' => $this->faker->randomFloat(2, 50, 2000), // Between $50 and $2000
             'payout_method' => $payoutMethod,
             'status' => $this->faker->randomElement($statuses),

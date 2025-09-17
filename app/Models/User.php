@@ -114,6 +114,14 @@ class User extends Authenticatable implements Wallet
         return $this->hasMany(SocialProfile::class);
     }
 
+    /**
+     * Get the subject slots for the user.
+     */
+    public function subjectSlots()
+    {
+        return $this->hasMany(UserSubjectSlot::class, 'tutor_id', 'id');
+    }
+
     public function redirectAfterLogin(): Attribute
     {
         return Attribute::make(
@@ -158,6 +166,16 @@ class User extends Authenticatable implements Wallet
     public function languages(): BelongsToMany
     {
         return $this->belongsToMany(Language::class, 'user_languages');
+    }
+
+    public function scopeTutor($query)
+    {
+        return $this->where('type', 'tutor');
+    }
+
+    public function scopeStudent($query)
+    {
+        return $this->where('type', 'student');
     }
 
 }
