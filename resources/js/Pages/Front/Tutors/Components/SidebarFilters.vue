@@ -1,7 +1,7 @@
 <template>
     <!-- Sidebar Filters -->
     <div class="lg:w-1/4">
-        <div class="bg-white rounded-lg shadow-md p-6 sticky top-4">
+        <div class="bg-white rounded-lg shadow-md p-6 sticky top-25">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-lg font-semibold text-gray-900">Filters</h2>
                 <button class="text-sm text-blue-600 hover:text-blue-800">Clear all filters</button>

@@ -22,11 +22,11 @@ class EducationResource extends JsonResource
             'country_id'            => $this->whenHas('country_id'),
             'city'                  => $this->whenHas('city'),
             'start_date'            => $this->whenHas('start_date', function () {
-                return \Carbon\Carbon::parse($this->start_date)->format(!empty(setting('_general.date_format')) ? setting('_general.date_format') : 'M d, Y');
+                return \Carbon\Carbon::parse($this->start_date)->format('M d, Y');
             }),
 
             'end_date'            => $this->whenHas('end_date', function () {
-                return \Carbon\Carbon::parse($this->end_date)->format(!empty(setting('_general.date_format')) ? setting('_general.date_format') : 'M d, Y');
+                return \Carbon\Carbon::parse($this->end_date)->format('M d, Y');
             }),
             'ongoing'               => $this->whenHas('ongoing'),
             'description'           => $this->whenHas('description'),

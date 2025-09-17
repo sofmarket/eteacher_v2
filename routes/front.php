@@ -18,7 +18,7 @@ Route::get('/how-it-works', HowItWorksController::class)->name('how-it-works');
 
 Route::prefix('/tutors')->name('tutors.')->group(function () {
     Route::get('/', [TutorsController::class, 'index'])->name('index');
-    Route::get('/{tutor}', [TutorsController::class, 'show'])->name('show');
+    Route::get('/{slug}', [TutorsController::class, 'show'])->name('show');
 });
 
 

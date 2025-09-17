@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'email'     => $this->email,
             'name'      => $this->profile?->fullName,
             'avatar'    => $this->profile?->image ?? 'https://ui-avatars.com/api/?name=' . $this->profile?->fullName,
+            'slug'      => $this->profile?->slug,
             'profile'   => new ProfileResource($this->whenLoaded('profile')),
             'profile_completed'              => (($this->profile?->created_at ?? null) == ($this->profile?->updated_at ?? null) ? false : true),
             'comment'                        => $this->whenHas('comment'),
