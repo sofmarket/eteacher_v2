@@ -11,14 +11,21 @@
                     </div>
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-8">
-                            <a href="#"
-                                class="text-gray-600 hover:text-gray-900 font-medium text-md transition-colors duration-200 relative group">Home</a>
-                            <a href="#"
-                                class="text-gray-600 hover:text-gray-900 font-medium text-md transition-colors duration-200 relative group">About</a>
-                            <a href="#"
-                                class="text-gray-600 hover:text-gray-900 font-medium text-md transition-colors duration-200 relative group">Services</a>
-                            <a href="#"
-                                class="text-gray-600 hover:text-gray-900 font-medium text-md transition-colors duration-200 relative group">Contact</a>
+                            <Link :href="route('front.home')"
+                                class="text-gray-600 hover:text-gray-900 font-medium text-md transition-colors duration-200 relative group">
+                            Home</Link>
+                            <Link :href="route('front.tutors.index')"
+                                class="text-gray-600 hover:text-gray-900 font-medium text-md transition-colors duration-200 relative group">
+                            Find a Tutor</Link>
+                            <Link :href="route('front.about')"
+                                class="text-gray-600 hover:text-gray-900 font-medium text-md transition-colors duration-200 relative group">
+                            About</Link>
+                            <Link :href="route('front.how-it-works')"
+                                    class="text-gray-600 hover:text-gray-900 font-medium text-md transition-colors duration-200 relative group">
+                                How It Works</Link>
+                            <Link :href="route('front.faq')"
+                                class="text-gray-600 hover:text-gray-900 font-medium text-md transition-colors duration-200 relative group">
+                            FAQ</Link>
                         </div>
                     </div>
                     <div class="flex items-center space-x-4">
@@ -36,7 +43,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 
 // Reactive state
 const isUserDropdownOpen = ref(false);
