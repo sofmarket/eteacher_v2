@@ -20,6 +20,16 @@ class UserResource extends JsonResource
             'email'     => $this->email,
             'name'      => $this->profile?->fullName,
             'avatar'    => $this->profile?->image ?? 'https://ui-avatars.com/api/?name=' . $this->profile?->fullName,
+            'profile'   => new ProfileResource($this->whenLoaded('profile')),
+            'profile_completed'              => (($this->profile?->created_at ?? null) == ($this->profile?->updated_at ?? null) ? false : true),
+            'comment'                        => $this->whenHas('comment'),
+            'verified'                       => !empty($this->verfied_at) ? true : false,
+            'subjects'                       => UserSubjectResource::collection($this->whenLoaded('subjects')),
+            'reviews'                        => ReviewsResource::collection($this->whenLoaded('reviews')),
+            'languages'                      => LanguageResource::collection($this->whenLoaded('languages')),
+            'educations'                     => EducationResource::collection($this->whenLoaded('educations')),
+            'address'                        => new AddressResource($this->whenLoaded('address')),
+            'identityVerification'           => new IdentityResource($this->whenLoaded('identityVerification')),
         ];
     }
 }

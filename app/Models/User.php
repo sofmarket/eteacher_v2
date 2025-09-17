@@ -23,6 +23,10 @@ class User extends Authenticatable implements Wallet
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles, HasWallet;
 
+    protected $with = [
+        'profile',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
