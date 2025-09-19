@@ -54,9 +54,10 @@ if (!function_exists('isEmail')) {
     }
 }
 
-
 if (!function_exists('formatCurrency')) {
     function formatCurrency(float $value) {
-        return number_format(floatval($value), 0) . " MAD"; // TODO: translate currency
+        return trans('messages.format_currency', [
+            'amount' => number_format(floatval($value), 0)
+        ]);
     }
 }

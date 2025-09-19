@@ -20,7 +20,7 @@ class UserSubjectResource extends JsonResource
             'subject_group_id'          => $this->whenHas('subject_group_id'),
             'user_subject_group_id'     => $this->whenHas('user_subject_group_id'),
             'hour_rate'                 => $this->whenHas('hour_rate', function ($hour_rate) {
-                return formatAmount($hour_rate);
+                return formatCurrency($hour_rate);
             }),
             'description'               => $this->whenHas('description'),
             'image'                     => !empty($this->image) ? url(Storage::url($this->image)) : url(Storage::url('placeholder.png')),
@@ -28,9 +28,9 @@ class UserSubjectResource extends JsonResource
             'laravel_through_key'       => $this->whenHas('laravel_through_key'),
             'sort_order'                => $this->whenHas('sort_order'),
             'subject'                   => new SubjectResource($this->whenLoaded('subject')),
-            'slots'                     => UserSlotResource::collection($this->whenLoaded('slots')),
+            'slots'                     => UserSubjectSlotResource::collection($this->whenLoaded('slots')),
             'group'                     => $this->whenLoaded('userSubjectGroup', function () {
-                return new SubjectGroupResource($this->userSubjectGroup->group);
+                return new UserSubjectGroupResource($this->userSubjectGroup);
             }),
             'subject_group'                     => $this->whenLoaded('group', function () {
                 return new SubjectGroupResource($this->group);

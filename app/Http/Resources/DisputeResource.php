@@ -15,12 +15,14 @@ class DisputeResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
+            'id' => $this->whenHas('id'),
             'ref' => '#' . pad($this->id, 8),
-            'status' => $this->status,
-            'dispute_reason' => $this->dispute_reason,
-            'dispute_detail' => $this->dispute_detail,
-            'created_at' => $this->created_at?->format('Y-m-d'),
+            'status' => $this->whenHas('status'),
+            'dispute_reason' => $this->whenHas('dispute_reason'),
+            'dispute_detail' => $this->whenHas('dispute_detail'),
+            'created_at' => $this->whenHas('created_at', function () {
+                return $this->created_at?->format('Y-m-d');
+            }),
 
             // Related data
             'creatorBy' => $this->whenLoaded('creatorBy', UserResource::make($this->creatorBy)),

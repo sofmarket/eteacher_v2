@@ -15,17 +15,22 @@ class UserSubjectSlotResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'                                    => $this->id,
-            'date'                                  => $this->start_time->format('Y-m-d'),
-            'time'                                  => $this->start_time->format('H:i'),
-            'end_time'                              => $this->end_time,
-            'spaces'                                => $this->spaces,
-            'duration'                              => $this->duration,
-            'total_booked'                          => $this->total_booked,
-            'session_fee'                           => $this->session_fee,
-            'type'                                  => $this->type,
-            'description'                           => $this->description,
-            'available_spaces'                      => $this->spaces - $this->total_booked,
+            'id'                                    => $this->whenHas('id'),
+            'end_time'                              => $this->whenHas('end_time'),
+            'spaces'                                => $this->whenHas('spaces'),
+            'duration'                              => $this->whenHas('duration'),
+            'total_booked'                          => $this->whenHas('total_booked'),
+            'session_fee'                           => $this->whenHas('session_fee'),
+            'type'                                  => $this->whenHas('type'),
+            'description'                           => $this->whenHas('description'),
+            'available_spaces'                      => $this->whenHas('spaces') - $this->whenHas('total_booked'),
+            
+            'date'                                  => $this->whenHas('start_time', function () {
+                return $this->start_time->format('Y-m-d');
+            }),
+            'time'                                  => $this->whenHas('start_time', function () {
+                return $this->start_time->format('H:i');
+            }),
             
             // Related data
             'subject'                               => $this->whenLoaded('subjectGroupSubjects.subject', function () {

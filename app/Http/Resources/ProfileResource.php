@@ -26,15 +26,12 @@ class ProfileResource extends JsonResource
             'feature_expired_at'    => $this->whenHas('feature_expired_at'),
             'first_name'            => $this->whenHas('first_name'),
             'last_name'             => $this->whenHas('last_name'),
-            'full_name'             => $this?->full_name,
-            'short_name'            => $this?->short_name,
+            'full_name'             => $this->full_name,
+            'short_name'            => $this->short_name,
             'slug'                  => $this->whenHas('slug'),
             'image'                 => $this->profile_image,
             'description'           => $this->whenHas('description'),
             'tagline'               => $this->whenHas('tagline'),
-            'address'               => $this->whenLoaded('user', function () {
-                return new AddressResource($this->user->address);
-            }),
         ];
     }
 }

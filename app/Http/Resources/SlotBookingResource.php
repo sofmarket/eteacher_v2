@@ -16,11 +16,13 @@ class SlotBookingResource extends JsonResource
     {
         return [
             
-            'id'                    => $this->id,
-            'status'                => $this->status,
-            'session_fee'           => formatCurrency($this->session_fee),
-            'booked_at'             => $this->booked_at,
-            'meta_data'             => $this->meta_data,
+            'id'                    => $this->whenHas('id'),
+            'status'                => $this->whenHas('status'),
+            'session_fee'           => $this->whenHas('session_fee', function () {
+                return formatCurrency($this->session_fee);
+            }),
+            'booked_at'             => $this->whenHas('booked_at'),
+            'meta_data'             => $this->whenHas('meta_data'),
             
             // Related data
             'student'               => $this->whenLoaded('student', function () {

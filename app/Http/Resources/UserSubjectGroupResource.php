@@ -16,13 +16,13 @@ class UserSubjectGroupResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'                            => $this->id,
-            'name'                          => $this->group->name,
-            'description'                   => $this->group->description,
-            'status'                        => $this->group->status,
-            'subject_group_id'              => $this->subject_group_id,
-            'sort_order'                    => $this->sort_order,
-            'subjects'                      => $this->whenLoaded('subjects', fn() => UserSubjectGroupSubjectResource::collection($this->subjects)),
+            'id'                            => $this->whenHas('id'),
+            'name'                          => $this->whenHas('name'),
+            'description'                   => $this->whenHas('description'),
+            'status'                        => $this->whenHas('status'),
+            'subject_group_id'              => $this->whenHas('subject_group_id'),
+            'sort_order'                    => $this->whenHas('sort_order'),
+            'subjects'                      => $this->whenLoaded('subjects', UserSubjectGroupSubjectResource::collection($this->subjects)),
         ];
     }
 }

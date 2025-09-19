@@ -15,14 +15,14 @@ class ConversationMessageResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'            => $this->id,
-            'body'          => $this->body,
-            'read'          => $this->read,
-            'sender_id'     => $this->sender_id,
-            'receiver_id'   => $this->receiver_id,
-            'conversation_id' => $this->conversation_id,
-            'created_at'    => $this->created_at,
-            'updated_at'    => $this->updated_at,
+            'id'                => $this->whenHas('id'),
+            'body'              => $this->whenHas('body'),
+            'read'              => $this->whenHas('read'),
+            'sender_id'         => $this->whenHas('sender_id'),
+            'receiver_id'       => $this->whenHas('receiver_id'),
+            'conversation_id'   => $this->whenHas('conversation_id'),
+            'created_at'        => $this->whenHas('created_at'),
+            'updated_at'        => $this->whenHas('updated_at'),
             
             // Related data
             'sender'        => $this->whenLoaded('sender', function () {
@@ -42,9 +42,16 @@ class ConversationMessageResource extends JsonResource
             }),
             
             // Formatted time for display
-            'time'          => $this->created_at->format('H:i'),
-            'date'          => $this->created_at->format('Y-m-d'),
-            'is_sent'       => $this->sender_id === auth()->id(),
+            'time'          => $this->whenHas('created_at', function () {
+                return $this->created_at->format('H:i');
+            }),
+            'date'          => $this->whenHas('created_at', function () {
+                return $this->created_at->format('Y-m-d');
+            }),
+            'is_sent'       => $this->whenHas('sender_id', function () {
+                return $this->sender_id === auth()->id();
+            }),
+        
         ];
     }
 }

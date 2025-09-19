@@ -16,10 +16,10 @@ class ConversationResource extends JsonResource
     {
         return [
 
-            'id'                            => $this->id,
-            'last_time_message'             => $this->last_time_message,
-            'created_at'                    => $this->created_at,
-            'updated_at'                    => $this->updated_at,
+            'id'                            => $this->whenHas('id'),
+            'last_time_message'             => $this->whenHas('last_time_message'),
+            'created_at'                    => $this->whenHas('created_at'),
+            'updated_at'                    => $this->whenHas('updated_at'),
             
             // Related data
             'sender'                        => $this->whenLoaded('sender', UserResource::make($this->sender)),

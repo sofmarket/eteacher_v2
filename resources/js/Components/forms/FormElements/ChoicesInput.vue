@@ -34,7 +34,10 @@ export default {
       type: [Array, Object, String, Number],
       default: () => []
     },
-    placeholder: String,
+    placeholder: {
+      type: String,
+      default: 'Choice a value'
+    },
     inputId: {
       type: String,
     },
@@ -90,7 +93,11 @@ export default {
               Array.isArray(this.modelValue) ? this.modelValue.map(v => String(v)) : []
             );
           } else {
-            this.choices.setChoiceByValue(this.modelValue ? String(this.modelValue) : '');
+            if(this.modelValue) {
+              this.choices.setChoiceByValue(this.modelValue ? String(this.modelValue) : '');
+            } else {
+              this.choices.removeActiveItems();
+            }
           }
         }
       });
@@ -103,14 +110,14 @@ export default {
         removeItems: true,
         removeItemButton: true,
         removeItemButtonAlignLeft: false,
-        placeholder: this.placeholder,
+        placeholder: true,
         placeholderValue: this.placeholder,
         searchEnabled: true,
         itemSelectText: '',
       });
 
       // Set initial value
-      this.updateChoicesValue();
+      // this.updateChoicesValue();
 
       // Listen for changes
       this.choices.passedElement.element.addEventListener('change', this.handleChoicesChange);

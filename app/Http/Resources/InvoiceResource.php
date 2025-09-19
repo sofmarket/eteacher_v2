@@ -16,13 +16,19 @@ class InvoiceResource extends JsonResource
     {
         return [
             'id'                    => pad($this->id, 8),
-            'amount'                => $this->amount,
-            'status'                => $this->status,
-            'payment_method'        => $this->payment_method,
-            'platform_fee'          => $this->platform_fee,
-            'issued_at'             => $this->issued_at?->format('Y-m-d'),
-            'paid_at'               => $this->paid_at?->format('Y-m-d'),
-            'refunded_at'           => $this->refunded_at?->format('Y-m-d'),
+            'amount'                => $this->whenHas('amount'),
+            'status'                => $this->whenHas('status'),
+            'payment_method'        => $this->whenHas('payment_method'),
+            'platform_fee'          => $this->whenHas('platform_fee'),
+            'issued_at'             => $this->whenHas('issued_at', function () {
+                return $this->issued_at?->format('Y-m-d');
+            }),
+            'paid_at'               => $this->whenHas('paid_at', function () {
+                return $this->paid_at?->format('Y-m-d');
+            }),
+            'refunded_at'           => $this->whenHas('refunded_at', function () {
+                return $this->refunded_at?->format('Y-m-d');
+            }),
             'tutor_payout'          => number_format($this->amount - $this->platform_fee, 2),
             
             // Related data

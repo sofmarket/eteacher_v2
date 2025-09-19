@@ -69,30 +69,38 @@ class User extends Authenticatable implements Wallet
         ];
     }
 
-    public function getNameAttribute()
-    {
-        return $this->profile?->first_name . ' ' . $this->profile?->last_name;
-    }
 
-    public function scopeFindByUsername($query, $username)
-    {
-        return $query->where('email', $username); // TODO: add phone
-    }
+    /*===============================================
+        RELATIONS
+    ===============================================*/
 
+    /**
+     * Get the profile for the user.
+     */
     public function profile()
     {
         return $this->hasOne(Profile::class);
     }
+
+    /**
+     * Get the account settings for the user.
+     */
     public function accountSetting(): HasMany
     {
         return $this->hasMany(AccountSetting::class, 'user_id');
     }
 
+    /**
+     * Get the identity verification for the user.
+     */
     public function identityVerification(): HasOne
     {
         return $this->hasOne(UserIdentityVerification::class);
     }
 
+    /**
+     * Get the subject groups for the user.
+     */
     public function subjectGroups(): HasMany
     {
         return $this->hasMany(UserSubjectGroup::class)->orderBy('sort_order');
@@ -103,16 +111,25 @@ class User extends Authenticatable implements Wallet
         return $this->hasManyThrough(UserSubjectGroupSubject::class, UserSubjectGroup::class);
     }
 
+    /**
+     * Get the reviews for the user.
+     */
     public function reviews(): HasMany
     {
         return $this->hasMany(Rating::class, 'tutor_id');
     }
 
+    /**
+     * Get the address for the user.
+     */
     public function address(): MorphOne
     {
         return $this->morphOne(Address::class, 'addressable');
     }
 
+    /**
+     * Get the social profiles for the user.
+     */
     public function socialProfiles(): HasMany
     {
         return $this->hasMany(SocialProfile::class);
@@ -126,18 +143,17 @@ class User extends Authenticatable implements Wallet
         return $this->hasMany(UserSubjectSlot::class, 'tutor_id', 'id');
     }
 
-    public function redirectAfterLogin(): Attribute
+    /**
+     * Get the booking slots for the user.
+     */
+    public function bookingSlots(): HasMany
     {
-        return Attribute::make(
-            get: fn() => match ($this->attributes['type']) {
-                'admin'     => route('admin.home', absolute: false),
-                'tutor'     => route('tutor.home', absolute: false),
-                'student'   => route('student.home', absolute: false),
-                default     => url('/')
-            },
-        );
+        return $this->hasMany(SlotBooking::class, 'tutor_id');
     }
 
+    /**
+     * Get the educations for the user.
+     */
     public function educations()
     {
         return $this->hasMany(UserEducation::class);
@@ -167,19 +183,71 @@ class User extends Authenticatable implements Wallet
         return $this->hasMany(UserIdentityVerification::class);
     }
 
+    /**
+     * Get the languages for the user.
+     */
     public function languages(): BelongsToMany
     {
         return $this->belongsToMany(Language::class, 'user_languages');
     }
 
+
+    /*===============================================
+        SCOPES
+    ===============================================*/
+    
+    /**
+     * Scope a query to find a user by username.
+     */
+    public function scopeFindByUsername($query, $username)
+    {
+        return $query->where(function ($query) use ($username) {
+            $query->where('email', $username);
+            $query->orWhere('phone', $username);
+        });
+    }
+
+    /**
+     * Scope a query to only include tutors.
+     */
     public function scopeTutor($query)
     {
         return $this->where('type', 'tutor');
     }
 
+    /**
+     * Scope a query to only include students.
+     */
     public function scopeStudent($query)
     {
         return $this->where('type', 'student');
+    }
+
+    /*===============================================
+        ATTRIBUTES
+    ===============================================*/
+
+    /**
+     * Get the redirect after login for the user.
+     */
+    public function redirectAfterLogin(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => match ($this->attributes['type']) {
+                'admin'     => route('admin.home', absolute: false),
+                'tutor'     => route('tutor.home', absolute: false),
+                'student'   => route('student.home', absolute: false),
+                default     => url('/')
+            },
+        );
+    }
+
+    /**
+     * Get the name of the user.
+     */
+    public function getNameAttribute()
+    {
+        return $this->profile?->first_name . ' ' . $this->profile?->last_name;
     }
 
 }
