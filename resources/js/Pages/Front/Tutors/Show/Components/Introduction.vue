@@ -23,17 +23,10 @@
                 <h3 class="text-xl font-semibold text-gray-900 mb-4">I can speak</h3>
                 <div class="space-y-2">
                     <div class="flex items-center">
-                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm mr-3">French</span>
-                        <span class="text-sm text-gray-600">Native</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm mr-3">Armenian</span>
-                        <span class="text-sm text-gray-600">Fluent</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm mr-3">Asturian</span>
-                        <span class="text-sm text-gray-600">Intermediate</span>
-                    </div>
+                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm mr-1">{{ tutor.profile.native_language }}</span>
+                        <span class="text-sm text-gray-600 mr-3">(Native)</span>
+                        <span v-for="language in tutor.languages" class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm mr-3">{{ language.name }}</span>
+                    </div>                   
                 </div>
             </div>
 
