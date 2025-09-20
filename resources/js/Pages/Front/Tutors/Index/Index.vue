@@ -1,13 +1,13 @@
 <template>
     <div class="min-h-screen bg-gray-50 w-full pt-[80px]">
-        
+
         <HeroSection />
 
         <!-- Main Content -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="flex flex-col lg:flex-row gap-8">
 
-                <SidebarFilters  @filtered="onFiltersChanged" />
+                <SidebarFilters @filtered="onFiltersChanged" />
 
                 <!-- Main Content Area -->
                 <div class="lg:w-3/4">
@@ -16,7 +16,8 @@
                         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                             <div class="flex items-center gap-4">
                                 <span class="text-sm text-gray-600">Sort by:</span>
-                                <select v-model="sortBy" class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <select v-model="sortBy"
+                                    class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                                     <option value="newest">Newest first</option>
                                     <option value="oldest">Oldest First</option>
                                     <option value="asc">Alphabetical A-Z</option>
@@ -25,8 +26,10 @@
                             </div>
                             <div class="flex items-center gap-4">
                                 <div class="relative">
-                                    <input type="text" v-model="keyword" placeholder="Search for a tutor" class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    <span class="absolute right-2 top-1.5 cursor-pointer text-gray-500 text-md" v-if="keyword != ''" @click="keyword = ''">x</span>
+                                    <input type="text" v-model="keyword" placeholder="Search for a tutor"
+                                        class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <span class="absolute right-2 top-1.5 cursor-pointer text-gray-500 text-md"
+                                        v-if="keyword != ''" @click="keyword = ''">x</span>
                                 </div>
                             </div>
                         </div>
@@ -34,17 +37,33 @@
 
                     <!-- Tutors Grid -->
                     <div class="grid grid-cols-1 gap-6"> <!-- md:grid-cols-2 xl:grid-cols-3 gap-6 -->
-                        <LoadingPlaceholder v-if="isLoading" v-for="n in 6" :key="`skeleton-${n}`" />
-                        <!-- Actual Tutor Cards -->
-                        <TutorCard v-else v-for="tutor in tutors.data" :key="tutor.id" :tutor="tutor" />
-                    </div>
 
-                    <!-- Load More Button 
-                    <div class="text-center mt-8">
-                        <button class="bg-white border border-gray-300 text-gray-700 px-8 py-3 rounded-md hover:bg-gray-50 transition-colors">
-                            Load More Tutors
-                        </button>
-                    </div> -->
+                        <!-- Actual Tutor Cards -->
+                        <TutorCard v-if="tutors.data.length > 0" v-for="tutor in tutors.data" :key="tutor.id"
+                            :tutor="tutor" />
+
+                        <LoadingPlaceholder v-if="isLoading" v-for="n in 5" :key="`skeleton-${n}`" />
+
+                        <div v-if="!isLoading && tutors.data.length === 0" class="text-center py-12">
+                            <div class="mx-auto w-24 h-24 text-gray-300 mb-4">
+                                <svg fill="currentColor" viewBox="0 0 24 24" class="w-full h-full">
+                                    <path
+                                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">No tutors found</h3>
+                            <p class="text-gray-500 mb-4">Try adjusting your search criteria or filters</p>
+                        </div>
+
+                        <!-- Load More Button  -->
+                        <div v-if="!isLoading && tutors.meta.current_page < tutors.meta.last_page"
+                            class="text-center mt-8">
+                            <button @click="loadMoreTutors"
+                                class="bg-white border border-gray-300 text-gray-700 px-8 py-3 rounded-md hover:bg-gray-50 transition-colors">
+                                Load More Tutors
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -70,29 +89,57 @@ import LoadingPlaceholder from './Components/LoadingPlaceholder.vue';
 const page = usePage();
 const tutors = ref(page.props.tutors);
 const keyword = ref('');
+const filters = ref({});
 const sortBy = ref('newest');
 const isLoading = ref(false);
 
-const fetchTutors = (filters = {}) => {
-    isLoading.value = true;
-    filters.sort_by = sortBy.value;
-    if(keyword.value != '') {
-        filters.keyword = keyword.value;
+const fetchTutors = (loadMore = false) => {
+
+    if (!loadMore) {
+        tutors.value.data = [];
     }
+
+    isLoading.value = true;
+
+    let query = {};
+
+    query.sort_by = sortBy.value;
+
+    if (keyword.value != '') {
+        query.keyword = keyword.value;
+    }
+    
+    Object.keys(filters.value).forEach(key => {
+        query[key] = filters.value[key];
+    });
+
+    if (loadMore) {
+        query.page = tutors.value.meta.current_page + 1;
+    }
+
+    console.log('query', query);
+
     axios.get(route('front.tutors.index'), {
-        params: filters
+        params: query
     }).then(response => {
-        tutors.value = response.data;
+        if (loadMore) {
+            tutors.value.data = [...tutors.value.data, ...response.data.data];
+        } else {
+            tutors.value = response.data;
+        }
+        tutors.value.meta = response.data.meta;
     }).finally(() => {
-        setTimeout(() => {
-            console.log('here');
-            isLoading.value = false;
-        }, 2000);
+        isLoading.value = false;
     });
 };
 
-const onFiltersChanged = (filters) => {
-    fetchTutors(filters);
+const loadMoreTutors = () => {
+    fetchTutors(true);
+}
+
+const onFiltersChanged = (_filters) => {
+    filters.value = _filters;
+    fetchTutors();
 }
 
 watch(keyword, useDebounceFn(() => {
