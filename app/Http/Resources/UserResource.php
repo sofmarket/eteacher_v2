@@ -39,7 +39,8 @@ class UserResource extends JsonResource
             'educations'                     => EducationResource::collection($this->whenLoaded('educations')),
             'address'                        => new AddressResource($this->whenLoaded('address')),
             'identityVerification'           => new IdentityResource($this->whenLoaded('identityVerification')),
-        
+            'social_profiles'                => SocialProfileResource::collection($this->whenLoaded('socialProfiles')),
+
         ];
     }
 }

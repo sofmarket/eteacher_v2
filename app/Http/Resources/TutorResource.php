@@ -43,6 +43,7 @@ class TutorResource extends JsonResource
                 }
                 return $subjectResources;
             }),
+            'social_profiles'                => SocialProfileResource::collection($this->whenLoaded('socialProfiles')),
         ];
     }
 }
