@@ -76,8 +76,7 @@
 
 <script setup>
 
-import { ref, watch } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { ref, watch, onMounted } from 'vue';
 import SidebarFilters from './Components/SidebarFilters.vue';
 import TipsSection from './Components/TipsSection.vue';
 import HeroSection from './Components/HeroSection.vue';
@@ -86,12 +85,18 @@ import { useDebounceFn } from '@vueuse/core';
 import axios from 'axios';
 import LoadingPlaceholder from './Components/LoadingPlaceholder.vue';
 
-const page = usePage();
-const tutors = ref(page.props.tutors);
+const tutors = ref({
+    data: [],
+    meta: {
+        current_page: 1,
+        last_page: 1,
+        total: 0
+    }
+});
 const keyword = ref('');
 const filters = ref({});
 const sortBy = ref('newest');
-const isLoading = ref(false);
+const isLoading = ref(true);
 
 const fetchTutors = (loadMore = false) => {
 
@@ -147,6 +152,10 @@ watch(keyword, useDebounceFn(() => {
 }, 500));
 
 watch(sortBy, () => {
+    fetchTutors();
+});
+
+onMounted(() => {
     fetchTutors();
 });
 

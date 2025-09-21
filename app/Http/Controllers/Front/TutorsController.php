@@ -16,41 +16,38 @@ class TutorsController extends Controller
 {
     public function index()
     {
+        if (request()->wantsJson()) {
+            $tutors = User::tutor()->has('subjectSlots');
 
-        $tutors = User::tutor()->has('subjectSlots');
+            $tutors->with([
+                'subjects' => function ($query) {
+                    $query->withCount(['slots as sessions' => fn($query) => $query->where('end_time', '>=', now())]);
+                    $query->with('subject:id,name');
+                },
+                'languages:id,name',
+                'address',
+            ]);
 
-        $tutors->with([
-            'subjects' => function ($query) {
-                $query->withCount(['slots as sessions' => fn($query) => $query->where('end_time', '>=', now())]);
-                $query->with('subject:id,name');
-            },
-            'languages:id,name',
-            'address',
-        ]);
+            $tutors->withWhereHas('profile', function ($query) {
+                // $query->whereNotNull('verified_at');
+                $query->select('id', 'verified_at', 'user_id', 'first_name', 'last_name', 'image', 'gender', 'tagline', 'description', 'slug', 'intro_video');
+            });
 
-        $tutors->withWhereHas('profile', function ($query) {
-            // $query->whereNotNull('verified_at');
-            $query->select('id', 'verified_at', 'user_id', 'first_name', 'last_name', 'image', 'gender', 'tagline', 'description', 'slug', 'intro_video');
-        });
+            $tutors->withStats();
 
-        $tutors->withStats();
-
-        $tutors->byRating() 
-            ->bySessionType()
-            ->byKeyword()
-            ->bySubjectGroup()
-            ->bySubject()
-            ->byCity()
-            ->sortBy();
-
-        if(request()->wantsJson()) {
+            $tutors->byRating()
+                ->bySessionType()
+                ->byKeyword()
+                ->bySubjectGroup()
+                ->bySubject()
+                ->byCity()
+                ->sortBy();
             return TutorResource::collection($tutors->paginate($this->perPage()));
         }
 
         return inertia('Front/Tutors/Index/Index', [
-            'tutors' => TutorResource::collection($tutors->paginate($this->perPage())),
-            'cities'        => CityResource::collection(City::all()),
-            'subjects'      => SubjectResource::collection(Subject::all()),
+            'cities' => CityResource::collection(City::all()),
+            'subjects' => SubjectResource::collection(Subject::all()),
             'subjectGroups' => SubjectGroupResource::collection(SubjectGroup::all()),
         ]);
     }
@@ -71,14 +68,14 @@ class TutorsController extends Controller
             'languages:id,name',
             'address',
         ])
-        ->withStats()
+            ->withStats()
             ->whereHas('profile', function ($query) use ($slug) {
                 $query->where('slug', $slug);
             })
             ->firstOrFail();
 
         return inertia('Front/Tutors/Show/Index', [
-            'tutor'         => TutorResource::make($tutor),
+            'tutor' => TutorResource::make($tutor),
         ]);
 
     }
