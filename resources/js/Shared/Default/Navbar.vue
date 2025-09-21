@@ -28,12 +28,11 @@
                             FAQ</Link>
                         </div>
                     </div>
-                    <div class="flex items-center space-x-4">
-                        <button
-                            class="text-gray-500 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Login</button>
-                        <button
-                            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">Sign
-                            Up</button>
+                    <div class="flex items-center space-x-4" v-if="!sharedUser">
+                        <Link :href="route('login')"
+                            class="text-gray-500 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Login</Link>
+                        <Link :href="route('signup')"
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">Sign Up</Link>
                     </div>
                 </div>
             </div>
@@ -51,7 +50,7 @@ const isMobileMenuOpen = ref(false);
 
 // Get user data from Inertia page props
 const page = usePage();
-const user = page.props.auth?.user || {};
+const sharedUser = page.props.sharedUser;
 
 // Toggle user dropdown
 const toggleUserDropdown = () => {
@@ -68,40 +67,6 @@ const toggleMobileMenu = () => {
     // Close user dropdown when mobile menu is opened
     if (isMobileMenuOpen.value) {
         isUserDropdownOpen.value = false;
-    }
-};
-
-// Handle menu item clicks
-const handleMenuClick = (action) => {
-    // Close dropdown after click
-    isUserDropdownOpen.value = false;
-
-    switch (action) {
-        case 'dashboard':
-            // Navigate to dashboard
-            window.location.href = '/dashboard';
-            break;
-        case 'profile':
-            // Navigate to profile
-            window.location.href = '/profile';
-            break;
-        case 'settings':
-            // Navigate to settings
-            window.location.href = '/settings';
-            break;
-        case 'earnings':
-            // Navigate to earnings
-            window.location.href = '/earnings';
-            break;
-        case 'logout':
-            // Handle logout
-            if (confirm('Are you sure you want to logout?')) {
-                // You can use Inertia router here if you have a logout route
-                window.location.href = '/logout';
-            }
-            break;
-        default:
-            console.log('Unknown action:', action);
     }
 };
 
@@ -128,4 +93,5 @@ onMounted(() => {
 onUnmounted(() => {
     document.removeEventListener('click', handleClickOutside);
 });
+
 </script>

@@ -17,18 +17,18 @@
                         <div class="sm:col-span-1">
                             <!-- First Name -->
                             <UniversalInput :label="$t('first_name')" :placeholder="$t('first_name')"
-                                v-model="signupForm.first_name" :errors="signupForm.errors.first_name" :required="true" />
+                                v-model="signupForm.first_name" :errors="signupForm.errors.first_name" :required="true" :inline="false" />
                         </div>
                         <div class="sm:col-span-1">
                             <!-- Last Name -->
                             <UniversalInput :label="$t('last_name')" :placeholder="$t('last_name')"
-                                v-model="signupForm.last_name" :errors="signupForm.errors.last_name" :required="true" />
+                                v-model="signupForm.last_name" :errors="signupForm.errors.last_name" :required="true" :inline="false" />
                         </div>
                     </div>
 
                     <!-- Email -->
                     <UniversalInput :label="$t('email')" :placeholder="$t('email')" v-model="signupForm.email"
-                        :errors="signupForm.errors.email" dir="ltr" :required="true" />
+                        :errors="signupForm.errors.email" dir="ltr" :required="true" :inline="false" />
 
                     <!-- Password -->
                     <PasswordInput :label="$t('password')" :placeholder="$t('password')" v-model="signupForm.password"
