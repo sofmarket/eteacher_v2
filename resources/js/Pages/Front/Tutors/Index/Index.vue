@@ -135,6 +135,10 @@ const fetchTutors = (loadMore = false) => {
         tutors.value.meta = response.data.meta;
     }).finally(() => {
         isLoading.value = false;
+        if(!loadMore) {
+            // scroll to top
+            window.scrollTo(0, 0);
+        }
     });
 };
 

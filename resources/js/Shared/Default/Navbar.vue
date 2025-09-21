@@ -34,6 +34,10 @@
                         <Link :href="route('signup')"
                             class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">Sign Up</Link>
                     </div>
+                    <div class="flex items-center space-x-4" v-else>
+                        <!-- User Menu -->
+                        
+                    </div>
                 </div>
             </div>
         </nav>
@@ -43,6 +47,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
+
 
 // Reactive state
 const isUserDropdownOpen = ref(false);

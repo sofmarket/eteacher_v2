@@ -49,6 +49,15 @@ class TutorsController extends Controller
             'cities' => CityResource::collection(City::all()),
             'subjects' => SubjectResource::collection(Subject::all()),
             'subjectGroups' => SubjectGroupResource::collection(SubjectGroup::all()),
+            'filters' => [
+                'group_id' => request()->get('group_id', null),
+                'subject_id' => request()->get('subject_id', null),
+                'city' => request()->get('city', null),
+                'max_price' => request()->get('max_price', null),
+                'session_type' => request()->get('session_type', 'all'),
+            ],
+            'keyword' => request()->get('keyword', ''),
+            'sort_by' => request()->get('sort_by', 'newest'),
         ]);
     }
 

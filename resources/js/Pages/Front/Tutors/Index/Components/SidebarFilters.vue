@@ -63,7 +63,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import ChoicesInput from '@/Components/forms/FormElements/ChoicesInput.vue';
 
@@ -75,13 +75,7 @@ const subjectGroups = computed(() => page.props.subjectGroups.data);
 const subjects = computed(() => page.props.subjects.data);
 const cities = computed(() => page.props.cities.data);
 
-const filters = ref({
-    session_type: 'all',
-    subject_group_id: null,
-    subject_id: null,
-    max_price: null,
-    city: null
-});
+const filters = ref(page.props.filters);
 
 const onClearFilters = () => {
     filters.value = {
@@ -120,6 +114,10 @@ watch(filters, () => {
     emit('filtered', _filters);
 
 }, { deep: true });
+
+onMounted(() => {
+    console.log(filters.value);
+});
 
 
 </script>
