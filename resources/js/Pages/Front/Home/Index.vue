@@ -2,7 +2,7 @@
   <div class="w-full">
 
     <!-- Hero Section -->
-    <section class="relative bg-gradient-to-br from-slate-300 via-white to-slate-100 pt-50 pb-20">
+    <section class="relative bg-slate-100 pt-50 pb-20">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
           <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">

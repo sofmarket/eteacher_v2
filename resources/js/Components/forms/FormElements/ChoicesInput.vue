@@ -117,7 +117,7 @@ export default {
       });
 
       // Set initial value
-      // this.updateChoicesValue();
+      this.updateChoicesValue();
 
       // Listen for changes
       this.choices.passedElement.element.addEventListener('change', this.handleChoicesChange);

@@ -43,7 +43,7 @@
 
             <!-- Location Filter -->
             <ChoicesInput class="mb-6" v-model="filters.city" placeholder="Choose a city" label="Tutor location">
-                <option v-for="city in cities" :value="city.id" :key="city.id">{{ city.name }}</option>
+                <option v-for="city in cities" :value="city.name?.toLowerCase()" :key="city.id">{{ city.name }}</option>
             </ChoicesInput>
 
             <!-- Fee Range -->

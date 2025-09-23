@@ -202,8 +202,10 @@ class User extends Authenticatable implements Wallet
     public function scopeFindByUsername($query, $username)
     {
         return $query->where(function ($query) use ($username) {
-            $query->where('email', $username);
-            $query->orWhere('phone', $username);
+            $query->where('email', $username)
+            ->whereHas('profile', function ($query) use ($username) {
+                $query->orWhere('phone_number', $username);
+            });
         });
     }
 
