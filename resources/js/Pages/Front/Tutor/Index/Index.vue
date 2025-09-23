@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-gray-50 w-full pt-[80px]">
+    <div class="min-h-screen bg-gray-50 w-full">
 
         <HeroSection />
 

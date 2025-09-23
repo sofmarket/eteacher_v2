@@ -8,7 +8,7 @@
 
                 <!-- Action Buttons -->
                 <div class="w-full mt-2 space-y-2">
-                    <button
+                    <Link :href="route('front.tutors.availability', tutor.profile.slug)"
                         class="w-full flex-1 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors flex items-center justify-center">
                         <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd"
@@ -16,7 +16,7 @@
                                 clip-rule="evenodd" />
                         </svg>
                         Book a session
-                    </button>
+                    </Link>
                     <div class="flex items-center space-x-3 mb-4 w-full">
                         <button
                             class="flex-1 bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-50 transition-colors flex items-center justify-center">

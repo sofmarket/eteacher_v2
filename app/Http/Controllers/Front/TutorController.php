@@ -12,7 +12,7 @@ use App\Models\Subject;
 use App\Models\SubjectGroup;
 use App\Models\User;
 
-class TutorsController extends Controller
+class TutorController extends Controller
 {
     public function index()
     {
@@ -45,7 +45,7 @@ class TutorsController extends Controller
             return TutorResource::collection($tutors->paginate($this->perPage()));
         }
 
-        return inertia('Front/Tutors/Index/Index', [
+        return inertia('Front/Tutor/Index/Index', [
             'cities' => CityResource::collection(City::all()),
             'subjects' => SubjectResource::collection(Subject::all()),
             'subjectGroups' => SubjectGroupResource::collection(SubjectGroup::all()),
@@ -83,7 +83,7 @@ class TutorsController extends Controller
             })
             ->firstOrFail();
 
-        return inertia('Front/Tutors/Show/Index', [
+        return inertia('Front/Tutor/Show/Index', [
             'tutor' => TutorResource::make($tutor),
         ]);
 
