@@ -15,17 +15,7 @@
                     class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors">
                     Today
                 </button>
-                <button
-                    class="flex items-center gap-6 bg-white border border-gray-300 hover:border-gray-400 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors">
-                    {{ weekRange }}
-                    <svg class="w-4 h-4" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                    </svg>
-                </button>
+                <SelectDate :currentDate="currentDate" :weekRage="weekRange" @change="handleDateChange" />
             </div>
             <div class="flex items-center gap-3">
                 <div
@@ -40,11 +30,11 @@
         </div>
 
         <!-- Weekly Calendar View -->
-        <div class="bg-white border border-gray-200 rounded-lg p-4 h-[50vh]">
-            <div class="flex items-center justify-between">
+        <div class="bg-white border border-gray-200 rounded-lg p-4 h-[75vh] relative">
+            <div class="flex items-start justify-between">
                 <button @click="navigateWeek(-1)" 
                         :disabled="!canNavigatePrevious"
-                        class="py-5 px-2 rounded-lg transition-colors"
+                        class="py-5 px-2 rounded-lg transition-colors mt-5"
                         :class="canNavigatePrevious ? 'hover:bg-gray-100 cursor-pointer' : 'cursor-not-allowed opacity-50'">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="15,18 9,12 15,6"></polyline>
@@ -62,26 +52,54 @@
                             <strong>{{ day.number }} {{ day.monthName }}</strong>
                             <span class="text-sm">{{ day.dayName }}</span>
                         </div>
-                        <button class="w-full px-3 py-2 rounded-lg text-sm font-medium transition-colors" 
-                                :disabled="day.isBeforeToday"
-                                :class="{
-                                    'bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200': day.isSelected && !day.isBeforeToday,
-                                    'bg-gray-100 hover:bg-gray-200 text-gray-600': !day.isSelected && !day.isBeforeToday,
-                                    'bg-gray-50 text-gray-400 cursor-not-allowed': day.isBeforeToday
-                                }">
-                            {{ day.isBeforeToday ? 'Past' : 'No sessions' }}
-                        </button>
+                        <div class="w-full">
+                            <div v-if="getSlotsForDate(day.date).length > 0" class="space-y-2">
+                                <div v-for="slot in getSlotsForDate(day.date)" :key="slot.id || slot.date + slot.time"
+                                     class="px-2 py-1 rounded text-xs font-medium transition-colors cursor-pointer bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200"
+                                     >
+                                       <!--:class="{
+                                            //  'bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200'
+                                            //  'bg-green-50 hover:bg-green-100 text-green-600 border border-green-200': !day.isSelected && !day.isBeforeToday,
+                                            //  'bg-gray-50 text-gray-400 cursor-not-allowed': day.isBeforeToday
+                                        }-->
+                                    <div class="text-center py-1 select-none" @click="bookSlot(slot)">
+                                        <div v-if="slot.time" class="font-semibold">{{ slot.time }}</div>
+                                        <div v-else class="font-semibold">Available</div>
+                                        <div v-if="slot.available_spaces" class="text-xs opacity-75">{{ slot.available_spaces }}/{{ slot.spaces }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else class="px-3 py-4 rounded-lg text-sm font-medium transition-colors select-none"
+                                 :class="{
+                                     'bg-gray-100 hover:bg-gray-200 text-gray-600': !day.isBeforeToday,
+                                     'bg-gray-50 text-gray-400 cursor-not-allowed': day.isBeforeToday
+                                 }">
+                                {{ day.isBeforeToday ? 'Past' : 'No sessions' }}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <button @click="navigateWeek(1)" 
                         :disabled="!canNavigateNext"
-                        class="py-5 px-2 rounded-lg transition-colors"
+                        class="py-5 px-2 rounded-lg transition-colors mt-5"
                         :class="canNavigateNext ? 'hover:bg-gray-100 cursor-pointer' : 'cursor-not-allowed opacity-50'">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="9,18 15,12 9,6"></polyline>
                     </svg>
                 </button>
+            </div>
+            <div class="absolute top-0 right-0 left-0 bottom-0 bg-black opacity-25" v-if="precessing">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <div class="w-10 h-10">
+                        <svg width="60" height="60" viewBox="0 0 44 44">
+                            <circle cx="22" cy="22" r="20" fill="none" stroke="#E5E7EB" stroke-width="4"></circle>
+                            <circle cx="22" cy="22" r="20" fill="none" stroke="#1447e6" stroke-width="4" stroke-dasharray="125.6" stroke-dashoffset="125.6">
+                                <animate attributeName="stroke-dashoffset" values="125.6;0" dur="1s" repeatCount="indefinite"></animate>
+                            </circle>
+                        </svg>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -106,12 +124,18 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
+import SelectDate from './Components/SelectDate.vue';
+import axios from 'axios';
+import { usePage } from '@inertiajs/vue3';
 
-const currentDate = ref(new Date()); // Use ref for reactivity
+const page = usePage();
+const slug = computed(() => page.props.slug);
 
-// Ensure currentDate is always set to the start of the day 
+const precessing = ref(false);
+const currentDate = ref(new Date());
 currentDate.value.setHours(0, 0, 0, 0);
+const slots = ref([]);
 
 const weekDays = computed(() => {
     const today = new Date(currentDate.value);
@@ -201,5 +225,51 @@ const canNavigatePrevious = computed(() => {
 const canNavigateNext = computed(() => {
     return true; // Always allow forward navigation
 });
+
+const handleDateChange = (newValue) => {
+    currentDate.value = newValue;
+}
+
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    };
+    return date.toLocaleDateString('en-US', options);
+}
+
+const getSlotsForDate = (date) => {
+    const dateString = date.toISOString().split('T')[0]; // Get YYYY-MM-DD format
+    return slots.value.filter(slot => slot.date === dateString);
+}
+
+watch(currentDate, () => {
+
+    precessing.value = true;
+    
+    let firstDay = weekDays.value[0];
+    let lastDay = weekDays.value[6];
+
+    axios.get(route('front.tutors.availability', {
+        slug: slug.value
+    }), {
+        params: {
+            first_day: firstDay.date.toISOString(),
+            last_day: lastDay.date.toISOString()
+        }
+    }).then((response) => {
+        slots.value = response.data.slots || [];
+    }).finally(() => {
+        precessing.value = false;
+    });
+
+});
+
+const bookSlot = (slot) => {
+    console.log(slot);
+}
 
 </script>
