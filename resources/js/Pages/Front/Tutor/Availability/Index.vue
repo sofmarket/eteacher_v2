@@ -42,7 +42,7 @@
                 </button>
 
                 <div class="grid grid-cols-1 gap-4 w-full sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
-                    <div v-for="day in weekDays" :key="day.date.toISOString()" class="text-center">
+                    <div v-for="day in weekDays" :key="day.date.toISOString()" class="text-center" v-memo="[day.date, day.isSelected, day.isBeforeToday, slotsByDate[day.date.toISOString().split('T')[0]]]">
                         <div class="text-sm font-medium mb-2 flex flex-col items-center justify-center rounded-lg p-5"
                             :class="{
                                 'bg-slate-100': day.isSelected,
@@ -53,15 +53,10 @@
                             <span class="text-sm">{{ day.dayName }}</span>
                         </div>
                         <div class="w-full">
-                            <div v-if="getSlotsForDate(day.date).length > 0" class="space-y-2">
-                                <div v-for="slot in getSlotsForDate(day.date)" :key="slot.id || slot.date + slot.time"
+                            <div v-if="slotsByDate[day.date.toISOString().split('T')[0]]?.length > 0" class="space-y-2">
+                                <div v-for="slot in slotsByDate[day.date.toISOString().split('T')[0]]" :key="slot.id || `${slot.date}-${slot.time}`"
                                      class="px-2 py-1 rounded text-xs font-medium transition-colors cursor-pointer bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200"
                                      >
-                                       <!--:class="{
-                                            //  'bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200'
-                                            //  'bg-green-50 hover:bg-green-100 text-green-600 border border-green-200': !day.isSelected && !day.isBeforeToday,
-                                            //  'bg-gray-50 text-gray-400 cursor-not-allowed': day.isBeforeToday
-                                        }-->
                                     <div class="text-center py-1 select-none" @click="bookSlot(slot)">
                                         <div v-if="slot.time" class="font-semibold">{{ slot.time }}</div>
                                         <div v-else class="font-semibold">Available</div>
@@ -124,7 +119,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch, useTemplateRef } from 'vue';
+import { computed, ref, watch, useTemplateRef, shallowRef } from 'vue';
 import SelectDate from './Components/SelectDate.vue';
 import axios from 'axios';
 import { usePage } from '@inertiajs/vue3';
@@ -138,8 +133,12 @@ const slotsContainer = useTemplateRef('slotsContainer');
 const precessing = ref(false);
 const currentDate = ref(new Date());
 currentDate.value.setHours(0, 0, 0, 0);
-const slots = ref([]);
+const slots = shallowRef([]); // Use shallowRef for better performance with large arrays
 const numDays = ref(1);
+
+// Memoize static arrays to avoid recreation
+const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const weekDays = computed(() => {
     const today = new Date(currentDate.value);
@@ -164,18 +163,18 @@ const weekDays = computed(() => {
     }
 
     const days = [];
-    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const now = new Date();
     now.setHours(0, 0, 0, 0);
+    const todayString = new Date().toDateString();
+    const selectedString = currentDate.value.toDateString();
 
     // Generate days based on numDays
     for (let i = 0; i < numDays.value; i++) {
         const day = new Date(startDate);
         day.setDate(startDate.getDate() + i);
 
-        const isToday = day.toDateString() === new Date().toDateString();
-        const isSelected = day.toDateString() === currentDate.value.toDateString();
+        const isToday = day.toDateString() === todayString;
+        const isSelected = day.toDateString() === selectedString;
         const isBeforeToday = day < now;
 
         days.push({
@@ -267,29 +266,50 @@ const formatDate = (dateString) => {
     return date.toLocaleDateString('en-US', options);
 }
 
+// Pre-compute slots by date for better performance
+const slotsByDate = computed(() => {
+    const slotsMap = {};
+    slots.value.forEach(slot => {
+        if (!slotsMap[slot.date]) {
+            slotsMap[slot.date] = [];
+        }
+        slotsMap[slot.date].push(slot);
+    });
+    return slotsMap;
+});
+
 const getSlotsForDate = (date) => {
     const dateString = date.toISOString().split('T')[0]; // Get YYYY-MM-DD format
-    return slots.value.filter(slot => slot.date === dateString);
+    return slotsByDate.value[dateString] || [];
 }
 
-const fetchSlots = () => {
+const fetchSlots = async () => {
+    if (precessing.value) return;
+    
     precessing.value = true;
     
     let firstDay = weekDays.value[0];
     let lastDay = weekDays.value[numDays.value - 1];
-
-    axios.get(route('front.tutors.availability', {
-        slug: slug.value
-    }), {
-        params: {
-            first_day: firstDay.date.toISOString(),
-            last_day: lastDay.date.toISOString()
-        }
-    }).then((response) => {
-        slots.value = response.data.slots || [];
-    }).finally(() => {
+    
+    try {
+        const response = await axios.get(route('front.tutors.availability', {
+            slug: slug.value
+        }), {
+            params: {
+                first_day: firstDay.date.toISOString(),
+                last_day: lastDay.date.toISOString()
+            }
+        });
+        
+        const slotsData = response.data.slots || [];
+        slots.value = slotsData;
+        
+        
+    } catch (error) {
+        slots.value = [];
+    } finally {
         precessing.value = false;
-    });
+    }
 };
 
 watch(currentDate, fetchSlots);
@@ -299,19 +319,28 @@ const bookSlot = (slot) => {
     console.log(slot);
 }
 
-useResizeObserver(slotsContainer, useDebounceFn((entries) => {
-    const entry = entries[0]
+// Memoize the resize handler to prevent unnecessary re-creation
+const handleResize = useDebounceFn((entries) => {
+    const entry = entries[0];
     const { width } = entry.contentRect;
-    console.log(width);
-    if(width <= 540) {
-        numDays.value = 1;
-    } else if(width > 540 && width <= 668) {
-        numDays.value = 2;
-    } else if(width > 658 && width <= 924) {
-        numDays.value = 4;
-    } else if(width > 924) {
-        numDays.value = 7;
+    
+    let newNumDays;
+    if (width <= 540) {
+        newNumDays = 1;
+    } else if (width > 540 && width <= 668) {
+        newNumDays = 2;
+    } else if (width > 658 && width <= 924) {
+        newNumDays = 4;
+    } else if (width > 924) {
+        newNumDays = 7;
     }
-}, 100));
+    
+    // Only update if the value actually changed
+    if (newNumDays !== numDays.value) {
+        numDays.value = newNumDays;
+    }
+}, 150); // Increased debounce time for better performance
+
+useResizeObserver(slotsContainer, handleResize);
 
 </script>
