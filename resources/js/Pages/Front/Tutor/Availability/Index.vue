@@ -136,6 +136,7 @@ const precessing = ref(false);
 const currentDate = ref(new Date());
 currentDate.value.setHours(0, 0, 0, 0);
 const slots = ref([]);
+const numDays = ref(4);
 
 const weekDays = computed(() => {
     const today = new Date(currentDate.value);
@@ -152,7 +153,7 @@ const weekDays = computed(() => {
     now.setHours(0, 0, 0, 0);
 
     // Generate 7 days starting from Sunday
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < numDays.value; i++) {
         const day = new Date(startOfWeek);
         day.setDate(startOfWeek.getDate() + i);
 
@@ -178,7 +179,7 @@ const weekRange = computed(() => {
     if (weekDays.value.length === 0) return '';
 
     const firstDay = weekDays.value[0];
-    const lastDay = weekDays.value[6];
+    const lastDay = weekDays.value[numDays.value - 1];
 
     if (firstDay.date.getMonth() === lastDay.date.getFullYear() && firstDay.date.getMonth() === lastDay.date.getMonth()) {
         return `${firstDay.monthName} ${firstDay.number} - ${lastDay.number} ${firstDay.date.getFullYear()}`;
@@ -199,7 +200,7 @@ const navigateWeek = (direction) => {
     }
     
     const newDate = new Date(currentDate.value);
-    newDate.setDate(newDate.getDate() + (direction * 7));
+    newDate.setDate(newDate.getDate() + (direction * numDays.value));
     currentDate.value = newDate;
 };
 
@@ -251,7 +252,7 @@ watch(currentDate, () => {
     precessing.value = true;
     
     let firstDay = weekDays.value[0];
-    let lastDay = weekDays.value[6];
+    let lastDay = weekDays.value[numDays.value - 1];
 
     axios.get(route('front.tutors.availability', {
         slug: slug.value
