@@ -1,7 +1,7 @@
 <template>
     <div class="bg-[#FAF8F5]">
         <Navbar />
-        <div class="min-h-screen xl:flex w-full pt-[80px]">
+        <div class="min-h-screen w-full pt-[80px]">
             <slot></slot>
         </div>
         <Footer />

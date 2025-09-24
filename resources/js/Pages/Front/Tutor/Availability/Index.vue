@@ -3,7 +3,7 @@
         <!-- Header Section -->
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-900">Book a session</h1>
-            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+            <button class="bg-[#ff6b35] text-white px-4 py-2 rounded-lg font-medium transition-colors">
                 Request a Session
             </button>
         </div>
@@ -100,7 +100,7 @@
 
 
         <div class="w-full mt-6 flex justify-end">
-            <button class="bg-blue-500 rounded-lg p-1.5">
+            <button class="bg-[#ff6b35] opacity-80 rounded-lg p-1.5">
                 <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M12 7C12.5523 7 13 7.44772 13 8V13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13V8C11 7.44772 11.4477 7 12 7Z"
