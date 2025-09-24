@@ -39,6 +39,8 @@
 
         <Introduction :tutor="tutor" />
 
+        <Availability :tutor="tutor" />
+
         <Resume :tutor="tutor" />
 
         <Reviews :tutor="tutor" />

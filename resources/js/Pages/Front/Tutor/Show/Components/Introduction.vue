@@ -206,6 +206,51 @@
                     <VideoPlayer />
                 </div>
             </div>
+            <!-- About Me Section -->
+            <div class="mt-15">
+                <h2 class="text-2xl font-bold text-stone-800 mb-4">About me</h2>
+                <div class="text-stone-700 leading-relaxed space-y-4">
+                    <p v-if="!showFullAbout">
+                        Hi! I am Cynthia Hunter, a dedicated and experienced tutor with a passion for helping students
+                        excel in their academic pursuits. With expertise across subjects including mathematics, science,
+                        and language arts, I bring a personalized approach to tutoring that addresses each student's
+                        unique learning needs. My teaching philosophy is centered on fostering a supportive and engaging
+                        learning environment where students feel encouraged to explore, ask questions, and develop a
+                        strong understanding of the material.
+                    </p>
+                    <div v-else>
+                        <p>
+                            Hi! I am Cynthia Hunter, a dedicated and experienced tutor with a passion for helping
+                            students excel in their academic pursuits. With expertise across subjects including
+                            mathematics, science, and language arts, I bring a personalized approach to tutoring that
+                            addresses each student's unique learning needs. My teaching philosophy is centered on
+                            fostering a supportive and engaging learning environment where students feel encouraged to
+                            explore, ask questions, and develop a strong understanding of the material.
+                        </p>
+                        <p>
+                            Over the years, I have had the privilege of working with students from diverse backgrounds
+                            and educational levels, from elementary school through college. My approach involves using
+                            interactive and practical teaching methods that make complex concepts more accessible and
+                            relatable. I am committed to not only improving academic performance but also building
+                            confidence and instilling a genuine love for learning. By tailoring my sessions to align
+                            with each student's individual goals and learning style, I aim to make every lesson both
+                            effective and enjoyable.
+                        </p>
+                        <p>
+                            In addition to subject-specific tutoring, I emphasize the development of key academic
+                            skills, such as effective study habits, time management, and test-taking strategies. These
+                            skills are essential for long-term success and personal growth. My goal is to provide
+                            comprehensive support that empowers students to achieve their full potential and excel in
+                            their studies. Whether you need help with specific coursework or want to enhance your
+                            overall academic performance, I am here to guide you every step of the way.
+                        </p>
+                    </div>
+                    <button @click="showFullAbout = !showFullAbout"
+                        class="text-stone-800 underline hover:text-stone-900 text-sm">
+                        {{ showFullAbout ? 'Show less' : 'Show more' }}
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -213,6 +258,8 @@
 <script setup>
 import { ref } from 'vue';
 import VideoPlayer from '@/Components/ui/VideoPlayer.vue';
+
+const showFullAbout = ref(false);
 
 const props = defineProps({
     tutor: {
