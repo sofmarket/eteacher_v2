@@ -30,7 +30,7 @@
         </div>
 
         <!-- Weekly Calendar View -->
-        <div class="bg-white border border-gray-200 rounded-lg p-4 h-[75vh] relative">
+        <div class="bg-white border border-gray-200 rounded-lg p-4 h-[75vh] relative" ref="slotsContainer">
             <div class="flex items-start justify-between">
                 <button @click="navigateWeek(-1)" 
                         :disabled="!canNavigatePrevious"
@@ -41,7 +41,7 @@
                     </svg>
                 </button>
 
-                <div class="grid grid-cols-7 gap-4 w-full">
+                <div class="grid grid-cols-1 gap-4 w-full sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
                     <div v-for="day in weekDays" :key="day.date.toISOString()" class="text-center">
                         <div class="text-sm font-medium mb-2 flex flex-col items-center justify-center rounded-lg p-5"
                             :class="{
@@ -124,27 +124,44 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { computed, ref, watch, useTemplateRef } from 'vue';
 import SelectDate from './Components/SelectDate.vue';
 import axios from 'axios';
 import { usePage } from '@inertiajs/vue3';
+import { useResizeObserver, useDebounceFn } from '@vueuse/core'
+
 
 const page = usePage();
 const slug = computed(() => page.props.slug);
+const slotsContainer = useTemplateRef('slotsContainer');
 
 const precessing = ref(false);
 const currentDate = ref(new Date());
 currentDate.value.setHours(0, 0, 0, 0);
 const slots = ref([]);
-const numDays = ref(4);
+const numDays = ref(1);
 
 const weekDays = computed(() => {
     const today = new Date(currentDate.value);
     const currentDay = today.getDay(); // 0 for Sunday, 1 for Monday, etc.
 
-    // Calculate the start of the week (Sunday)
-    const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - currentDay);
+    let startDate;
+    
+    // Calculate start date based on numDays
+    if (numDays.value === 1) {
+        // For 1 day, start from the current date
+        startDate = new Date(today);
+    } else if (numDays.value === 2) {
+        // For 2 days, start from today
+        startDate = new Date(today);
+    } else if (numDays.value === 4) {
+        // For 4 days, start from today
+        startDate = new Date(today);
+    } else {
+        // For 7 days, start from Sunday of the current week
+        startDate = new Date(today);
+        startDate.setDate(today.getDate() - currentDay);
+    }
 
     const days = [];
     const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -152,10 +169,10 @@ const weekDays = computed(() => {
     const now = new Date();
     now.setHours(0, 0, 0, 0);
 
-    // Generate 7 days starting from Sunday
+    // Generate days based on numDays
     for (let i = 0; i < numDays.value; i++) {
-        const day = new Date(startOfWeek);
-        day.setDate(startOfWeek.getDate() + i);
+        const day = new Date(startDate);
+        day.setDate(startDate.getDate() + i);
 
         const isToday = day.toDateString() === new Date().toDateString();
         const isSelected = day.toDateString() === currentDate.value.toDateString();
@@ -164,7 +181,7 @@ const weekDays = computed(() => {
         days.push({
             date: day,
             number: day.getDate(),
-            dayName: dayNames[i],
+            dayName: dayNames[day.getDay()],
             monthName: monthNames[day.getMonth()],
             isToday,
             isSelected,
@@ -181,10 +198,18 @@ const weekRange = computed(() => {
     const firstDay = weekDays.value[0];
     const lastDay = weekDays.value[numDays.value - 1];
 
-    if (firstDay.date.getMonth() === lastDay.date.getFullYear() && firstDay.date.getMonth() === lastDay.date.getMonth()) {
-        return `${firstDay.monthName} ${firstDay.number} - ${lastDay.number} ${firstDay.date.getFullYear()}`;
+    // For single day, just show the date
+    if (numDays.value === 1) {
+        return `${firstDay.monthName} ${firstDay.number}, ${firstDay.date.getFullYear()}`;
+    }
+
+    // For multiple days, show range
+    if (firstDay.date.getFullYear() === lastDay.date.getFullYear() && firstDay.date.getMonth() === lastDay.date.getMonth()) {
+        return `${firstDay.monthName} ${firstDay.number} - ${lastDay.number}, ${firstDay.date.getFullYear()}`;
+    } else if (firstDay.date.getFullYear() === lastDay.date.getFullYear()) {
+        return `${firstDay.monthName} ${firstDay.number} - ${lastDay.monthName} ${lastDay.number}, ${firstDay.date.getFullYear()}`;
     } else {
-        return `${firstDay.monthName} ${firstDay.number} - ${lastDay.monthName} ${lastDay.number} ${firstDay.date.getFullYear()}`;
+        return `${firstDay.monthName} ${firstDay.number}, ${firstDay.date.getFullYear()} - ${lastDay.monthName} ${lastDay.number}, ${lastDay.date.getFullYear()}`;
     }
 });
 
@@ -209,17 +234,17 @@ const goToToday = () => {
     currentDate.value.setHours(0, 0, 0, 0);
 };
 
-// Check if we can navigate to previous week (disable if current week contains today or earlier)
+// Check if we can navigate to previous week (disable if current period contains today or earlier)
 const canNavigatePrevious = computed(() => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
-    const currentWeekStart = new Date(currentDate.value);
-    const currentDay = currentWeekStart.getDay();
-    currentWeekStart.setDate(currentWeekStart.getDate() - currentDay);
+    // Get the first day of the current period
+    const firstDay = weekDays.value[0];
+    if (!firstDay) return false;
     
-    // If the current week starts on or after today, we can go back
-    return currentWeekStart > today;
+    // If the first day is after today, we can go back
+    return firstDay.date > today;
 });
 
 // Check if we can navigate to next week (always allow forward navigation)
@@ -247,8 +272,7 @@ const getSlotsForDate = (date) => {
     return slots.value.filter(slot => slot.date === dateString);
 }
 
-watch(currentDate, () => {
-
+const fetchSlots = () => {
     precessing.value = true;
     
     let firstDay = weekDays.value[0];
@@ -266,11 +290,28 @@ watch(currentDate, () => {
     }).finally(() => {
         precessing.value = false;
     });
+};
 
-});
+watch(currentDate, fetchSlots);
+watch(numDays, fetchSlots);
 
 const bookSlot = (slot) => {
     console.log(slot);
 }
+
+useResizeObserver(slotsContainer, useDebounceFn((entries) => {
+    const entry = entries[0]
+    const { width } = entry.contentRect;
+    console.log(width);
+    if(width <= 540) {
+        numDays.value = 1;
+    } else if(width > 540 && width <= 668) {
+        numDays.value = 2;
+    } else if(width > 658 && width <= 924) {
+        numDays.value = 4;
+    } else if(width > 924) {
+        numDays.value = 7;
+    }
+}, 100));
 
 </script>
