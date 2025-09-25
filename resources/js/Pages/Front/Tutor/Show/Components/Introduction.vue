@@ -238,7 +238,7 @@
         </div>
         <div class="max-w-7xl mx-auto p-8">
             <!-- About Me Section -->
-            <div class="mt-15">
+            <div class="mt-5">
                 <h2 class="text-2xl font-bold text-stone-800 mb-4">About me</h2>
                 <div class="text-stone-700 leading-relaxed space-y-4">
                     <p v-if="!showFullAbout">

@@ -30,11 +30,11 @@
             </div>
 
             <!-- Weekly Calendar View -->
-            <div class="bg-white rounded-lg p-4 h-[350px] relative" ref="slotsContainer">
+            <div class="bg-white rounded-lg py-4 h-[350px] relative" ref="slotsContainer">
                 <div class="flex items-start justify-between">
                     <button @click="navigateWeek(-1)" :disabled="!canNavigatePrevious"
-                        class="py-5 px-2 rounded-lg transition-colors mt-5"
-                        :class="canNavigatePrevious ? 'hover:bg-gray-100 cursor-pointer' : 'cursor-not-allowed opacity-50'">
+                        class="py-3 px-2 rounded-lg transition-colors top-10 absolute left-[-50px]"
+                        :class="canNavigatePrevious ? 'bg-slate-50 hover:bg-slate-100 cursor-pointer' : 'cursor-not-allowed opacity-50'">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <polyline points="15,18 9,12 15,6"></polyline>
@@ -80,8 +80,8 @@
                     </div>
 
                     <button @click="navigateWeek(1)" :disabled="!canNavigateNext"
-                        class="py-5 px-2 rounded-lg transition-colors mt-5"
-                        :class="canNavigateNext ? 'hover:bg-gray-100 cursor-pointer' : 'cursor-not-allowed opacity-50'">
+                        class="py-3 px-2 rounded-lg transition-colors top-10 absolute right-[-50px]"
+                        :class="canNavigateNext ? 'bg-slate-50 hover:bg-slate-100 cursor-pointer' : 'cursor-not-allowed opacity-50'">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <polyline points="9,18 15,12 9,6"></polyline>
