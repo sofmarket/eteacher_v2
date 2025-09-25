@@ -68,12 +68,6 @@ import TipsSection from './Components/TipsSection.vue';
 
 const tutor = computed(() => usePage().props.tutor.data);
 
-// Helper function to get initials from name
-const getInitials = (name) => {
-    if (!name) return 'TN';
-    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
-};
-
 const getSocialProfileColor = (type) => {
     switch (type) {
         case 'facebook':
@@ -158,7 +152,7 @@ const getSocialProfileShape = (type) => {
 }
 
 onMounted(() => {
-    console.log(tutor);
+    console.log(tutor.value);
 });
 
 </script>

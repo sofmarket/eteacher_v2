@@ -1,14 +1,14 @@
 <template>
     <div class="w-full bg-white border-t" id="availability-tab">
-        <div class="max-w-7xl mx-auto py-15 px-15 lg:px-0">
+        <div class="w-full max-w-7xl mx-auto py-15 px-15">
             <!-- Header Section -->
-            <div class="flex justify-between items-center mb-6">
+            <div class="flex flex-col md:flex-row gap-5 justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold text-gray-900">Book a session</h1>
                 <RequestSession />
             </div>
 
             <!-- Date Selection Controls -->
-            <div class="mb-6 flex justify-between">
+            <div class="mb-6 justify-between hidden md:flex">
                 <div class="flex gap-3">
                     <button @click="goToToday"
                         class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors">
@@ -126,12 +126,16 @@
 import { computed, ref, watch, useTemplateRef, shallowRef } from 'vue';
 import SelectDate from '@/Pages/Front/Tutor/Availability/Components/SelectDate.vue';
 import axios from 'axios';
-import { usePage } from '@inertiajs/vue3';
 import { useResizeObserver, useDebounceFn } from '@vueuse/core'
 import RequestSession from './RequestSession.vue';
 
-const page = usePage();
-const slug = computed(() => page.props.slug || 'owen-taylor');
+const props = defineProps({
+    tutor: {
+        type: Object,
+        required: true
+    }
+});
+
 const slotsContainer = useTemplateRef('slotsContainer');
 
 const precessing = ref(false);
@@ -297,7 +301,7 @@ const fetchSlots = async () => {
 
     try {
         const response = await axios.get(route('front.tutors.availability', {
-            slug: slug.value
+            slug: props.tutor?.profile?.slug
         }), {
             params: {
                 first_day: firstDay.date.toISOString(),

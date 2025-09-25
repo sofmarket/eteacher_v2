@@ -1,6 +1,6 @@
 <template>
-    <div class="w-full bg-gray-50 font-sans border-t py-20 px-5">
-        <div class="max-w-7xl mx-auto">
+    <div class="w-full bg-gray-50 font-sans border-t py-8 lg:py-20 px-5 lg:px-15 lg:px-0">
+        <div class="w-full max-w-7xl mx-auto">
             <!-- Section Title -->
             <h2 class="text-3xl font-bold text-black mb-8 text-left">Similar Tutors</h2>
 
@@ -112,7 +112,7 @@
             </div>
 
             <!-- View All Tutors Button -->
-            <div class="flex justify-center mt-15">
+            <div class="flex justify-center my-5 lg:my-15">
                 <button
                     class="bg-white border border-orange-500 rounded-md px-4 py-2 text-base text-orange-500 cursor-pointer transition-all duration-200 font-medium hover:bg-orange-500 hover:text-white">View
                     All Tutors</button>

@@ -1,27 +1,25 @@
 <template>
     <div class="w-full" id="introduction-tab">
         <!-- Tab Content -->
-        <div class="max-w-7xl mx-auto p-8">
+        <div class="w-full max-w-7xl mx-auto p-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Left Section - Profile -->
                 <div class="lg:col-span-2">
                     <div class="space-y-6">
                         <!-- Profile Header -->
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center">
+                        <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 lg:gap-0">
+                            <div class="flex flex-col lg:flex-row items-start lg:items-center gap-5 lg:gap-0">
                                 <div
                                     class="w-18 h-18 rounded-xl bg-purple-200 flex items-center justify-center mr-4 flex-shrink-0 relative">
-                                    <svg class="w-12 h-12 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd"
-                                            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                            clip-rule="evenodd" />
-                                    </svg>
+                                    <img v-if="tutor?.profile?.image != null" :src="tutor?.profile?.image" alt="Tutor Avatar" class="w-12 h-12 rounded-full">
+                                    <span v-else class="text-purple-600 text-3xl">{{ getInitials(tutor?.profile?.full_name) }}</span>
                                     <span
                                         class="absolute bottom-[-2px] right-[calc(50%-2px)] bg-green-400 w-2 h-2 rounded-full"></span>
+                                    
                                 </div>
                                 <div class="">
                                     <div class="flex items-center mb-1">
-                                        <h1 class="text-2xl font-bold text-stone-800">Cynthia Hunter</h1>
+                                        <h1 class="text-2xl font-bold text-stone-800">{{ tutor?.profile?.full_name }}</h1>
                                         <div class="flex items-center mx-2">
                                             <svg class="w-6 h-6 text-green-500" fill="currentColor"
                                                 viewBox="0 0 20 20">
@@ -32,20 +30,19 @@
                                             <span class="text-green-600 font-medium mx-1">Verified</span>
                                         </div>
                                     </div>
-                                    <p class="text-sm text-stone-600">Empowering Students with Customized Learning
-                                        Support.</p>
+                                    <p class="text-sm text-stone-600">{{ tutor?.profile?.tagline }}</p>
                                 </div>
                             </div>
                             <!-- Pricing -->
                             <div class="text-right">
-                                <div class="text-2xl text-stone-800">$40.00<span
-                                        class="text-stone-600">/session</span>
+                                <div class="text-2xl text-stone-800">{{ tutor?.min_price }}<span
+                                        class="text-stone-600"> / session</span>
                                 </div>
                                 <p class="text-stone-600 text-sm">Starting from</p>
                             </div>
                         </div>
                         <!-- Tutor Statistics -->
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                             <div class="space-y-3">
                                 <div class="flex items-center">
                                     <svg class="w-5 h-5 text-stone-600 mr-2" fill="none" stroke="currentColor"
@@ -53,7 +50,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                                     </svg>
-                                    <span class="text-stone-700">5.0 /5.0 (1 review)</span>
+                                    <span class="text-stone-700">{{ tutor.avg_rating || 0 }} /5.0 ({{ tutor.total_reviews }} review)</span>
                                 </div>
                                 <div class="flex items-center">
                                     <svg class="w-5 h-5 text-stone-600 mr-2" fill="currentColor"
@@ -62,7 +59,7 @@
                                             d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
                                             clip-rule="evenodd" />
                                     </svg>
-                                    <span class="text-stone-700">74 Booked sessions</span>
+                                    <span class="text-stone-700">{{ tutor.sessions }} Booked sessions</span>
                                 </div>
                                 <div class="flex items-center">
                                     <svg class="w-5 h-5 text-stone-600 mr-2" fill="currentColor"
@@ -71,7 +68,7 @@
                                             d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
                                             clip-rule="evenodd" />
                                     </svg>
-                                    <span class="text-stone-700">0 Sessions</span>
+                                    <span class="text-stone-700">{{ tutor.active_students }} Sessions</span>
                                 </div>
                                 <div class="flex items-center">
                                     <svg class="w-5 h-5 text-stone-600 mr-2" fill="currentColor"
@@ -116,8 +113,8 @@
                                         <h3 class="font-semibold text-stone-800">I can teach</h3>
                                     </div>
                                     <p class="text-stone-700">
-                                        Software Design, UI/UX,
-                                        <span class="underline cursor-pointer">+7 more</span>
+                                        {{ tutor.subjects.map(subject => subject.name).join(', ') }},
+                                        <!-- <span class="underline cursor-pointer">+7 more</span> -->
                                     </p>
                                 </div>
 
@@ -132,15 +129,14 @@
                                         </svg>
                                         <h3 class="font-semibold text-stone-800">I can speak</h3>
                                     </div>
-                                    <div class="flex flex-wrap gap-2">
+                                    <div class="flex flex-wrap gap-2 select-none">
                                         <span
-                                            class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">French</span>
+                                            class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">{{ tutor.profile.native_language }}</span>
                                         <span
-                                            class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Native</span>
-                                        <span
-                                            class="px-3 py-1 bg-stone-100 text-stone-700 rounded-full text-sm">Armenian</span>
-                                        <span
-                                            class="px-3 py-1 bg-stone-100 text-stone-700 rounded-full text-sm">Asturian</span>
+                                            class="py-1 text-sm">(Native)</span>
+                                        <span v-for="language in tutor.languages"
+                                            class="px-3 py-1 bg-stone-100 text-stone-700 rounded-full text-sm">{{ language.name }}</span>
+                                        
                                     </div>
                                 </div>
 
@@ -178,19 +174,19 @@
                         </div>
                     </div>
                     <!-- Action Buttons - Bottom of entire layout -->
-                    <div class="mt-8 flex items-center gap-3">
-                        <div class="flex space-x-3">
+                    <div class="mt-8 flex flex-col lg:flex-row items-center gap-3">
+                        <button @click="scrollToTab('availability-tab')"
+                            class="w-full lg:w-auto bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg flex items-center space-x-2 transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span>Book a session</span>
+                        </button>
+                        <div class="w-full lg:w-auto flex gap-3">
                             <button
-                                class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg flex items-center space-x-2 transition-colors">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                                <span>Book a session</span>
-                            </button>
-                            <button
-                                class="bg-stone-100 hover:bg-stone-200 text-stone-800 px-6 py-3 rounded-lg flex items-center space-x-2 transition-colors">
+                                class="flex-1 bg-stone-100 hover:bg-stone-200 text-stone-800 px-6 py-3 rounded-lg flex items-center space-x-2 transition-colors">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
                                         d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
@@ -198,15 +194,15 @@
                                 </svg>
                                 <span>Send message</span>
                             </button>
+                            <button
+                                class="w-12 h-12 bg-stone-100 hover:bg-stone-200 rounded-full flex items-center justify-center transition-colors">
+                                <svg class="w-6 h-6 text-stone-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                </svg>
+                            </button>
                         </div>
-                        <button
-                            class="w-12 h-12 bg-stone-100 hover:bg-stone-200 rounded-full flex items-center justify-center transition-colors">
-                            <svg class="w-6 h-6 text-stone-600" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                            </svg>
-                        </button>
                     </div>
                 </div>
                 <div>
@@ -215,7 +211,7 @@
             </div>
         </div>
         <!-- Tab Navigation -->
-        <div class="w-full border-b-2 border-gray-200 mt-5">
+        <div class="w-full max-w-full border-b-2 border-gray-200 mt-5 overflow-x-auto">
             <div class="max-w-7xl mx-auto px-8 py-0">
                 <nav class="flex space-x-4">
                     <button v-for="tab in tabs" :key="tab.id" @click="activeTab = tab.id; scrollToTab(tab.target)"
@@ -240,56 +236,20 @@
             <!-- About Me Section -->
             <div class="mt-5">
                 <h2 class="text-2xl font-bold text-stone-800 mb-4">About me</h2>
-                <div class="text-stone-700 leading-relaxed space-y-4">
-                    <p v-if="!showFullAbout">
-                        Hi! I am Cynthia Hunter, a dedicated and experienced tutor with a passion for helping
-                        students
-                        excel in their academic pursuits. With expertise across subjects including mathematics,
-                        science,
-                        and language arts, I bring a personalized approach to tutoring that addresses each student's
-                        unique learning needs. My teaching philosophy is centered on fostering a supportive and
-                        engaging
-                        learning environment where students feel encouraged to explore, ask questions, and develop a
-                        strong understanding of the material.
-                    </p>
-                    <div v-else>
-                        <p>
-                            Hi! I am Cynthia Hunter, a dedicated and experienced tutor with a passion for helping
-                            students excel in their academic pursuits. With expertise across subjects including
-                            mathematics, science, and language arts, I bring a personalized approach to tutoring
-                            that
-                            addresses each student's unique learning needs. My teaching philosophy is centered on
-                            fostering a supportive and engaging learning environment where students feel encouraged
-                            to
-                            explore, ask questions, and develop a strong understanding of the material.
-                        </p>
-                        <p>
-                            Over the years, I have had the privilege of working with students from diverse
-                            backgrounds
-                            and educational levels, from elementary school through college. My approach involves
-                            using
-                            interactive and practical teaching methods that make complex concepts more accessible
-                            and
-                            relatable. I am committed to not only improving academic performance but also building
-                            confidence and instilling a genuine love for learning. By tailoring my sessions to align
-                            with each student's individual goals and learning style, I aim to make every lesson both
-                            effective and enjoyable.
-                        </p>
-                        <p>
-                            In addition to subject-specific tutoring, I emphasize the development of key academic
-                            skills, such as effective study habits, time management, and test-taking strategies.
-                            These
-                            skills are essential for long-term success and personal growth. My goal is to provide
-                            comprehensive support that empowers students to achieve their full potential and excel
-                            in
-                            their studies. Whether you need help with specific coursework or want to enhance your
-                            overall academic performance, I am here to guide you every step of the way.
-                        </p>
-                    </div>
-                    <button @click="showFullAbout = !showFullAbout"
-                        class="text-stone-800 underline hover:text-stone-900 text-sm">
-                        {{ showFullAbout ? 'Show less' : 'Show more' }}
-                    </button>
+                <div class="text-stone-700 leading-relaxed space-y-1">
+                    <template v-if="tutor.profile.description.length > 100">
+                        <p v-if="showFullAbout" class="text-stone-700 leading-relaxed" v-html="tutor.profile.description"></p>
+                        
+                        <div v-else>
+                            <p class="text-stone-700 leading-relaxed" v-html="tutor.profile.description.substring(0, 100) + '...'"></p>
+                        </div>
+                        
+                        <button @click="showFullAbout = !showFullAbout"
+                            class="text-stone-800 underline hover:text-stone-900 text-sm">
+                            {{ showFullAbout ? 'Show less' : 'Show more' }}
+                        </button>
+                    </template>
+                    <p v-else class="text-stone-700 leading-relaxed" v-html="tutor.profile.description"></p>
                 </div>
             </div>
         </div>
@@ -320,6 +280,12 @@ const scrollToTab = (target) => {
         });
     }
 }
+
+// Helper function to get initials from name
+const getInitials = (name) => {
+    if (!name) return 'TN';
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+};
 
 const props = defineProps({
     tutor: {

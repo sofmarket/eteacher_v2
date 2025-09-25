@@ -1,10 +1,30 @@
 <template>
     <div class="relative bg-white border-10 border-white rounded-lg overflow-hidden aspect-video">
-        <img src="@/assets/images/cards/videoframe_100.png" alt="Video Introduction" class="w-full h-full object-cover rounded-lg">
+        <img src="@/assets/images/cards/videoframe_100.png" alt="Video Introduction"
+            class="w-full h-full object-cover rounded-lg">
         <!-- Video Controls Overlay -->
-        <div class="absolute bottom-3 left-3 rounded-full text-white bg-[#2b333f75]">
-            <svg class="w-13 h-13 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5.5l8 6.5-8 6.5v-13z" stroke="currentColor" stroke-width="3" fill="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+        <div
+            class="absolute bottom-3 left-3 rounded-full text-white bg-gray-500/75 flex items-center justify-center w-[60px] h-[60px] cursor-pointer">
+            
+            <svg fill="#ffffff" width="24px" height="24px" viewBox="-0.5 0 7 7" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink">
+
+                <title>play [#1003]</title>
+                <desc>Created with Sketch.</desc>
+                <defs>
+
+                </defs>
+                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g id="Dribbble-Light-Preview" transform="translate(-347.000000, -3766.000000)" fill="#ffffff">
+                        <g id="icons" transform="translate(56.000000, 160.000000)">
+                            <path
+                                d="M296.494737,3608.57322 L292.500752,3606.14219 C291.83208,3605.73542 291,3606.25002 291,3607.06891 L291,3611.93095 C291,3612.7509 291.83208,3613.26444 292.500752,3612.85767 L296.494737,3610.42771 C297.168421,3610.01774 297.168421,3608.98319 296.494737,3608.57322"
+                                id="play-[#1003]">
+
+                            </path>
+                        </g>
+                    </g>
+                </g>
             </svg>
         </div>
     </div>
