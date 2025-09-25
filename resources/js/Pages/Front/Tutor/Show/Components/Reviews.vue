@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full bg-stone-50 border-t p-15 select-none">
+    <div class="w-full bg-stone-50 border-t p-15 select-none" id="reviews-tab">
         <div class="max-w-7xl mx-auto">
             <!-- Student Reviews Heading -->
             <h2 class="text-3xl font-bold text-stone-800 mb-8">Student Reviews</h2>

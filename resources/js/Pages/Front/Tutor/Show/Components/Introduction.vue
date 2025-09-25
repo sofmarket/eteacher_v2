@@ -1,6 +1,7 @@
 <template>
-    <div class="w-full bg-stone-50 p-8">
-        <div class="max-w-7xl mx-auto">
+    <div class="w-full" id="introduction-tab">
+        <!-- Tab Content -->
+        <div class="max-w-7xl mx-auto p-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Left Section - Profile -->
                 <div class="lg:col-span-2">
@@ -31,12 +32,14 @@
                                             <span class="text-green-600 font-medium mx-1">Verified</span>
                                         </div>
                                     </div>
-                                    <p class="text-sm text-stone-600">Empowering Students with Customized Learning Support.</p>
+                                    <p class="text-sm text-stone-600">Empowering Students with Customized Learning
+                                        Support.</p>
                                 </div>
                             </div>
                             <!-- Pricing -->
                             <div class="text-right">
-                                <div class="text-2xl text-stone-800">$40.00<span class="text-stone-600">/session</span>
+                                <div class="text-2xl text-stone-800">$40.00<span
+                                        class="text-stone-600">/session</span>
                                 </div>
                                 <p class="text-stone-600 text-sm">Starting from</p>
                             </div>
@@ -53,7 +56,8 @@
                                     <span class="text-stone-700">5.0 /5.0 (1 review)</span>
                                 </div>
                                 <div class="flex items-center">
-                                    <svg class="w-5 h-5 text-stone-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg class="w-5 h-5 text-stone-600 mr-2" fill="currentColor"
+                                        viewBox="0 0 20 20">
                                         <path fill-rule="evenodd"
                                             d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
                                             clip-rule="evenodd" />
@@ -61,7 +65,8 @@
                                     <span class="text-stone-700">74 Booked sessions</span>
                                 </div>
                                 <div class="flex items-center">
-                                    <svg class="w-5 h-5 text-stone-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg class="w-5 h-5 text-stone-600 mr-2" fill="currentColor"
+                                        viewBox="0 0 20 20">
                                         <path fill-rule="evenodd"
                                             d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
                                             clip-rule="evenodd" />
@@ -69,7 +74,8 @@
                                     <span class="text-stone-700">0 Sessions</span>
                                 </div>
                                 <div class="flex items-center">
-                                    <svg class="w-5 h-5 text-stone-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg class="w-5 h-5 text-stone-600 mr-2" fill="currentColor"
+                                        viewBox="0 0 20 20">
                                         <path fill-rule="evenodd"
                                             d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
                                             clip-rule="evenodd" />
@@ -195,7 +201,8 @@
                         </div>
                         <button
                             class="w-12 h-12 bg-stone-100 hover:bg-stone-200 rounded-full flex items-center justify-center transition-colors">
-                            <svg class="w-6 h-6 text-stone-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 text-stone-600" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                             </svg>
@@ -206,15 +213,42 @@
                     <VideoPlayer />
                 </div>
             </div>
+        </div>
+        <!-- Tab Navigation -->
+        <div class="w-full border-b-2 border-gray-200 mt-5">
+            <div class="max-w-7xl mx-auto px-8 py-0">
+                <nav class="flex space-x-4">
+                    <button v-for="tab in tabs" :key="tab.id" @click="activeTab = tab.id; scrollToTab(tab.target)"
+                        class="relative py-4 px-1 text-md font-medium transition-colors duration-200 w-full text-center" :class="activeTab === tab.id
+                            ? 'text-stone-800'
+                            : 'text-stone-600 hover:text-stone-800'">
+                        <span class="flex items-center justify-center">
+                            {{ tab.name }}
+                            <span v-if="tab.badge"
+                                class="ml-2 inline-flex items-center justify-center w-5 h-5 text-xs font-medium text-stone-700 bg-stone-200 rounded-full">
+                                {{ tab.badge }}
+                            </span>
+                        </span>
+                        <!-- Active tab indicator -->
+                        <div v-if="activeTab === tab.id"
+                            class="absolute bottom-0 left-0 right-0 h-1 bg-green-600 rounded-t-sm z-999"></div>
+                    </button>
+                </nav>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto p-8">
             <!-- About Me Section -->
             <div class="mt-15">
                 <h2 class="text-2xl font-bold text-stone-800 mb-4">About me</h2>
                 <div class="text-stone-700 leading-relaxed space-y-4">
                     <p v-if="!showFullAbout">
-                        Hi! I am Cynthia Hunter, a dedicated and experienced tutor with a passion for helping students
-                        excel in their academic pursuits. With expertise across subjects including mathematics, science,
+                        Hi! I am Cynthia Hunter, a dedicated and experienced tutor with a passion for helping
+                        students
+                        excel in their academic pursuits. With expertise across subjects including mathematics,
+                        science,
                         and language arts, I bring a personalized approach to tutoring that addresses each student's
-                        unique learning needs. My teaching philosophy is centered on fostering a supportive and engaging
+                        unique learning needs. My teaching philosophy is centered on fostering a supportive and
+                        engaging
                         learning environment where students feel encouraged to explore, ask questions, and develop a
                         strong understanding of the material.
                     </p>
@@ -222,15 +256,20 @@
                         <p>
                             Hi! I am Cynthia Hunter, a dedicated and experienced tutor with a passion for helping
                             students excel in their academic pursuits. With expertise across subjects including
-                            mathematics, science, and language arts, I bring a personalized approach to tutoring that
+                            mathematics, science, and language arts, I bring a personalized approach to tutoring
+                            that
                             addresses each student's unique learning needs. My teaching philosophy is centered on
-                            fostering a supportive and engaging learning environment where students feel encouraged to
+                            fostering a supportive and engaging learning environment where students feel encouraged
+                            to
                             explore, ask questions, and develop a strong understanding of the material.
                         </p>
                         <p>
-                            Over the years, I have had the privilege of working with students from diverse backgrounds
-                            and educational levels, from elementary school through college. My approach involves using
-                            interactive and practical teaching methods that make complex concepts more accessible and
+                            Over the years, I have had the privilege of working with students from diverse
+                            backgrounds
+                            and educational levels, from elementary school through college. My approach involves
+                            using
+                            interactive and practical teaching methods that make complex concepts more accessible
+                            and
                             relatable. I am committed to not only improving academic performance but also building
                             confidence and instilling a genuine love for learning. By tailoring my sessions to align
                             with each student's individual goals and learning style, I aim to make every lesson both
@@ -238,9 +277,11 @@
                         </p>
                         <p>
                             In addition to subject-specific tutoring, I emphasize the development of key academic
-                            skills, such as effective study habits, time management, and test-taking strategies. These
+                            skills, such as effective study habits, time management, and test-taking strategies.
+                            These
                             skills are essential for long-term success and personal growth. My goal is to provide
-                            comprehensive support that empowers students to achieve their full potential and excel in
+                            comprehensive support that empowers students to achieve their full potential and excel
+                            in
                             their studies. Whether you need help with specific coursework or want to enhance your
                             overall academic performance, I am here to guide you every step of the way.
                         </p>
@@ -260,6 +301,25 @@ import { ref } from 'vue';
 import VideoPlayer from '@/Components/ui/VideoPlayer.vue';
 
 const showFullAbout = ref(false);
+const activeTab = ref('introduction');
+
+const tabs = ref([
+    { id: 'introduction', name: 'Introduction', target: 'introduction-tab' },
+    { id: 'availability', name: 'Availability', target: 'availability-tab' },
+    { id: 'resume', name: 'Resume Highlights', target: 'resume-tab' },
+    { id: 'reviews', name: 'Reviews', badge: '1', target: 'reviews-tab' }
+]);
+
+const scrollToTab = (target) => {
+    const tab = document.getElementById(target);
+    if (tab) {
+        const navbar = document.getElementById('navbar');
+        window.scrollTo({ 
+            behavior: 'smooth',
+            top: tab.offsetTop - navbar.offsetHeight
+        });
+    }
+}
 
 const props = defineProps({
     tutor: {

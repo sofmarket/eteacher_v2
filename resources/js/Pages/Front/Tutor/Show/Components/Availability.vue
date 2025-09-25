@@ -1,12 +1,10 @@
 <template>
-    <div class="w-full bg-white border-t py-15 px-5">
-        <div class="max-w-7xl mx-auto">
+    <div class="w-full bg-white border-t" id="availability-tab">
+        <div class="max-w-7xl mx-auto py-15 px-15 lg:px-0">
             <!-- Header Section -->
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold text-gray-900">Book a session</h1>
-                <button class="bg-[#ff6b35] text-white px-4 py-2 rounded-lg font-medium transition-colors">
-                    Request a Session
-                </button>
+                <RequestSession />
             </div>
 
             <!-- Date Selection Controls -->
@@ -121,7 +119,6 @@
                 </button>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -131,7 +128,7 @@ import SelectDate from '@/Pages/Front/Tutor/Availability/Components/SelectDate.v
 import axios from 'axios';
 import { usePage } from '@inertiajs/vue3';
 import { useResizeObserver, useDebounceFn } from '@vueuse/core'
-
+import RequestSession from './RequestSession.vue';
 
 const page = usePage();
 const slug = computed(() => page.props.slug || 'owen-taylor');

@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full bg-stone-50 p-15 border-t">
+    <div class="w-full bg-stone-50 p-15 border-t" id="resume-tab">
         <div class="max-w-7xl mx-auto">
             <!-- Navigation Tabs -->
             <div class="mb-8">

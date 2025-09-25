@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Navigation -->
-        <nav
+        <nav id="navbar"
             class="fixed top-0 w-full z-50 bg-white lg:bg-white/90 dark:bg-black backdrop-blur-xl light:border-b border-gray-100/50 shadow-sm z-9999">
             <div class="max-w-7xl mx-auto px-0 lg:px-8 py-2">
                 <div class="flex flex-col lg:flex-row justify-between items-center h-auto lg:h-16 ">
@@ -29,9 +29,9 @@
                         </button>
 
                         <div class="flex items-center">
-                            <div class="flex-shrink-0">
+                            <Link :href="route('front.home')" class="flex-shrink-0 select-none">
                                 <h1 class="text-2xl font-bold text-blue-600">ETeacher</h1>
-                            </div>
+                            </Link>
                         </div>
 
                         <button @click="toggleApplicationMenu"
